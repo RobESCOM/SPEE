@@ -27,7 +27,6 @@ import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.pagos.mapeo.ServicioArea;
-import mx.ipn.escom.spee.util.Base64FileConverter;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -49,9 +48,6 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
-
-	@Autowired
-	private Base64FileConverter base64;
 
 	@Transactional
 	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio) throws IOException {
