@@ -48,7 +48,7 @@
 							name="Historial de Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/historial-pago">
+							href="${pageContext.request.contextPath}/pagos/gestionar-historial-pagos">
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
@@ -56,7 +56,7 @@
 							name="Notificaciones" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/historial-pago">
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
 								<s:text name="Gestionar Notificaciones" />
 						</a></li>
 					</ul></li>

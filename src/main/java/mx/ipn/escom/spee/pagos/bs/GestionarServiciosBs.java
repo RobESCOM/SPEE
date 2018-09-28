@@ -34,8 +34,7 @@ public class GestionarServiciosBs {
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuarioSel.getId());
 		InformacionPersonal info = new InformacionPersonal();
-		info.setIdCuenta(15);
-		//info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
+		info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 		return genericSearchBs.findByExample(info).get(0);
 	}
 

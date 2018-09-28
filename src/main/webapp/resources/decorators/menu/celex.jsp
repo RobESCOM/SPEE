@@ -11,7 +11,6 @@
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
 
-
 				<li class="dropdown"><a href="#"><s:text
 							name="menu.alumno.pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
