@@ -11,7 +11,7 @@
 	</p>
 	</br>
 	<p>
-		Password: ${password}
+		PAra ingresar al sistema <a href="${urlActivation}">aquí</a>
 	</p>
 	
 </body>

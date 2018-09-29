@@ -1,10 +1,14 @@
 package mx.ipn.escom.spee.util.dao;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
@@ -26,7 +30,7 @@ public class GenericDao implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Autowired
 	protected SessionFactory sessionFactory;
 
@@ -81,7 +85,6 @@ public class GenericDao implements Serializable {
 
 	@Transactional(propagation = Propagation.MANDATORY)
 	public <C extends Modelo> void delete(C entity) {
-		System.err.println(entity);
 		sessionFactory.getCurrentSession().clear();
 		sessionFactory.getCurrentSession().delete(entity);
 	}
@@ -113,14 +116,23 @@ public class GenericDao implements Serializable {
 
 	}
 
-	public <C extends Modelo> Boolean existByAttribute(Class<C> clazz, String nombreAtributo, String valorAtributo) {
-		sessionFactory.getCurrentSession().clear();
-		CriteriaBuilder builder = sessionFactory.getCriteriaBuilder();
+	public <C extends Modelo> Boolean existByAttribute(Class<C> clazz, Map<String, Serializable> id,
+			Map<String, Object> attributes) {
+
+		CriteriaBuilder builder = sessionFactory.getCurrentSession().getCriteriaBuilder();
 		CriteriaQuery<C> criteria = builder.createQuery(clazz);
 		Root<C> root = criteria.from(clazz);
-		criteria.where(builder.equal(root.get(nombreAtributo), valorAtributo));
+		List<Predicate> predicates = new ArrayList<>();
+		for (Entry<String, Serializable> e : id.entrySet()) {
+			predicates.add(builder.notEqual(root.<String>get(e.getKey()), e.getValue()));
+		}
+		for (Entry<String, Object> e : attributes.entrySet()) {
+			predicates.add(builder.equal(root.<String>get(e.getKey()), e.getValue()));
+		}
+		criteria.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
 		List<C> result = sessionFactory.getCurrentSession().createQuery(criteria).getResultList();
-		return !result.isEmpty();	}
+		return !result.isEmpty();
+	}
 
 	@Transactional(propagation = Propagation.MANDATORY)
 	public <C extends Modelo> C updateMerge(C entity) {

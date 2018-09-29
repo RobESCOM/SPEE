@@ -8,6 +8,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import mx.edu.spee.controlacceso.bs.UsuarioBs;
+import mx.edu.spee.controlacceso.exception.UniqueException;
+import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 
 import mx.edu.spee.controlacceso.mapeo.Usuario;
@@ -44,10 +46,11 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 
 	public void validateCreate() {
 		if (usuario != null) {
-			Usuario usuarioRegistrado = usuarioBs.registrar(usuario, model);
-//			Cuenta cuenta = new Cuenta();
-//			cuenta.setIdUsuario(usuario.getId());
-//			info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
+			try {
+				usuarioBs.registrar(usuario, model);
+			} catch (UniqueException ue) {
+				addActionError("El usuario ya existe.");
+			}
 		}
 	}
 
