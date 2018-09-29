@@ -25,6 +25,7 @@
 	<div class="form-group">
 		<div class="col-md-8 col-md-offset-2">
 			<s:actionmessage cssClass="alert alert-success" />
+			<s:actionerror cssClass="alert alert-danger" />
 		</div>
 	</div>
 
@@ -51,7 +52,7 @@
 						headerValue="Seleccione"
 						list="#{'1':'Alumno', '2':'Profesor', '3':'Externo'}"
 						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="estatusNuevo" cssClass="error" theme="" />
+					<s:fielderror fieldName="estatusNuevo" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 
@@ -62,8 +63,8 @@
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="info.nombre" id="txNombre" />
-					<s:fielderror fieldName="model.nombre" cssClass="error" theme="" />
+						cssClassError="input-error" name="model.nombre" id="txNombre" />
+					<s:fielderror fieldName="model.nombre" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -73,10 +74,10 @@
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo"
-						name="info.primerApellido" cssClassError="input-error"
+						name="model.primerApellido" cssClassError="input-error"
 						id="txUsuario" />
 					<s:fielderror fieldName="model.primerApellido" cssClass="error"
-						theme="" />
+						theme="bootstrap" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -88,7 +89,7 @@
 					<s:textfield cssClass="form-control campo"
 						name="model.segundoApellido" cssClassError="input-error"
 						id="txSegundoApellido" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.segundoApellido" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -99,7 +100,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.curp"
 						cssClassError="input-error" id="txCurp" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.curp" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div id="divBoleta" class="form-group">
@@ -110,7 +111,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.boleta"
 						cssClassError="input-error" id="txBoleta" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.boleta" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div id="divNoEmpleado" class="form-group">
@@ -122,7 +123,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.noEmpleado"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.noEmpleado" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -132,7 +133,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="usuario.login"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="usuario.login" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -142,7 +143,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.celular"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.celular" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 
@@ -153,7 +154,7 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield type="password" cssClass="form-control campo"
 						name="usuario.password" cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
+					<s:fielderror fieldName="usuario.password" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 		</fieldset>

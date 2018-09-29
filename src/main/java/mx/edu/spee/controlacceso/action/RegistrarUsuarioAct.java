@@ -9,7 +9,6 @@ import com.opensymphony.xwork2.ModelDriven;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import mx.edu.spee.controlacceso.bs.UsuarioBs;
 import mx.edu.spee.controlacceso.exception.UniqueException;
-import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 
 import mx.edu.spee.controlacceso.mapeo.Usuario;
