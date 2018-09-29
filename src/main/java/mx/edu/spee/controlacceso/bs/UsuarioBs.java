@@ -67,7 +67,7 @@ public class UsuarioBs implements Serializable {
 
 	private void crearCuenta(Usuario usuario) {
 		Cuenta cuenta = new Cuenta();
-		//cuenta.setIdUsuario(genericSearchBs.findByExample(usuario).get(0).getId());
+		cuenta.setIdUsuario(genericSearchBs.findByExample(usuario).get(0).getId());
 		cuenta.setIdPerfil(Perfil.PerfilEnum.ALUMNO.getValor());
 		genericDao.save(cuenta);
 	}
@@ -78,6 +78,9 @@ public class UsuarioBs implements Serializable {
 
 		mailProperties.put(Constantes.SUBJECT, "Email de Prueba");
 		mailProperties.put(Constantes.TEMPLATE, "mx/ipn/escom/spee/mail/templates/confirmacionCuenta.vm");
+		
+		templateParams.put("usuario", usuario.getLogin());
+		templateParams.put("password", usuario.getPassword());
 
 		List<String> destinatarios = new ArrayList<>();
 		destinatarios.add(usuario.getLogin());

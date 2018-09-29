@@ -11,6 +11,8 @@ import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.interceptor.validation.SkipValidation;
+import org.apache.struts2.rest.DefaultHttpHeaders;
+import org.apache.struts2.rest.HttpHeaders;
 
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
@@ -30,8 +32,11 @@ import net.sf.jasperreports.engine.JRException;
 @Results({
 		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
 				"gestionar-pagos/new" }),
-		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }) })
-@AllowedMethods({ "generarReporte" })
+		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }),
+		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
+				"archivoVisualizar.fileInputStream", "contentDisposition",
+				"inline;filename=\"${archivoVisualizar.fileUploadFileName}\"", "bufferSize", "1024" }) })
+@AllowedMethods({ "imprimirReporte", "vizualizarArchivo", })
 public class GestionarPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -51,7 +56,7 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	private List<ArchivoPagoDia> listPagos;
 
-	private Archivo archivo;
+	private Archivo archivoVisualizar;
 
 	private Usuario usuarioSel;
 
@@ -90,15 +95,23 @@ public class GestionarPagosAct extends GeneralActionSupport {
 		return SUCCESS;
 	}
 
-	@SkipValidation
-	public String generarReporte() {
+	public HttpHeaders imprimirReporte() {
 		List<ArchivoPagoDia> listPagosAutorizados = new ArrayList<>();
+		Archivo archivo = new Archivo();
 		try {
 			archivo = pagoBs.generarReporteCelex(listPagosAutorizados);
 		} catch (FileNotFoundException | JRException e) {
 			addActionError(getText("Archivo no se pudo crear"));
 		}
-		return GENERAR_REPORTE;
+
+		return vizualizarArchivo(archivo);
+	}
+
+	@SkipValidation
+	public HttpHeaders vizualizarArchivo(Archivo archivo) {
+		archivoVisualizar = new Archivo();
+		setArchivoVisualizar(archivo);
+		return new DefaultHttpHeaders("filesuccess").disableCaching();
 	}
 
 	public Usuario getUsuarioSel() {
@@ -136,14 +149,6 @@ public class GestionarPagosAct extends GeneralActionSupport {
 		this.listPagos = listPagos;
 	}
 
-	public Archivo getArchivo() {
-		return archivo;
-	}
-
-	public void setArchivo(Archivo archivo) {
-		this.archivo = archivo;
-	}
-
 	public GestionarServiciosBs getGestionarServiciosBs() {
 		return gestionarServiciosBs;
 	}
@@ -158,6 +163,14 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public void setInfoUsuario(InformacionPersonal infoUsuario) {
 		this.infoUsuario = infoUsuario;
+	}
+
+	public Archivo getArchivoVisualizar() {
+		return archivoVisualizar;
+	}
+
+	public void setArchivoVisualizar(Archivo archivoVisualizar) {
+		this.archivoVisualizar = archivoVisualizar;
 	}
 
 }

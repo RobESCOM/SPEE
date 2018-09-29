@@ -4,6 +4,15 @@
 <title></title>
 </head>
 <body>
-	Esto es sólo una prueba del envío de mails
+	Bienvenido a Sistema de Pagos Electrónicos ESCOM:
+	
+	<p>
+		Nombre: ${usuario}
+	</p>
+	</br>
+	<p>
+		Password: ${password}
+	</p>
+	
 </body>
 </html>

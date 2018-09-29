@@ -14,13 +14,6 @@
 </jsp:text>
 </head>
 <body>
-	<s:set var="tool"
-		value="'Nullam rhoncus ex eget lacinia ornare. Morbi dictum ante sed nulla maximus viverra. Morbi eu lorem vitae est condimentum iaculis sit amet vel sapien. Orci varius natoque penatibus et magnis dis parturient montes,
-	 		nascetur ridiculus mus. Morbi dolor augue, gravida nec luctus vel, auctor at lectus. '" />
-	<s:set var="btnAceptar" value="%{getText('mx.com.spee.boton.aceptar')}" />
-	<s:set var="btnCancelar"
-		value="%{getText('mx.com.spee.boton.cancelar')}" />
-
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
@@ -34,6 +27,7 @@
 			<s:actionmessage cssClass="alert alert-success" />
 		</div>
 	</div>
+
 	<div class="col-md-12">
 		<div class="outter-section form-medium text-left">
 			<s:text name="mx.com.spee.label.camposObligatorios" />
@@ -45,17 +39,31 @@
 		method="post" theme="simple">
 		<fieldset class="form form-horizontal form-medium">
 			<legend class="form-section">
-				<s:text name="CU1_SUBTITLE" />
+				<s:text name="Datos Personales" />
 			</legend>
 			<div class="form-group">
 				<label
 					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="CU1_LBL1" />
+					for=""> <s:text name="Perfil" />
+				</label>
+				<div class="col-xs-12 col-sm-8 col-md-8">
+					<s:select id="alumnoCheckId" class="form-control" headerKey="-1"
+						headerValue="Seleccione"
+						list="#{'1':'Alumno', '2':'Profesor', '3':'Externo'}"
+						name="selectValue" cssErrorClass="field-error" />
+					<s:fielderror fieldName="estatusNuevo" cssClass="error" theme="" />
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label
+					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
+					for=""> <s:text name="Nombre(s)" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo"
 						cssClassError="input-error" name="info.nombre" id="txNombre" />
-					<s:fielderror fieldName="info.nombre" cssClass="error" theme="" />
+					<s:fielderror fieldName="model.nombre" cssClass="error" theme="" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -64,53 +72,56 @@
 					for=""> <s:text name="CU1_LBL2" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.primerApellido" 
-						cssClassError="input-error" id="txUsuario" />
-					<s:fielderror fieldName="info.primerApellido" cssClass="error" theme="" />
+					<s:textfield cssClass="form-control campo"
+						name="info.primerApellido" cssClassError="input-error"
+						id="txUsuario" />
+					<s:fielderror fieldName="model.primerApellido" cssClass="error"
+						theme="" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label
 					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="CU1_LBL3" />
+					for=""> <s:text name="Segundo Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.segundoApellido" 
-						cssClassError="input-error" id="txUsuario" />
-					<s:fielderror fieldName="" cssClass="error" theme="" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
-					<s:text name="CU1_LBL4" />
-				</label>
-				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.curp" 
-						cssClassError="input-error" id="txUsuario" />
+					<s:textfield cssClass="form-control campo"
+						name="model.segundoApellido" cssClassError="input-error"
+						id="txSegundoApellido" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
 			</div>
 			<div class="form-group">
 				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="CU1_LBL5" />
+					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio">
+					<s:text name="CURP" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.boleta" 
-						cssClassError="input-error" id="txUsuario" />
+					<s:textfield cssClass="form-control campo" name="model.curp"
+						cssClassError="input-error" id="txCurp" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
 			</div>
-			<div class="form-group">
+			<div id="divBoleta" class="form-group">
+				<label
+					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
+					for=""> <s:text name="Boleta" />
+				</label>
+				<div class="col-xs-12 col-sm-8 col-md-8">
+					<s:textfield cssClass="form-control campo" name="model.boleta"
+						cssClassError="input-error" id="txBoleta" />
+					<s:fielderror fieldName="" cssClass="error" theme="" />
+				</div>
+			</div>
+			<div id="divNoEmpleado" class="form-group">
 				<div class="col-xs-12 col-sm-4 col-md-4 control-label">
-					<i class="material-icons md-15 md-eld" data-toggle="tooltip"
-						data-placement="top" title="${tool}"> &#xE887; </i> &#160; <label
-						class="label-obligatorio" for=""> <s:text name="CU1_LBL6" />
+					<label class="label-obligatorio" for=""> <s:text
+							name="CU1_LBL6" />
 					</label>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.noEmpleado" 
-						cssClassError="input-error"  />
+					<s:textfield cssClass="form-control campo" name="model.noEmpleado"
+						cssClassError="input-error" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
 			</div>
@@ -119,7 +130,7 @@
 					for=""> <s:text name="CU1_LBL7" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="usuario.login" 
+					<s:textfield cssClass="form-control campo" name="usuario.login"
 						cssClassError="input-error" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
@@ -129,33 +140,64 @@
 					for=""> <s:text name="CU1_LBL8" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="info.celular" 
-						cssClassError="input-error"/>
+					<s:textfield cssClass="form-control campo" name="model.celular"
+						cssClassError="input-error" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
 			</div>
-			
+
 			<div class="form-group">
 				<label class=" col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="Passwor" />
+					for=""> <s:text name="Password" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="usuario.password" 
-						cssClassError="input-error"/>
+					<s:textfield type="password" cssClass="form-control campo"
+						name="usuario.password" cssClassError="input-error" />
 					<s:fielderror fieldName="" cssClass="error" theme="" />
 				</div>
 			</div>
 		</fieldset>
 
+
 		<div class="outter-section form-medium text-right">
 			<div class="col-xs-12 col-md-12 col-md-12 text-right">
-				<s:submit cssClass="btn btn-primary" value="%{btnAceptar}" />
+				<s:submit cssClass="btn btn-primary" value="Aceptar" />
 				<a class="btn btn-primary"
-					href="${pageContext.request.contextPath}/control-acceso/login">${btnCancelar}</a>
+					href="${pageContext.request.contextPath}/control-acceso/login">Cancelar</a>
 			</div>
 		</div>
-
 	</s:form>
+
+	<sj:dialog id="dlgDeleteContact" modal="true"
+		title="Eliminar Medio de Contacto" autoOpen="false"
+		openTopics="showDlgDeleteContact" closeTopics="closeDlgDeleteContact"
+		resizable="true" draggable="false">
+		<s:url var="urlAction" action="gestionar-contactos/"
+			includeContext="true" />
+		<s:hidden id="hdnIdContactoDelete" value="%{#urlAction}" />
+		<div class="form-horizontal">
+			<s:form id="frmDeleteContacto"
+				action="%{#pageContext.request.contextPath}/aspirante/gestionar-contactos/%{#hdnIdContactoDelete}"
+				method="post">
+				<s:hidden name="_method" value="delete"></s:hidden>
+				<div class="form-group">
+					<div class="col-md-12 col-contact">
+						<s:text name="IU1.4-3_MSG_ELIMINAR" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-12 text-right">
+						<s:submit id="btnDialogDeleteAceptar"
+							class="btn btn-default btn-default-eld" title="%{#btnSi}"
+							value="%{#btnSi}">
+						</s:submit>
+						<a id="btnDialogDeleteCancelar"
+							class="btn btn-default btn-default-eld"><s:text name="No" /></a>
+					</div>
+				</div>
+			</s:form>
+		</div>
+	</sj:dialog>
 </body>
 	</html>
 </jsp:root>

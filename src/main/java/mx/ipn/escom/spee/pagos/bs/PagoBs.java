@@ -105,7 +105,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 	private Archivo compilarReporteCelex(List<ArchivoPagoDia> listPagosAutorizadosCelex)
 			throws JRException, FileNotFoundException {
-		String ruta = PropertyAccess.getProperty("mx.edu.eld.admision.listaAspirantes.reporte.ruta");
+		String ruta = PropertyAccess.getProperty("mx.edu.spee.pagos.celex.reporte.ruta");
 		ServletContext servletContext = ServletActionContext.getServletContext();
 		String context = servletContext.getRealPath("/");
 
@@ -118,13 +118,13 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		parameters.put("rutaImagen", rutaImagen);
 
 		JasperReport reporte = JasperCompileManager.compileReport(
-				context + ruta + PropertyAccess.getProperty("mx.edu.eld.admision.listaAspirantes.nombre.archivoXML"));
+				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoXML"));
 		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters,
 				new net.sf.jasperreports.engine.JREmptyDataSource());
 		JasperExportManager.exportReportToPdfFile(jasperPrint,
-				context + ruta + PropertyAccess.getProperty("mx.edu.eld.admision.listaAspirantes.nombre.archivoPDF"));
+				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
 		File file = new File(
-				context + ruta + PropertyAccess.getProperty("mx.edu.eld.admision.listaAspirantes.nombre.archivoPDF"));
+				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
 		archivo.setFileUploadFileName(file.getName());
 		//archivo.setFileInputStream(new FileInputStream(file));
 

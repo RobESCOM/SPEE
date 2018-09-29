@@ -4,26 +4,33 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
-
+import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 import mx.edu.spee.controlacceso.bs.UsuarioBs;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
+
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
+import mx.ipn.escom.spee.pagos.action.GestionarAutorizacionPagosAct;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/control-acceso")
-@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
-		"login" }) })
+@Results({
+		@Result(name = GestionarAutorizacionPagosAct.ERROR, type = "redirectAction", params = { "actionName",
+				"registrar-usuario/new" }),
+		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "login" }) })
 public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDriven<InformacionPersonal> {
 
 	private static final long serialVersionUID = 1L;
 
 	private Usuario usuario;
 
-	private InformacionPersonal info;
+	private InformacionPersonal model;
+
+	private Integer perfil;
+
+	private String selectValue;
 
 	@Autowired
 	private UsuarioBs usuarioBs;
@@ -37,7 +44,7 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 
 	public void validateCreate() {
 		if (usuario != null) {
-			Usuario usuarioRegistrado = usuarioBs.registrar(usuario, info);
+			Usuario usuarioRegistrado = usuarioBs.registrar(usuario, model);
 //			Cuenta cuenta = new Cuenta();
 //			cuenta.setIdUsuario(usuario.getId());
 //			info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
@@ -66,11 +73,11 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 	}
 
 	public InformacionPersonal getInfo() {
-		return info;
+		return model;
 	}
 
 	public void setInfo(InformacionPersonal info) {
-		this.info = info;
+		this.model = info;
 	}
 
 	public GenericSearchBs getGenericSearchBs() {
@@ -82,9 +89,28 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 	}
 
 	@Override
+	@VisitorFieldValidator
 	public InformacionPersonal getModel() {
-		// TODO Auto-generated method stub
-		return null;
+		if (model == null) {
+			model = new InformacionPersonal();
+		}
+		return model;
+	}
+
+	public Integer getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(Integer perfil) {
+		this.perfil = perfil;
+	}
+
+	public String getSelectValue() {
+		return selectValue;
+	}
+
+	public void setSelectValue(String selectValue) {
+		this.selectValue = selectValue;
 	}
 
 }
