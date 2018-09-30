@@ -1,6 +1,7 @@
 package mx.edu.spee.controlacceso.mapeo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,9 @@ public class Usuario implements Modelo, Serializable {
 
 	@Column(name = "st_activo")
 	private Boolean activo;
+
+	@Column(name = "fh_alta")
+	private Date fechaAlta;
 
 	@Transient
 	private Perfil perfilActivo;
@@ -107,5 +111,12 @@ public class Usuario implements Modelo, Serializable {
 		this.perfilActivo = perfilActivo;
 	}
 
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}
 
 }

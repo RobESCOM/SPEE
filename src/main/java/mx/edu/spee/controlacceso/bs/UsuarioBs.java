@@ -76,11 +76,11 @@ public class UsuarioBs implements Serializable {
 
 	public void guardarInformacionPersonal(Usuario usuario, InformacionPersonal info) {
 		info.setCorreo(usuario.getLogin());
-		if (info.getBoleta() == null || info.getBoleta().equals("")) {
-			info.setBoleta(Perfil.PerfilEnum.NO_APLICA.getNombre());
-		} else if (info.getNoEmpleado() == null || info.getNoEmpleado().equals("")) {
-			info.setNoEmpleado(Perfil.PerfilEnum.NO_APLICA.getNombre());
-		}
+//		if (info.getBoleta() == null || info.getBoleta().equals("")) {
+//			info.setBoleta(Perfil.PerfilEnum.NO_APLICA.getNombre());
+//		} else if (info.getNoEmpleado() == null || info.getNoEmpleado().equals("")) {
+//			info.setNoEmpleado(Perfil.PerfilEnum.NO_APLICA.getNombre());
+//		}
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuario.getId());
 		info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());

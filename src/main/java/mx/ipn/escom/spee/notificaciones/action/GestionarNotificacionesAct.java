@@ -20,6 +20,30 @@ public class GestionarNotificacionesAct extends GeneralActionSupport {
 		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
 				.getValor()) {
 			return ResultConstants.ALUMNO;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ENCARGADO_CAJA
+				.getValor()) {
+			return ResultConstants.ENCARGADO_CAJA;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.CONTADOR
+				.getValor()) {
+			return ResultConstants.CONTADOR;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
+				.getValor()) {
+			return ResultConstants.EXTERNO;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES
+				.getValor()) {
+			return ResultConstants.ADMINISTRADOR_DENTALES;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
+				.getValor()) {
+			return ResultConstants.SUBDIRECTOR;
+		}
+		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
+				.getValor()) {
+			return ResultConstants.TRABAJADOR;
 		} else {
 			return NO_AUTORIZADO;
 		}

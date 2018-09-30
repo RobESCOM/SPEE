@@ -22,6 +22,23 @@
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
+
+				<li class="dropdown"><a href="#"><s:text
+							name="Citas" /><span class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales">
+								<s:text name="Gestionar Citas Dentales" />
+						</a></li>
+					</ul></li>
+				<li class="dropdown"><a href="#"><s:text
+							name="Notificaciones" /><span class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
+								<s:text name="Gestionar Notificaciones" />
+						</a></li>
+					</ul></li>
 			</ul>
 		</div>
 	</div>

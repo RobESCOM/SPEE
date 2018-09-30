@@ -26,7 +26,7 @@
 	includeContext="true" />
 <sj:head debug="true" jqueryui="true" jquerytheme="custom" locale="es"
 	customBasepath="%{#urlRutaContextoTema}" />
-<title><s:text name="Sistema de Electronicos ESCOM - IPN" /></title>
+<title><s:text name="Sistema de Pagos Electronicos ESCOM - IPN" /></title>
 <link rel="icon" type="image/png"
 	href="${pageContext.request.contextPath}/resources/images/ipn-logo-color.png"
 	sizes="32x32" />

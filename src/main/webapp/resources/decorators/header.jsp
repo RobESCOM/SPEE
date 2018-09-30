@@ -62,12 +62,34 @@
 					</ul></li>
 			</ul>
 			<s:if test="#usuario.perfilActivo.id == #varSUBDIRECTOR">
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
+				</ul>
 				<s:include value="./menu/subdirector.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varCELEX">
 				<s:include value="./menu/celex.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varDENTALES">
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
+				</ul>
 				<s:include value="./menu/serviciosDentales.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varBIBLIOTECA">
@@ -77,12 +99,45 @@
 				<s:include value="./menu/fotocopiado.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varCAJERO">
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
+				</ul>
 				<s:include value="./menu/cajero.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varCONTADOR">
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
+				</ul>
 				<s:include value="./menu/contador.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varTRABAJADOR">
+				<ul class="nav navbar-top-links navbar-right">
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
+				</ul>
 				<s:include value="./menu/trabajador.jsp" />
 			</s:if>
 			<s:if test="#usuario.perfilActivo.id == #varALUMNO">
