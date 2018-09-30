@@ -9,7 +9,7 @@
 
 	<s:set var="usuario"
 		value="%{#session[@mx.ipn.escom.spee.action.NombreObjetosSesion@USUARIO_SESION]}" />
-		
+
 	<s:set var="varSUBDIRECTOR"
 		value="%{@mx.edu.spee.controlacceso.mapeo.Perfil$PerfilEnum@SUBDIRECTOR.getValor()}" />
 	<s:set var="varCELEX"
@@ -88,8 +88,14 @@
 			<s:if test="#usuario.perfilActivo.id == #varALUMNO">
 				<ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#"><i class="material-icons">
-								notifications </i> </a></li>
+						data-toggle="dropdown" href="#"> <i
+							class="material-icons md-18 md-light">notifications</i>
+					</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li><a
+								href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">Gestionar
+									Notificaciones</a></li>
+						</ul></li>
 				</ul>
 				<s:include value="./menu/alumno.jsp" />
 			</s:if>

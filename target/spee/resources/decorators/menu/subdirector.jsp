@@ -12,14 +12,32 @@
 			<ul class="nav" id="side-menu">
 				<li class="dropdown"><a
 					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
-							name="menu.contador.spagos" /><span class="fa arrow"></span> </a>
+							name="Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
-								<s:text name="mensu.contador.gestionar_conceptos" />
+								<s:text name="Pagos Autorizados" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
-								<s:text name="mensu.contador.costo_conceptos" />
+								<s:text name="Gestionar Historial Pagos" />
+						</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#"><s:text name="Reportes" /><span
+						class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
+								<s:text name="Gestionar Reportes" />
+						</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#"><s:text name="Permisos" /><span
+						class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
+								<s:text name="Gestionar Permisos" />
 						</a></li>
 					</ul></li>
 			</ul>

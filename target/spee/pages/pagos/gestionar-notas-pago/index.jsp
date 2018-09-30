@@ -24,7 +24,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="CU89_TITLE" />
+			<s:text name="Gestionar Notas de Pago" />
 		</h1>
 	</div>
 </div>
@@ -36,9 +36,9 @@
 				<table id="tblNotasPago" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="CU89_THEAD1" /></th>
-							<th><s:text name="CU89_THEAD2" /></th>
-							<th><s:text name="CU89_THEAD3" /></th>
+							<th><s:text name="Concepto" /></th>
+							<th><s:text name="Monto" /></th>
+							<th><s:text name="Acciones" /></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,11 +47,11 @@
 								<td>${ntPago[0]}</td>
 								<td>${ntPago[1]}</td>
 								<td><a href="#" title="${ttbVisualizar}"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
+										class="material-icons md-24">${varIconoVisualizar}</i>
 								</a> <a href="#" title="${ttbPagarCaja}"> <i
-										class="material-icons md-24 md-eld">${varIconoPagarCaja}</i>
+										class="material-icons md-24">${varIconoPagarCaja}</i>
 								</a> <a href="#" title="${ttbSubirArchivo}"> <i
-										class="material-icons md-24 md-eld">${varIconoSubirArchivo}</i>
+										class="material-icons md-24">${varIconoSubirArchivo}</i>
 								</a></td>
 							</tr>
 						</s:iterator>

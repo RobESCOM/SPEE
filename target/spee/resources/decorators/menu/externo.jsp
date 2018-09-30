@@ -16,10 +16,10 @@
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
-								<s:text name="menu.contador.gestionar_conceptos" />
+								<s:text name="Pagos Autorizados" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
-								<s:text name="menu.contador.costo_conceptos" />
+								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
 			</ul>
