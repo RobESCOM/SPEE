@@ -14,8 +14,7 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.GestionarServiciosBs;
-import mx.ipn.escom.spee.pagos.mapeo.Servicio;
-import mx.ipn.escom.spee.pagos.mapeo.ServicioArea;
+import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.ResultConstants;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
@@ -35,12 +34,12 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
-	
+
 	private InformacionPersonal infoUsuario;
 
 	private Usuario usuarioSel;
 
-	private List<Servicio> listCatalogoServicios;
+	private List<CatalogoServicio> listCatalogoServicios;
 
 	private AjaxResult ajaxResult;
 
@@ -49,7 +48,7 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
 				.getValor()) {
 			infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
-			listCatalogoServicios = genericSearchBs.findAll(Servicio.class);
+			listCatalogoServicios = genericSearchBs.findAll(CatalogoServicio.class);
 			return ResultConstants.ALUMNO;
 		} else {
 			return NO_AUTORIZADO;
@@ -66,7 +65,7 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 
 	public AjaxResult obtenerArchivos() {
 		AjaxResult ajaxResult = new AjaxResult();
-		ajaxResult.addCampo("pagos", genericSearchBs.findAll(ServicioArea.class));
+		ajaxResult.addCampo("pagos", genericSearchBs.findAll(CatalogoServicio.class));
 		return ajaxResult;
 	}
 
@@ -78,11 +77,11 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 		this.gestionarServiciosBs = gestionarServiciosBs;
 	}
 
-	public List<Servicio> getListCatalogoServicios() {
+	public List<CatalogoServicio> getListCatalogoServicios() {
 		return listCatalogoServicios;
 	}
 
-	public void setListCatalogoServicios(List<Servicio> listCatalogoServicios) {
+	public void setListCatalogoServicios(List<CatalogoServicio> listCatalogoServicios) {
 		this.listCatalogoServicios = listCatalogoServicios;
 	}
 

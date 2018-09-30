@@ -24,8 +24,8 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_clave")
-	private Integer clave;
+	@Column(name = "clave")
+	private String clave;
 
 	@Column(name = "tx_nombre")
 	private String nombre;
@@ -109,6 +109,14 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	public void setIdCuenta(Integer idCuenta) {
 		this.idCuenta = idCuenta;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
 }

@@ -49,8 +49,7 @@
 					<thead>
 						<tr>
 							<th><s:text name="Nombre" /></th>
-							<th><s:text name="CURP" /></th>
-							<th><s:text name="Boleta" /></th>
+							<th><s:text name="Clave" /></th>
 							<th><s:text name="Fecha" /></th>
 							<th><s:text name="Concepto" /></th>
 							<th><s:text name="Cantidad" /></th>
@@ -62,8 +61,7 @@
 								value="%{pagoBs.obtenerAlumno(#pagAutorizadoCelex.idUsuario)}"></s:set>
 							<tr>
 								<td>${usuarioSel}</td>
-								<td>${alumno.curp }</td>
-								<td>${alumno.boleta }</td>
+								<td>${infoUsuario.clave }</td>
 								<td><s:date name="%{#pagAutorizadoCelex.fechaEnvio}"
 										format="yyyy-MM-dd" /></td>
 								<td>Servicio</td>

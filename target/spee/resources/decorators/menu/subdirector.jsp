@@ -40,6 +40,14 @@
 								<s:text name="Gestionar Permisos" />
 						</a></li>
 					</ul></li>
+				<li class="dropdown"><a href="#"><s:text
+							name="Notificaciones" /><span class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
+								<s:text name="Gestionar Notificaciones" />
+						</a></li>
+					</ul></li>
 			</ul>
 		</div>
 	</div>

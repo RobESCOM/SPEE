@@ -12,14 +12,14 @@ import javax.persistence.Table;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
-@Table(name = "tc03_servicio")
-public class Servicio implements Modelo, Serializable {
+@Table(name = "tc02_catalogo_servicio")
+public class CatalogoServicio implements Modelo, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_servicio_area")
+	@Column(name = "id_catalogo_servicio")
 	private Integer id;
 
 	@Column(name = "tx_clave")
@@ -28,19 +28,28 @@ public class Servicio implements Modelo, Serializable {
 	@Column(name = "ds_servicio")
 	private String descripcion;
 
-	@Column(name = "nu_monto")
-	private Double monto;
+	@Column(name = "precio")
+	private String precio;
 
-	public Servicio() {
+	@Column(name = "id_area")
+	private Integer idArea;
+
+	@Column(name = "id_tipo_servicio")
+	private String idTipoServicio;
+
+	public CatalogoServicio() {
 		super();
 	}
 
-	public Servicio(Integer id, String clave, String descripcion, Double monto) {
+	public CatalogoServicio(Integer id, String clave, String descripcion, String precio, Integer idArea,
+			String idTipoServicio) {
 		super();
 		this.id = id;
 		this.clave = clave;
 		this.descripcion = descripcion;
-		this.monto = monto;
+		this.precio = precio;
+		this.idArea = idArea;
+		this.idTipoServicio = idTipoServicio;
 	}
 
 	public Integer getId() {
@@ -67,12 +76,28 @@ public class Servicio implements Modelo, Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public Double getMonto() {
-		return monto;
+	public String getPrecio() {
+		return precio;
 	}
 
-	public void setMonto(Double monto) {
-		this.monto = monto;
+	public void setPrecio(String precio) {
+		this.precio = precio;
+	}
+
+	public Integer getIdArea() {
+		return idArea;
+	}
+
+	public void setIdArea(Integer idArea) {
+		this.idArea = idArea;
+	}
+
+	public String getIdTipoServicio() {
+		return idTipoServicio;
+	}
+
+	public void setIdTipoServicio(String idTipoServicio) {
+		this.idTipoServicio = idTipoServicio;
 	}
 
 }

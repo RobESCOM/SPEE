@@ -25,8 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
+import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
-import mx.ipn.escom.spee.pagos.mapeo.ServicioArea;
+import mx.ipn.escom.spee.pagos.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -49,11 +50,11 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	@Autowired
 	private GenericSearchBs genericSearchBs;
 
+	/* TODO falta determinar lo de la carpeta */
 	@Transactional
 	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio) throws IOException {
-		ServicioArea catalogoServicio = new ServicioArea();
-		// catalogoServicio.setClave(idServicio.toString());
-		ServicioArea servicio = genericSearchBs.findByExample(catalogoServicio).get(0);
+		CatalogoServicio catalogoServicio = new CatalogoServicio();
+		catalogoServicio.setClave(idServicio.toString());
 		Date currentDate = new Date();
 		ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 
@@ -61,11 +62,14 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		FileInputStream fis = new FileInputStream(archivo.getFileUpload());
 		archivoPago.setArchivo(bfile);
 		fis.read(bfile);
-		archivoPago.setUsuario(genericSearchBs.findById(Usuario.class, usuario.getId()));
+		CatalogoServicio catalogo = new CatalogoServicio();
+		catalogo.setId(idServicio);
+		archivoPago.setCatalogoServicio(catalogo);
 		archivoPago.setIdUsuario(usuario.getId());
 		archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
+		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
 		archivoPago.setFechaEnvio(currentDate);
-		archivoPago.setNombreArchivo(archivo.getFileUploadFileName());
+		archivoPago.setIdCarpeta(1);
 		save(archivoPago);
 		LOGGER.info("se ha registrado un pago");
 	}
@@ -75,7 +79,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		ArchivoPagoDia archivoPagoDiaExample = new ArchivoPagoDia();
 		archivoPagoDiaExample.setId(idSel);
 		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, idSel);
-		// archivoPagoDia.setIdEstado(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+		archivoPagoDia.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 		update(archivoPagoDia);
 	}
 
@@ -95,11 +99,12 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		ArchivoPagoDia archivoPagoDiaExample = new ArchivoPagoDia();
 		archivoPagoDiaExample.setId(idSel);
 		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, idSel);
-		// archivoPagoDia.setIdEstado(EstadoPagoEnum.RECHAZADO.getIdEstatus());
+		archivoPagoDia.setIdEstadoPago(EstadoPagoEnum.RECHAZADO.getIdEstatus());
 		update(archivoPagoDia);
 	}
 
-	public Archivo generarReporteCelex(List<ArchivoPagoDia> listPagosAutorizadosCelex) throws FileNotFoundException, JRException {
+	public Archivo generarReporteCelex(List<ArchivoPagoDia> listPagosAutorizadosCelex)
+			throws FileNotFoundException, JRException {
 		return compilarReporteCelex(listPagosAutorizadosCelex);
 	}
 
@@ -123,10 +128,9 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 				new net.sf.jasperreports.engine.JREmptyDataSource());
 		JasperExportManager.exportReportToPdfFile(jasperPrint,
 				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
-		File file = new File(
-				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
+		File file = new File(context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
 		archivo.setFileUploadFileName(file.getName());
-		//archivo.setFileInputStream(new FileInputStream(file));
+		// archivo.setFileInputStream(new FileInputStream(file));
 
 		return archivo;
 	}

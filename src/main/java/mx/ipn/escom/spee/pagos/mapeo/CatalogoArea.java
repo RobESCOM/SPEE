@@ -47,7 +47,7 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_catalogo_area")
+	@Column(name = "id_area")
 	private Integer id;
 
 	@Column(name = "nb_area")
@@ -55,6 +55,12 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	@Column(name = "ds_descripcion")
 	private String descripcion;
+
+	@Column(name = "st_activa")
+	private Boolean estatus;
+
+	@Column(name = "responsable")
+	private Integer idResponsable;
 
 	public CatalogoArea() {
 		super();
@@ -89,6 +95,22 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
+	}
+
+	public Boolean getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(Boolean estatus) {
+		this.estatus = estatus;
+	}
+
+	public Integer getIdResponsable() {
+		return idResponsable;
+	}
+
+	public void setIdResponsable(Integer idResponsable) {
+		this.idResponsable = idResponsable;
 	}
 
 }

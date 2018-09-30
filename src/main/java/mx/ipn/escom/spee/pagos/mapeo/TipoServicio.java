@@ -12,23 +12,41 @@ import javax.persistence.Table;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
-@Table(name = "tc02_servicios_area")
-public class ServicioArea implements Modelo, Serializable {
+@Table(name = "tc03_tipo_servicio")
+public class TipoServicio implements Modelo, Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	public enum CatalogoTipoServicioEnum {
+
+		SIGAA(1, "Comprobante emitido por el subsistema"),
+
+		VOUCHER(2, "Comprobante de pago emitido por usuario");
+
+		private Integer id;
+
+		private String nombre;
+
+		private CatalogoTipoServicioEnum(Integer id, String nombre) {
+			this.id = id;
+			this.nombre = nombre;
+		}
+
+		public Integer getId() {
+			return id;
+		}
+
+		public String getNombre() {
+			return nombre;
+		}
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_servicios_area")
+	@Column(name = "id_tipo_servicio")
 	private Integer id;
 
-	@Column(name = "id_area")
-	private Integer idArea;
-
-	@Column(name = "id_servicio")
-	private Integer idServicio;
-
-	public ServicioArea() {
+	public TipoServicio() {
 		super();
 	}
 
@@ -38,22 +56,6 @@ public class ServicioArea implements Modelo, Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Integer getIdArea() {
-		return idArea;
-	}
-
-	public void setIdArea(Integer idArea) {
-		this.idArea = idArea;
-	}
-
-	public Integer getIdServicio() {
-		return idServicio;
-	}
-
-	public void setIdServicio(Integer idServicio) {
-		this.idServicio = idServicio;
 	}
 
 }

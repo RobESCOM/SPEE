@@ -22,47 +22,57 @@
 	</div>
 </div>
 
-<div class="form-section form-horizontal">
-	<div class="form-group">
-		<div class="row">
-			<div class="col-md-12">
-				<table id="tblPagosEnviados" class="table table-striped">
-					<thead>
-						<tr>
-							<th><s:text name="Estado" /></th>
-							<th><s:text name="Fecha" /></th>
-							<th><s:text name="Concepto" /></th>
-							<th><s:text name="Costo" /></th>
-							<th><s:text name="Acciones" /></th>
-						</tr>
-					</thead>
-					<tbody>
-						<s:iterator value="listPagos" var="pagAutorizado">
+<div class="form-group">
+	<div class="col-md-12">
+		<s:actionmessage cssClass="alert alert-success" />
+		<s:actionerror />
+	</div>
+</div>
+
+<fieldset class="form-section form-horizontal text-justify">
+	<div class="form-section form-horizontal">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-md-12">
+					<table id="tblPagosEnviados" class="table table-striped">
+						<thead>
 							<tr>
-								<td><s:if
-										test="%{#pagAutorizado.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@AUTORIZADO.getIdEstatus()}">
-										<i class="material-icons  md-24 md-eld-green ">&#xE061;</i>
-									</s:if> <s:elseif
-										test="%{#pagAutorizado.idEstadoPago  eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@REVISION.getIdEstatus()}">
-										<i class="material-icons  md-24 md-sem-yellow ">&#xE061;</i>
-									</s:elseif> <s:elseif
-										test="%{#pagAutorizado.idEstadoPago  eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@RECHAZADO.getIdEstatus()}">
-										<i class="material-icons  md-24 md-sem-rojo ">&#xE061;</i>
-									</s:elseif></td>
-								<td><s:date name="%{#pagAutorizado.fechaEnvio}" format="yyyy-MM-dd"/> </td>
-								<td>Servicio</td>
-								<td>$ 	Monto MXN</td>
-								<td><a href="#" title="Visualizar Archivo de Pago"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-								</a></td>
+								<th><s:text name="Estado" /></th>
+								<th><s:text name="Fecha" /></th>
+								<th><s:text name="Concepto" /></th>
+								<th><s:text name="Costo" /></th>
+								<th><s:text name="Acciones" /></th>
 							</tr>
-						</s:iterator>
-					</tbody>
-				</table>
+						</thead>
+						<tbody>
+							<s:iterator value="listPagos" var="pagAutorizado">
+								<tr>
+									<td><s:if
+											test="%{#pagAutorizado.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@AUTORIZADO.getIdEstatus()}">
+											<i class="material-icons  md-24 md-eld-green ">&#xE061;</i>
+										</s:if> <s:elseif
+											test="%{#pagAutorizado.idEstadoPago  eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@REVISION.getIdEstatus()}">
+											<i class="material-icons  md-24 md-sem-yellow ">&#xE061;</i>
+										</s:elseif> <s:elseif
+											test="%{#pagAutorizado.idEstadoPago  eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@RECHAZADO.getIdEstatus()}">
+											<i class="material-icons  md-24 md-sem-rojo ">&#xE061;</i>
+										</s:elseif></td>
+									<td><s:date name="%{#pagAutorizado.fechaEnvio}"
+											format="yyyy-MM-dd" /></td>
+									<td>{pag.idCatalogoServicio}</td>
+									<td>$ Monto MXN</td>
+									<td><a href="#" title="Visualizar Archivo de Pago"> <i
+											class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
+									</a></td>
+								</tr>
+							</s:iterator>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</fieldset>
 <div class="text-left">
 	<div class="col-md-12">
 		<label class="control-label"><i

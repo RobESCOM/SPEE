@@ -12,8 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
@@ -27,30 +25,31 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 	@Column(name = "id_pago_dia")
 	private Integer id;
 
-	@Column(name = "id_servicio_area")
-	private Integer idServicioArea;
-
-	@Column(name = "id_tipo_comprobante")
-	private Integer idTipoComprobante;
-
-	@Column(name = "id_estado_pago")
-	private Integer idEstadoPago;
-
-	@Column(name = "id_usuario")
-	private Integer idUsuario;
-
-	@Column(name = "tx_pago")
+	@Column(name = "tx_archivo")
 	private byte[] archivo;
-
-	@Column(name = "nb_archivo")
-	private String nombreArchivo;
 
 	@Column(name = "fh_envio")
 	private Date fechaEnvio;
 
+	@Column(name = "id_tipo_comprobante")
+	private Integer idTipoComprobante;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
-	private Usuario usuario;
+	@JoinColumn(name = "id_catalogo_servicio", referencedColumnName = "id_catalogo_servicio", insertable = false, updatable = false)
+	private CatalogoServicio catalogoServicio;
+
+	@Column(name = "id_estado_pago")
+	private Integer idEstadoPago;
+
+	@Column(name = "id_cuenta")
+	private Integer idUsuario;
+
+	@Column(name = "id_carpeta")
+	private Integer idCarpeta;
+
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
+//	private Usuario usuario;
 
 //	@ManyToOne(fetch = FetchType.LAZY)
 //	@JoinColumn(name = "id_estado", referencedColumnName = "id_estado", insertable = false, updatable = false)
@@ -72,14 +71,6 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 		this.id = id;
 	}
 
-	public String getNombreArchivo() {
-		return nombreArchivo;
-	}
-
-	public void setNombreArchivo(String nombreArchivo) {
-		this.nombreArchivo = nombreArchivo;
-	}
-
 	public Date getFechaEnvio() {
 		return fechaEnvio;
 	}
@@ -88,12 +79,20 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 		this.fechaEnvio = fechaEnvio;
 	}
 
-	public Integer getIdServicioArea() {
-		return idServicioArea;
+	public CatalogoServicio getCatalogoServicio() {
+		return catalogoServicio;
 	}
 
-	public void setIdServicioArea(Integer idServicioArea) {
-		this.idServicioArea = idServicioArea;
+	public void setCatalogoServicio(CatalogoServicio catalogoServicio) {
+		this.catalogoServicio = catalogoServicio;
+	}
+
+	public Integer getIdCarpeta() {
+		return idCarpeta;
+	}
+
+	public void setIdCarpeta(Integer idCarpeta) {
+		this.idCarpeta = idCarpeta;
 	}
 
 	public Integer getIdTipoComprobante() {
@@ -118,14 +117,6 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 
 	public void setArchivo(byte[] archivo) {
 		this.archivo = archivo;
-	}
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
 	}
 
 	public Integer getIdUsuario() {

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
-import mx.ipn.escom.spee.pagos.mapeo.ServicioArea;
+import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Service("catalogoServiciosBs")
@@ -24,8 +24,8 @@ public class GestionarServiciosBs {
 	@Autowired
 	private GenericSearchBs genericSearchBs;
 
-	public List<ServicioArea> obtenerServiciosTipo() {
-		ServicioArea catalogoServicioExample = new ServicioArea();
+	public List<CatalogoServicio> obtenerServiciosTipo() {
+		CatalogoServicio catalogoServicioExample = new CatalogoServicio();
 		LOGGER.info("Se ha creado una lista de servicios celex");
 		return genericSearchBs.findByExample(catalogoServicioExample);
 	}

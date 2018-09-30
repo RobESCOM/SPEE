@@ -23,6 +23,8 @@ import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.GestionarServiciosBs;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
+import mx.ipn.escom.spee.pagos.mapeo.CatalogoArea.CatalogoAreaEnum;
+import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.ResultConstants;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -66,15 +68,16 @@ public class GestionarPagosAct extends GeneralActionSupport {
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			// archivoPago.setIdArea(CatalogoAreaEnum.CELEX.getIdEstatus());
+			CatalogoServicio catalogo = new CatalogoServicio();
+			catalogo.setIdArea(CatalogoAreaEnum.CELEX.getIdEstatus());
+			archivoPago.setCatalogoServicio(catalogo);
 			listPagos = genericSearchBs.findByExample(archivoPago);
-			// infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
+			infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
 			return ResultConstants.ADMINISTRADOR_CELEX;
 		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
 				.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdUsuario(usuarioSel.getId());
-			archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
 			listPagos = genericSearchBs.findByExample(archivoPago);
 			return ResultConstants.ALUMNO;
 		} else {

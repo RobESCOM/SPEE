@@ -14,12 +14,11 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
-import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
 @Results({
-		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "cargar-pago/new" }) })
+		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-pagos" }) })
 public class CargarPagoAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -37,7 +36,7 @@ public class CargarPagoAct extends GeneralActionSupport {
 	private Archivo archivo;
 
 	public String editNew() {
-		pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class, 11).getArchivo());
+		//pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class, 11).getArchivo());
 		return EDITNEW;
 	}
 
