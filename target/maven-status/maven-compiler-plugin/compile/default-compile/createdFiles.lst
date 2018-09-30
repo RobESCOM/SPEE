@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 mx\ipn\escom\spee\util\mapeo\Mensaje.class
 mx\ipn\escom\spee\util\listener\LocaleLanguageListener.class
 mx\ipn\escom\spee\util\exception\AccessPropertyException.class
@@ -45,3 +46,5 @@ mx\edu\spee\controlacceso\exception\DisableUserException.class
 mx\edu\spee\controlacceso\mapeo\Perfil$PerfilEnum.class
 mx\edu\spee\controlacceso\exception\UserDuplicatedException.class
 mx\ipn\escom\spee\util\bs\GenericBs.class
+=======
+>>>>>>> d124bbef6919e265db355b66c2c7dd01bc9b3414

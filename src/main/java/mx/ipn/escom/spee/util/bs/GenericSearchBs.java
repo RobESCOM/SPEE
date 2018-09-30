@@ -39,8 +39,4 @@ public class GenericSearchBs implements Serializable {
 		return genericDao.findAll(clazz);
 	}
 
-	@Transactional(readOnly = true)
-	public <C extends Modelo> Integer count(Class<C> clazz) {
-		return genericDao.count(clazz);
-	}
 }

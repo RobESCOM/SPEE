@@ -73,6 +73,9 @@ public class Perfil implements Modelo, Catalogo, Serializable {
 	@Column(name = "ds_perfil")
 	private String descripcion;
 
+	@Column(name = "st_activo")
+	private Boolean activo;
+
 	public Perfil() {
 		super();
 	}
@@ -107,7 +110,13 @@ public class Perfil implements Modelo, Catalogo, Serializable {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
-	
+
+	public Boolean getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Boolean activo) {
+		this.activo = activo;
+	}
 
 }

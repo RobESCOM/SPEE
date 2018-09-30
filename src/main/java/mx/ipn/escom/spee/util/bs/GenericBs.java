@@ -2,6 +2,7 @@ package mx.ipn.escom.spee.util.bs;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -42,28 +43,16 @@ public class GenericBs<T extends Modelo> {
 		genericDao.update(list);
 	}
 
-	@Transactional(rollbackFor = Exception.class)
-	public T updateMarge(T entity) {
-		return genericDao.updateMerge(entity);
-	}
 
 	@Transactional(rollbackFor = Exception.class)
 	public void delete(T entity) {
 		genericDao.delete(entity);
 	}
 
-	public void clear() {
-		genericDao.clear();
-	}
-
+	
 	@Transactional(readOnly = true)
-	public Boolean existeAtributo(Class<T> clazz, String nombreAtributo, String nombreIdAtributo, String valorAtributo,
-			Serializable idAtributo) {
-		return genericDao.existByAttribute(clazz, nombreAtributo, nombreIdAtributo, valorAtributo, idAtributo);
-	}
-
-	@Transactional(readOnly = true)
-	public Boolean existeAtributo(Class<T> clazz, String nombreAtributo, String valorAtributo) {
-		return genericDao.existByAttribute(clazz, nombreAtributo, valorAtributo);
+	public <T extends Modelo> Boolean existeAtributo(Class<T> clazz, Map<String, Serializable> id,
+			Map<String, Object> attributes) {
+		return genericDao.existByAttribute(clazz, id, attributes);
 	}
 }

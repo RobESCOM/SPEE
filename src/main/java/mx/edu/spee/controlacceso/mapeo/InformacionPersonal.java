@@ -24,8 +24,8 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_informacion_personal")
-	private Integer id;
+	@Column(name = "id_clave")
+	private Integer clave;
 
 	@Column(name = "tx_nombre")
 	private String nombre;
@@ -36,20 +36,11 @@ public class InformacionPersonal implements Modelo, Serializable {
 	@Column(name = "tx_segundo_apellido")
 	private String segundoApellido;
 
-	@Column(name = "tx_curp")
-	private String curp;
-
-	@Column(name = "tx_numero_boleta")
-	private String boleta;
-
-	@Column(name = "tx_numero_empleado")
-	private String noEmpleado;
+	@Column(name = "tx_celular")
+	private String celular;
 
 	@Column(name = "tx_correo")
 	private String correo;
-
-	@Column(name = "tx_celular")
-	private String celular;
 
 	@Column(name = "id_cuenta")
 	private Integer idCuenta;
@@ -91,17 +82,6 @@ public class InformacionPersonal implements Modelo, Serializable {
 	}
 
 	@Validations(regexFields = {
-			@RegexFieldValidator(regexExpression = "${getText('mx.ipn.escom.spee.regex.nombre')}", type = ValidatorType.FIELD, message = "Caracteres no permitidos") }, requiredStrings = {
-					@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") })
-	public String getCurp() {
-		return curp;
-	}
-
-	public void setCurp(String curp) {
-		this.curp = curp;
-	}
-
-	@Validations(regexFields = {
 			@RegexFieldValidator(regexExpression = "${getText('mx.ipn.escom.spee.regex.mail')}", type = ValidatorType.FIELD, message = "Caracteres no permitidos") }, requiredStrings = {
 					@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") })
 	public String getCorreo() {
@@ -121,30 +101,6 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	public void setCelular(String celular) {
 		this.celular = celular;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getBoleta() {
-		return boleta;
-	}
-
-	public void setBoleta(String boleta) {
-		this.boleta = boleta;
-	}
-
-	public String getNoEmpleado() {
-		return noEmpleado;
-	}
-
-	public void setNoEmpleado(String noEmpleado) {
-		this.noEmpleado = noEmpleado;
 	}
 
 	public Integer getIdCuenta() {
