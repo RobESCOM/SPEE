@@ -28,6 +28,7 @@ import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.ResultConstants;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
+import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 import net.sf.jasperreports.engine.JRException;
 
 @Namespace("/pagos")
@@ -35,15 +36,19 @@ import net.sf.jasperreports.engine.JRException;
 		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
 				"gestionar-pagos/new" }),
 		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }),
+		@Result(name = "getPaymentsByUserId", type = "json", params = { "root", "action", "includeProperties",
+				"ajaxResult.*" }),
 		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
 				"archivoVisualizar.fileInputStream", "contentDisposition",
 				"inline;filename=\"${archivoVisualizar.fileUploadFileName}\"", "bufferSize", "1024" }) })
-@AllowedMethods({ "imprimirReporte", "vizualizarArchivo", })
+@AllowedMethods({ "imprimirReporte", "vizualizarArchivo", "getPaymentsByUserId" })
 public class GestionarPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	public static final String GENERAR_REPORTE = "generarReporte";
+
+	public static final String GET_PAYMENT_BY_USER = "getPaymentsByUserId";
 
 	@Autowired
 	private PagoBs pagoBs;
@@ -61,6 +66,10 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	private Archivo archivoVisualizar;
 
 	private Usuario usuarioSel;
+
+	private AjaxResult ajaxResult;
+
+	private Integer idUser;
 
 	public String index() {
 		getUsuarioSel();
@@ -115,6 +124,20 @@ public class GestionarPagosAct extends GeneralActionSupport {
 		archivoVisualizar = new Archivo();
 		setArchivoVisualizar(archivo);
 		return new DefaultHttpHeaders("filesuccess").disableCaching();
+	}
+
+	@SkipValidation
+	public String getPaymentsByUserId() {
+		getUsuarioSel();
+		if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()) {
+			getAjaxResult();
+			ajaxResult = pagoBs.obtenerPagosUsuario(idUser);
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+			return GET_PAYMENT_BY_USER;
+		} else {
+			return NO_AUTORIZADO;
+		}
 	}
 
 	public Usuario getUsuarioSel() {
@@ -174,6 +197,27 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public void setArchivoVisualizar(Archivo archivoVisualizar) {
 		this.archivoVisualizar = archivoVisualizar;
+	}
+
+	public AjaxResult getAjaxResult() {
+		this.ajaxResult = (AjaxResult) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
+		if (ajaxResult == null) {
+			ajaxResult = new AjaxResult();
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+		}
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(AjaxResult ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
+	public Integer getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
 	}
 
 }

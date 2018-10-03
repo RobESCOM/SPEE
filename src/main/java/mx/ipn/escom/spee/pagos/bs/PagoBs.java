@@ -31,6 +31,7 @@ import mx.ipn.escom.spee.pagos.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
+import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -137,6 +138,14 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 	public List<ArchivoPagoDia> obtenerPagosPorAutorizar() {
 		return genericSearchBs.findAll(ArchivoPagoDia.class);
+	}
+	
+	public AjaxResult obtenerPagosUsuario(Integer idUsuario) {
+		AjaxResult ajaxResult = new AjaxResult();
+		ArchivoPagoDia pagoDia = new ArchivoPagoDia();
+		pagoDia.setIdUsuario(idUsuario);
+		ajaxResult.addCampo("pagos", genericSearchBs.findByExample(pagoDia));
+		return ajaxResult;
 	}
 
 }

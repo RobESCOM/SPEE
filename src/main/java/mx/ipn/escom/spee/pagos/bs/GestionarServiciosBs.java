@@ -14,6 +14,7 @@ import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
+import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Service("catalogoServiciosBs")
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
@@ -36,6 +37,13 @@ public class GestionarServiciosBs {
 		InformacionPersonal info = new InformacionPersonal();
 		info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 		return genericSearchBs.findByExample(info).get(0);
+	}
+	
+	
+	public AjaxResult obtenerServicios() {
+		AjaxResult ajaxResult = new AjaxResult();
+		ajaxResult.addCampo("pagos", genericSearchBs.findAll(CatalogoServicio.class));
+		return ajaxResult;
 	}
 
 	public GenericSearchBs getGenericSearchBs() {
