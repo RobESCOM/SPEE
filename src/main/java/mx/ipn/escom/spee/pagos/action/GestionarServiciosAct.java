@@ -20,14 +20,14 @@ import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Namespace("/pagos")
-@Results({
-		@Result(name = "jsonTest", type = "json", params = { "root", "action", "includeProperties", "ajaxResult.*" }) })
-@AllowedMethods({ "jsonTest" })
+@Results({ @Result(name = "getAllServices", type = "json", params = { "root", "action", "includeProperties",
+		"ajaxResult.*" }) })
+@AllowedMethods({ "getAllServices" })
 public class GestionarServiciosAct extends GeneralActionSupport {
 
 	public static final long serialVersionUID = 1L;
 
-	public static final String JSON_TEST = "jsonTest";
+	public static final String GET_ALL_SERVICES = "getAllServices";
 
 	@Autowired
 	private GestionarServiciosBs gestionarServiciosBs;
@@ -58,17 +58,11 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 	}
 
 	@SkipValidation
-	public String jsonTest() {
+	public String getAllServices() {
 		getAjaxResult();
-		ajaxResult = obtenerArchivos();
+		ajaxResult = gestionarServiciosBs.obtenerServicios();
 		SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
-		return JSON_TEST;
-	}
-
-	public AjaxResult obtenerArchivos() {
-		AjaxResult ajaxResult = new AjaxResult();
-		ajaxResult.addCampo("pagos", genericSearchBs.findAll(CatalogoServicio.class));
-		return ajaxResult;
+		return GET_ALL_SERVICES;
 	}
 
 	public GestionarServiciosBs getGestionarServiciosBs() {
