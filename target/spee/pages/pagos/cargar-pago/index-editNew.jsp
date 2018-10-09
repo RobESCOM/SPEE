@@ -64,6 +64,14 @@
 						class="hide" accept=".pdf" value="" />
 				</div>
 			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label "> <s:text
+						name="Clave"></s:text>
+				</label>
+				<div class="col-md-6">
+				<s:textfield name="" value="" required="true" class="form-control"></s:textfield>
+				</div>
+			</div>
 		</fieldset>
 		<div class="col-md-12 text-right">
 			<s:submit class="btn btn-primary" value="Aceptar"></s:submit>

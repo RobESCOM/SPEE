@@ -10,7 +10,7 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 
 @Namespace("/citas")
 @Results({
-	@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-citas-dentales/new" }) })
+	@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-citas-dentales" }) })
 public class GestionarCitasDentalesAct extends GeneralActionSupport {
 
 	/**

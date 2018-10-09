@@ -10,33 +10,53 @@
 	<div class="navbar sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
-				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
-							name="menu.contador.pagos" /><span class="fa arrow"></span> </a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
-								<s:text name="Pagos Autorizados" />
-						</a> <a
-							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
-								<s:text name="Gestionar Historial Pagos" />
-						</a></li>
-					</ul></li>
-
+				
+				<!-- Citas -->
 				<li class="dropdown"><a href="#"><s:text
-							name="Citas" /><span class="fa arrow"></span> </a>
+							name="menu.dentales.citas" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales">
-								<s:text name="Gestionar Citas Dentales" />
+								<s:text name="menu.dentales.citas.gestionar_citas" />
+						</a></li>
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales!">
+									<s:text name="menu.dentales.citas.previa_cita" />
+							</a></li>
+					</ul></li>
+				
+				<!-- Pacientes -->
+				<li class="dropdown"><a href="#"><s:text
+							name="menu.dentales.pacientes" /><span class="fa arrow"></span>
+				</a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/paciente/gestionar-paciente">
+								<s:text name="menu.dentales.pacientes.gestionar_pacientes" />
 						</a></li>
 					</ul></li>
+				
+				<!-- Pagos -->
+				<li class="dropdown"><a
+					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
+							name="menu.dentales.pagos" /><span class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
+								<s:text name="menu.dentales.pagos.gestionar_pagos" />
+						</a> <a
+							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
+								<s:text name="menu.dentales.pagos.gestionar_historial_pagos" />
+						</a></li>
+					</ul></li>
+
+				<!-- Notificaciones -->
 				<li class="dropdown"><a href="#"><s:text
-							name="Notificaciones" /><span class="fa arrow"></span> </a>
+							name="menu.dentales.notificaciones" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
-								<s:text name="Gestionar Notificaciones" />
+								<s:text name="menu.dentales.notificaciones.gestionar_notificaciones" />
 						</a></li>
 					</ul></li>
 			</ul>
