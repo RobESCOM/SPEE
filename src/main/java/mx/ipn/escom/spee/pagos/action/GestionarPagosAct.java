@@ -62,6 +62,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	private Usuario usuarioSel;
 
+	private Integer idUsuario;
+
 	public String index() {
 		getUsuarioSel();
 		if (usuarioSel.getPerfilActivo()
@@ -174,6 +176,14 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public void setArchivoVisualizar(Archivo archivoVisualizar) {
 		this.archivoVisualizar = archivoVisualizar;
+	}
+
+	public Integer getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(Integer idUsuario) {
+		this.idUsuario = idUsuario;
 	}
 
 }

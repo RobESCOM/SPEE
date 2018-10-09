@@ -43,6 +43,8 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 
 	private AjaxResult ajaxResult;
 
+	private Integer id;
+
 	public String index() {
 		getUsuarioSel();
 		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
@@ -123,6 +125,14 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 
 	public void setInfoUsuario(InformacionPersonal infoUsuario) {
 		this.infoUsuario = infoUsuario;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 }
