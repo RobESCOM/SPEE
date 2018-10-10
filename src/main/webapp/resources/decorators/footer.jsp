@@ -7,7 +7,7 @@
 	<jsp:directive.page language="java"
 		contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
 	<div class="row">
-		<div class="footer">
+		<div class="footer" >
 			<div>
 				<p>Escuela Superior de Cómputo, Av. Juan de Dios Bátiz, Nueva
 					Industrial Vallejo</p>

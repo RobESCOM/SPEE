@@ -11,7 +11,7 @@
 	]]>
 </jsp:text>
 
-<s:set var="listPagosAutorizados" value="{{'','Juan Carlos','SDF54512SDF321','2013660005', '04/07/2018', '15:00'}}" />
+<s:set var="listPagosAutorizados" value="{{'','Juan Carlos','2013660005', '04/07/2018', '15:00'}}" />
 
 <s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
 <s:set var="ttbAdjuntar" value="%{getText('tooltipAdjuntar')}" />
@@ -28,7 +28,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="CU96_TITLE" />
+			<s:text name="Gestionar Citas Agendadas" />
 		</h1>
 	</div>
 </div>
@@ -40,12 +40,11 @@
 				<table id="tblPagosPorAutorizar" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="CU95_THEAD1" /></th>
-							<th><s:text name="Nombre" /></th>
-							<th><s:text name="Curp"/></th>
-							<th><s:text name="Boleta-Num. Empleado"/></th>
-							<th><s:text name="CU95_THEAD2" /></th>
-							<th><s:text name="CU95_THEAD3" /></th>
+							<th><s:text name="Estatus" /></th>
+							<th><s:text name="Nombre del paciente" /></th>
+							<th><s:text name="Identificador"/></th>
+							<th><s:text name="Fecha" /></th>
+							<th><s:text name="Hora" /></th>
 							<th><s:text name="Acciones"/></th>
 							
 						</tr>
@@ -53,18 +52,13 @@
 					<tbody>
 						<s:iterator value="listPagosAutorizados" var="pagoAutorizado">
 							<tr>
-								<td>${pagoAutorizado[0]}</td>
+								<td class="material-icons  md-24 md-sem-green">&#xE061;</td>
 								<td>${pagoAutorizado[1]}</td>
 								<td>${pagoAutorizado[2]}</td>
 								<td>${pagoAutorizado[3]}</td>
 								<td>${pagoAutorizado[4]}</td>
-								<td>${pagoAutorizado[5]}</td>
+
 								<td>
-								<a
-									href="${pageContext.request.contextPath}/consulta/visualizar-cuestionario/1"
-									title="${ttbVerCuestionario}"> <i
-										class="material-icons md-24 md-eld">description</i>
-								</a>
 								<a
 									href="${pageContext.request.contextPath}/consulta/gestionar-consulta/new"
 									title="${ttbRealizarConsulta}"> <i

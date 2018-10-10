@@ -32,7 +32,7 @@
 				<table id="tblPagosPorAutorizar" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="#" /></th>
+							<th><s:text name="# notificacion" /></th>
 							<th><s:text name="Estado" /></th>
 							<th><s:text name="Motivo" /></th>
 							<th><s:text name="Acciones" /></th>
@@ -57,6 +57,5 @@
 		</div>
 	</div>
 </div>
-
 	</html>
 </jsp:root>
