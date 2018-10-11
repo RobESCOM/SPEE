@@ -162,8 +162,8 @@
 
 		<div class="outter-section form-medium text-right">
 			<div class="col-xs-12 col-md-12 col-md-12 text-right">
-				<s:submit cssClass="btn btn-primary" value="Aceptar" />
-				<a class="btn btn-primary"
+				<s:submit cssClass="btn btn-default-spee" value="Aceptar" />
+				<a class="btn btn-default-spee"
 					href="${pageContext.request.contextPath}/control-acceso/login">Cancelar</a>
 			</div>
 		</div>

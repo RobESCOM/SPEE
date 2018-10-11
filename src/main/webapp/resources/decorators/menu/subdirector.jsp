@@ -29,7 +29,7 @@
 						class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
+							href="${pageContext.request.contextPath}/servicio/gestionar-servicio">
 								<s:text name="Gestionar servicios" />
 						</a></li>
 					</ul></li>
@@ -45,6 +45,9 @@
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
 								<s:text name="Gestionar Historial Pagos" />
+						</a> <a
+							href="${pageContext.request.contextPath}/pagos/gestionar-actividad-cajero">
+								<s:text name="Actividad de cajeros" />
 						</a></li>
 					</ul></li>
 
