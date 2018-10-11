@@ -19,7 +19,7 @@
 <s:set var="ttbAdjuntar" value="%{getText('tooltipAdjuntar')}" />
 
 <s:set var="varIconoBancomer" value="'&#xE8A1;'" />
-<s:set var="varIconoAdjuntar" value="'&#xE5D8;'" />
+<s:set var="varIconoAdjuntar" value="'attach_file'" />
 
 
 <div class="row title">
@@ -52,7 +52,7 @@
 								<td><a
 									href="${pageContext.request.contextPath}/pagos/gestionar-pagos/new"
 									title="${ttbAdjuntar}"> <i
-										class="material-icons md-24 md-eld">${varIconoAdjuntar}</i>
+										class="material-icons md-24 md-eld">attach_file</i>
 								</a><a href="#" title="${ttbBancomer}"> <i
 										class="material-icons md-24 md-eld">${varIconoBancomer}</i>
 								</a></td>

@@ -101,21 +101,8 @@
 		value="${pageContext.request.contextPath}" />
 	<s:textfield cssClass="hide" id="hdnUrlLanguageDataTable"
 		value="%{getText('URL_LANGUAGE_DATATABLE')}" />
+		<s:include value="footer.jsp" />
 </body>
-<div class="row">
-	<div class="footer">
-		<div>
-			<p>Escuela Superior de Cómputo, Av. Juan de Dios Bátiz, Nueva
-				Industrial Vallejo</p>
-			<p>Col. Lindavista C.P. 07738, Ciudad de México CDMX, D.F.</p>
-			<p>
-				<span>TT 2017 - B029</span>
-			</p>
-			<p>
-				<a href="http://www.escom.ipn.mx/">www.escom.ipn.mx</a>
-			</p>
-		</div>
-	</div>
-</div>
+
 	</html>
 </jsp:root>

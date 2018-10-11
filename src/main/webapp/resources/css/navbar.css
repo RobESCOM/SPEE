@@ -11,6 +11,19 @@
 	/* Standard syntax (must be last) */
 }
 
+.navbar-header {
+	background: #2271b3 !important;
+	/* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(#020202, #3f4144) !important;
+	/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#020202, #3f4144) !important;
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#020202, #3f4144) !important;
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(#494646, #070719) !important;
+	/* Standard syntax (must be last) */
+}
+
 /* Color para las opciones del menu en el primer nivel */
 div.sidebar-nav.navbar-collapse > ul.nav > li.dropdown > a{
 	/*background:#020202!important;*/
@@ -19,6 +32,15 @@ div.sidebar-nav.navbar-collapse > ul.nav > li.dropdown > a{
 /* Color para las opciones del menu en el segundo nivel */
 ul.nav.nav-second-level > li > a{
 	background: #2271b3 !important;
+	/* For browsers that do not support gradients */
+	background: -webkit-linear-gradient(#020202, #3f4144) !important;
+	/* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#020202, #3f4144) !important;
+	/* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#020202, #3f4144) !important;
+	/* For Firefox 3.6 to 15 */
+	background: linear-gradient(#494646, #070719) !important;
+	/* Standard syntax (must be last) */
 }
 
 /* Color para las opciones del menu en el tercer nivel */

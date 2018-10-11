@@ -15,8 +15,8 @@
 
 </head>
 <body>
-	<s:set var="btnAceptar" value="%{getText('mx.com.eld.boton.aceptar')}" />
-	<s:set var="btnRegresar" value="%{getText('Regresar')}" />
+	<s:set var="btnCancelar" value="%{getText('Cancelar')}" />
+	<s:set var="btnEnviarNota" value="%{getText('Enviar Nota')}" />
 	<s:set var="listServicios" value="{{'Amalgama','2','$ 65.00'}}" />
 	<s:set var="obs"
 		value="'Se realiza limpieza bucal y la aplicación de una amalgama en el molar inferior derecho. 
@@ -34,42 +34,42 @@
 	<fieldset class="form form-horizontal form-medium">
 
 		<div class="form-group text-justify">
-			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Fecha de la consulta" />
 			</label>
-			<div class="col-sm-8 col-md-8">
+			<div class="col-sm-6 col-md-6">
 				<s:property value="'07/08/2017'" />
 			</div>
 		</div>
 		<div class="form-group text-justify">
-			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Nombre del paciente" />
 			</label>
-			<div class="col-sm-8 col-md-8">
+			<div class="col-sm-6 col-md-6">
 				<s:property value="'Roberto Mendoza Saavedra'" />
 			</div>
 		</div>
 		<div class="form-group text-justify">
-			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Identificador" />
 			</label>
-			<div class="col-sm-8 col-md-8">
+			<div class="col-sm-6 col-md-6">
 				<s:property value="'2012630293'" />
 			</div>
 		</div>
 		<div class="form-group text-justify">
-			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Contacto del paciente" />
 			</label>
-			<div class="col-sm-8 col-md-8">
+			<div class="col-sm-6 col-md-6">
 				<s:property value="'5521842095'" />
 			</div>
 		</div>
 		<div class="form-group text-justify">
-			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Dentista" />
 			</label>
-			<div class="col-sm-8 col-md-8">
+			<div class="col-sm-6 col-md-6">
 				<s:property value="'Rocío Gómez Ruíz'" />
 			</div>
 		</div>
@@ -109,7 +109,7 @@
 			</div>
 		</div>
 
-		<div class="form-group text-justify form-medium">
+		<div class="form-group text-justify form-large">
 			<label class="col-sm-4 col-md-4 control-label" for=""> <s:text
 					name="Observaciones" />
 			</label>
@@ -121,8 +121,10 @@
 
 	<div class="outter-section form-medium text-right">
 		<div class="col-xs-12 col-md-12 col-md-12 text-right">
-			<a class="btn btn-default btn-default-eld"
-				href="${pageContext.request.contextPath}/consulta/gestionar-historial-clinico/1">${btnRegresar}</a>
+			<a class="btn btn-default btn-default-spee"
+				href="${pageContext.request.contextPath}/consulta/gestionar-historial-clinico/1">${btnEnviarNota}</a>
+			<a class="btn btn-default btn-default-spee"
+				href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales">${btnCancelar}</a>
 		</div>
 	</div>
 </body>

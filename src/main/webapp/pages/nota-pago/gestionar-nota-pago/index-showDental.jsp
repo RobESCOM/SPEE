@@ -68,13 +68,13 @@
 			</div>
 		</div>
 	</fieldset>
-	<div class="form form-horizontal form-medium">
+	<div class="form form-medium">
 		<div class="separator separator-no-margin col-md-12">
 			<label class="col-md-12"> <s:text name="Conceptos de pago" />
 			</label>
 		</div>
 		<!-- Tabla con los servicios realizados -->
-		<div class="form-section form-medium">
+		<div class="form-section form-horizontal form-large">
 			<div class="form-group">
 				<div class="row">
 					<div class="col-md-12">
@@ -111,7 +111,7 @@
 
 	<div class="outter-section form-medium text-right">
 		<div class="col-xs-12 col-md-12 col-md-12 text-right">
-			<a class="btn btn-default btn-default-eld"
+			<a class="btn btn-default btn-default-spee"
 				href="${pageContext.request.contextPath}/consulta/gestionar-historial-clinico/1">Regresar</a>
 		</div>
 	</div>

@@ -39,15 +39,15 @@
 			</label>
 			<div class="text-left">
 				<ul>
-					<li>El formato debe ser .pdf o png</li>
+					<li>El formato debe ser .pdf o .png</li>
 					<li>Debe no mas de xk</li>
 					<li>Debe contener su nombre, numero de boleta...</li>
-					<li>Debe poderse visualizar claramente</li>
+					<li>Debe visualizarse claramente</li>
 				</ul>
 			</div>
 			<div class="form-group">
 				<label class="col-md-4 control-label "> <s:text
-						name="Nombre "></s:text>
+						name="Nombre del archivo "></s:text>
 				</label>
 				<div class="col-md-6">
 					<div class="input-group">
@@ -66,18 +66,18 @@
 			</div>
 			<div class="form-group">
 				<label class="col-md-4 control-label "> <s:text
-						name="Clave"></s:text>
+						name="Folio de operacion"></s:text>
 				</label>
 				<div class="col-md-6">
 				<s:textfield name="" value="" required="true" class="form-control"></s:textfield>
 				</div>
 			</div>
 		</fieldset>
-		<div class="col-md-12 text-right">
-			<s:submit class="btn btn-primary" value="Aceptar"></s:submit>
+		<div class="form-medium text-right">
+			<s:submit class="btn btn-default-spee" value="Aceptar"></s:submit>
 			<a
 				href="${pageContext.request.contextPath}/pagos/gestionar-servicios"
-				class="btn btn-primary"><s:text name="Cancelar" /></a>
+				class="btn btn-default-spee"><s:text name="Cancelar" /></a>
 		</div>
 	</s:form>
 </body>

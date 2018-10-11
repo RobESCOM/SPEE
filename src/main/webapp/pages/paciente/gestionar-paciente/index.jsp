@@ -20,7 +20,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="Gestionar Pacientes" />
+			<s:text name="Consultar Pacientes" />
 		</h1>
 	</div>
 </div>

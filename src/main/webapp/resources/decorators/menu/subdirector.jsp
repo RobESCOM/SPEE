@@ -10,6 +10,31 @@
 	<div class="navbar sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
+				<!-- Áreas -->
+				<li class="dropdown"><a href="#"><s:text name="Areas" /><span
+						class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/area/gestionar-area">
+								<s:text name="Gestionar areas" />
+						</a></li>
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/area/gestionar-responsable-area">
+								<s:text name="Gestionar responsables de areas" />
+						</a></li>
+					</ul></li>
+
+				<!-- Servicios -->
+				<li class="dropdown"><a href="#"><s:text name="Servicios" /><span
+						class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
+								<s:text name="Gestionar servicios" />
+						</a></li>
+					</ul></li>
+
+				<!-- Pagos -->
 				<li class="dropdown"><a
 					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
 							name="Pagos" /><span class="fa arrow"></span> </a>
@@ -23,6 +48,7 @@
 						</a></li>
 					</ul></li>
 
+				<!-- Reportes -->
 				<li class="dropdown"><a href="#"><s:text name="Reportes" /><span
 						class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
@@ -32,6 +58,7 @@
 						</a></li>
 					</ul></li>
 
+				<!-- Permisos -->
 				<li class="dropdown"><a href="#"><s:text name="Permisos" /><span
 						class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
@@ -40,6 +67,8 @@
 								<s:text name="Gestionar Permisos" />
 						</a></li>
 					</ul></li>
+
+				<!-- Notificaciones -->
 				<li class="dropdown"><a href="#"><s:text
 							name="Notificaciones" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">

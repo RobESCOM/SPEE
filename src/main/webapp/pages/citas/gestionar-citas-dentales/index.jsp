@@ -17,7 +17,7 @@
 <s:set var="ttbAdjuntar" value="%{getText('tooltipAdjuntar')}" />
 <s:set var="ttbVerCuestionario" value="%{getText('Ver Cuestionario')}" />
 <s:set var="ttbRealizarConsulta" value="%{getText('Realizar Consulta')}" />
-<s:set var="ttbVerHistorialClinico" value="%{getText('Ver Historial Clínico')}" />
+<s:set var="ttbVerHistorialClinico" value="%{getText('Visualizar Historial Clínico')}" />
 <s:set var="ttbCancelarCita" value="%{getText('Cancelar Cita')}" />
 <s:set var="ttbInasistencia" value="%{getText('Marcar Inasistencia')}" />
 
@@ -62,20 +62,20 @@
 								<a
 									href="${pageContext.request.contextPath}/consulta/gestionar-consulta/new"
 									title="${ttbRealizarConsulta}"> <i
-										class="material-icons md-24 md-eld">face</i>
+										class="material-icons md-24 md-eld">local_hospital</i>
 								</a>
 								<a
-									href="${pageContext.request.contextPath}/citas/visualizar-historial-clinico/1"
+									href="${pageContext.request.contextPath}/consulta/gestionar-historial-clinico/1"
 									title="${ttbVerHistorialClinico}"> <i
 										class="material-icons md-24 md-eld">history</i>
 								</a>
 								<a
-									title="${ttbCancelarCita}"> <i
-										class="material-icons md-24 md-eld">cancel</i>
-								</a>
-								<a
 									title="${ttbInasistencia}"> <i
 										class="material-icons md-24 md-eld">alarm_off</i>
+								</a>
+								<a
+									title="${ttbCancelarCita}"> <i
+										class="material-icons md-24 md-eld">cancel</i>
 								</a>
 								</td>
 							</tr>

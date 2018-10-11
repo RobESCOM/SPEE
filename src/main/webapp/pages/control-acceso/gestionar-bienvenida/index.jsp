@@ -37,28 +37,28 @@
 		<s:if test="#usuario.perfilActivo.id == #varSUBDIRECTOR">
 			<s:text name="CU51_LBL1">
 				<s:param>
-					Subdirector
+					Subdirector Administrativo
 				</s:param>
 			</s:text>
 		</s:if>
 		<s:elseif test="#usuario.perfilActivo.id == #varCELEX">
 			<s:text name="CU51_LBL1">
 				<s:param>
-					Administrador CELEX
+					Coordinador CELEX
 				</s:param>
 			</s:text>
 		</s:elseif>
 		<s:elseif test="#usuario.perfilActivo.id == #varDENTALES">
 			<s:text name="CU51_LBL1">
 				<s:param>
-					Administrador de Dervicios Dentales
+					Dentista
 				</s:param>
 			</s:text>
 		</s:elseif>
 		<s:elseif test="#usuario.perfilActivo.id == #varBIBLIOTECA">
 			<s:text name="CU51_LBL1">
 				<s:param>
-					Administrador Biblioteca
+					Administrador de Biblioteca
 				</s:param>
 			</s:text>
 		</s:elseif>
@@ -72,7 +72,7 @@
 		<s:elseif test="#usuario.perfilActivo.id == #varCAJERO">
 			<s:text name="CU51_LBL1">
 				<s:param>
-					Encargado de Caja
+					Cajero
 				</s:param>
 			</s:text>
 		</s:elseif>

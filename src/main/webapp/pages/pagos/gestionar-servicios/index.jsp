@@ -11,7 +11,7 @@
 	]]>
 </jsp:text>
 
-<s:set var="varIconoAdjuntar" value="'&#xE5D8;'" />
+<s:set var="varIconoAdjuntar" value="'attach_file'" />
 
 <div class="row title">
 	<div class="col-md-12">
@@ -22,14 +22,15 @@
 </div>
 
 <fieldset class="form-section form-horizontal text-justify">
-	<div class="form-medium text-left">
+	<div class="form-horizontal text-left">
 		<div class="row">
-			<label class="col-md-4 text-left control-label"> <s:text
-					name="CLAVE">
+			<label class="col-md-6 text-left control-label"> <s:text
+					name="Identificador">
 				</s:text>
-			</label> <label class="col-md-4 text-left"> <s:text
-					name="%{infoUsuario.clave}">
-				</s:text></label>
+			</label>
+			<div class="col-md-6 text-left">
+				<s:property value="infoUsuario.clave" />
+			</div>
 		</div>
 	</div>
 	<div class="form-section form-horizontal">
@@ -65,7 +66,7 @@
 									</s:else></td>
 									<td><a
 										href="${pageContext.request.contextPath}/pagos/cargar-pago/new?idServicio=${oservicio.id}"
-										title="Adjuntar Archivo"> <i
+										title="Adjuntar comprobante de pago"> <i
 											class="material-icons md-24 md-eld">${varIconoAdjuntar}</i>
 									</a></td>
 								</tr>

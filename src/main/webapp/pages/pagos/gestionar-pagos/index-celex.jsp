@@ -12,7 +12,7 @@
 </jsp:text>
 
 <s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
-<s:set var="varIconoVisualizar" value="'&#xE415;'" />
+<s:set var="varIconoVisualizar" value="'attach_file'" />
 
 <div class="row title">
 	<div class="col-md-12">

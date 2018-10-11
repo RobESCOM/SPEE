@@ -7,14 +7,15 @@
 	<jsp:directive.page language="java"
 		contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
 	<div class="row">
-		<div class="footer" >
+		<div class="footer">
 			<div>
-				<p>Escuela Superior de Cómputo, Av. Juan de Dios Bátiz, Nueva
+				<p class="footer-text">Escuela Superior de Cómputo, Av. Juan de Dios Bátiz, Nueva
 					Industrial Vallejo</p>
-				<p>Col. Lindavista C.P. 07738, Ciudad de México CDMX, D.F.</p>
-				<p>
+				<p class="footer-text">Col. Lindavista, 07738, Ciudad de México, CDMX.</p>
+				<p class="footer-text">
 					<a href="http://www.escom.ipn.mx/">www.escom.ipn.mx</a>
 				</p>
+				<p class="footer-text">TT 2017 - B029</p>
 			</div>
 		</div>
 	</div>

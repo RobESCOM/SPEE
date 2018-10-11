@@ -32,7 +32,7 @@
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/paciente/gestionar-paciente">
-								<s:text name="menu.dentales.pacientes.gestionar_pacientes" />
+								<s:text name="menu.dentales.pacientes.consultar_pacientes" />
 						</a></li>
 					</ul></li>
 				
