@@ -8,6 +8,9 @@ import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.opensymphony.xwork2.ActionSupport;
+
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
@@ -20,8 +23,11 @@ import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Namespace("/pagos")
-@Results({ @Result(name = "getAllServices", type = "json", params = { "root", "action", "includeProperties",
-		"ajaxResult.*" }) })
+@Results({
+		@Result(name = "getAllServices", type = "json", params = { "root", "action", "includeProperties",
+				"ajaxResult.*" }),
+		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
+				"gestionar-servicios" }) })
 @AllowedMethods({ "getAllServices" })
 public class GestionarServiciosAct extends GeneralActionSupport {
 
@@ -47,14 +53,39 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 
 	public String index() {
 		getUsuarioSel();
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
-				.getValor()) {
-			infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
-			listCatalogoServicios = genericSearchBs.findAll(CatalogoServicio.class);
-			return ResultConstants.ALUMNO;
+		if (usuarioSel != null) {
+			if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
+					.getValor()) {
+				infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
+				listCatalogoServicios = genericSearchBs.findAll(CatalogoServicio.class);
+				return ResultConstants.ALUMNO;
+			} else {
+				return NO_AUTORIZADO;
+			}
 		} else {
 			return NO_AUTORIZADO;
 		}
+	}
+
+	public void validateCreate() {
+
+	}
+
+	public String create() {
+		addActionMessage("Pago se envió exitosamente");
+		return SUCCESS;
+	}
+
+	public String editNew() {
+		return EDITNEW;
+	}
+
+	public String edit() {
+		return EDIT;
+	}
+
+	public String show() {
+		return SHOW;
 	}
 
 	@SkipValidation

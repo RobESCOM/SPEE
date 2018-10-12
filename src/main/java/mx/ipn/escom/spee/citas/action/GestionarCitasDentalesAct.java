@@ -34,6 +34,7 @@ public class GestionarCitasDentalesAct extends GeneralActionSupport {
 	private Integer idUser;
 
 	public String index() {
+		getUsuarioSel();
 		if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
 			return INDEX;

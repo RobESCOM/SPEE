@@ -24,6 +24,7 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	private Usuario usuarioSel;
 
 	public String index() {
+		getUsuarioSel();
 		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
 				.getValor()) {
 			return INDEX;

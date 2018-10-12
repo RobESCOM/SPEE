@@ -7,7 +7,7 @@
 
 <jsp:text>
 	<![CDATA[                 
-	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/pagos/gestionar-autorizacion-pagos/js/index-editNew.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/notificaciones/gestionar-notificaciones/js/index.js"></script>
 	]]>
 </jsp:text>
 
@@ -29,26 +29,20 @@
 	<div class="form-group">
 		<div class="row">
 			<div class="col-md-12">
-				<table id="tblPagosPorAutorizar" class="table table-striped">
+				<table id="tblNotificaciones" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="# notificacion" /></th>
-							<th><s:text name="Estado" /></th>
 							<th><s:text name="Motivo" /></th>
-							<th><s:text name="Acciones" /></th>
+							<th><s:text name="Concepto" /></th>
+							<th><s:text name="Fecha" /></th>
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listNotificaciones" var="notificación">
+						<s:iterator value="listNotificaciones" var="notificacion">
 							<tr>
-								<td>1</td>
-								<td>Pago Rechazado</td>
-								<td>No es Visible</td>
-								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/idSel=${pagoPorAutorizar.id}"
-									title="Visualizar Comprobante"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-								</a></td>
+								<td>${notificacion.motivo}</td>
+								<td>10 impresiones</td>
+								<td>04/08/2018</td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -57,5 +51,6 @@
 		</div>
 	</div>
 </div>
+
 	</html>
 </jsp:root>

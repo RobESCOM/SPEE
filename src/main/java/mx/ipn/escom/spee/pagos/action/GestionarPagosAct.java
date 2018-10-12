@@ -41,7 +41,7 @@ import net.sf.jasperreports.engine.JRException;
 		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
 				"archivoVisualizar.fileInputStream", "contentDisposition",
 				"inline;filename=\"${archivoVisualizar.fileUploadFileName}\"", "bufferSize", "1024" }) })
-@AllowedMethods({ "imprimirReporte", "vizualizarArchivo", "getPaymentsByUserId" })
+@AllowedMethods({ "generarReporte", "vizualizarArchivo", "getPaymentsByUserId" })
 public class GestionarPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -107,7 +107,7 @@ public class GestionarPagosAct extends GeneralActionSupport {
 		return SUCCESS;
 	}
 
-	public HttpHeaders imprimirReporte() {
+	public HttpHeaders generarReporte() {
 		List<ArchivoPagoDia> listPagosAutorizados = new ArrayList<>();
 		Archivo archivo = new Archivo();
 		try {

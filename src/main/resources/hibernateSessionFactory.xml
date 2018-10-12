@@ -33,6 +33,10 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 				<value>mx.ipn.escom.spee.pagos.mapeo.*</value>
 				<value>mx.edu.spee.controlacceso.mapeo</value>
 				<value>mx.edu.spee.controlacceso.mapeo.*</value>
+				<value>mx.ipn.escom.spee.notificaciones.mapeo</value>
+				<value>mx.ipn.escom.spee.notificaciones.mapeo.*</value>
+				<value>mx.ipn.escom.spee.citas.mapeo</value>
+				<value>mx.ipn.escom.spee.citas.mapeo.*</value>
 			</list>
 		</property>
 	</bean>
