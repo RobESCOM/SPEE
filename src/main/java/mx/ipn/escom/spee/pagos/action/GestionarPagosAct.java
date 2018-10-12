@@ -129,12 +129,16 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	@SkipValidation
 	public String getPaymentsByUserId() {
 		getUsuarioSel();
-		if (usuarioSel.getPerfilActivo()
-				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()) {
-			getAjaxResult();
-			ajaxResult = pagoBs.obtenerPagosUsuario(idUser);
-			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
-			return GET_PAYMENT_BY_USER;
+		if (usuarioSel != null) {
+			if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
+					.getValor()) {
+				getAjaxResult();
+				ajaxResult = pagoBs.obtenerPagosUsuario(idUser);
+				SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+				return GET_PAYMENT_BY_USER;
+			} else {
+				return NO_AUTORIZADO;
+			}
 		} else {
 			return NO_AUTORIZADO;
 		}
