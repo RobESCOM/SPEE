@@ -14,6 +14,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
 
+import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.Archivo;
@@ -81,12 +82,13 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			catalogo.setIdArea(CatalogoAreaEnum.CELEX.getIdEstatus());
 			archivoPago.setCatalogoServicio(catalogo);
 			listPagos = genericSearchBs.findByExample(archivoPago);
-			infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
 			return ResultConstants.ADMINISTRADOR_CELEX;
 		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
 				.getValor()) {
+			Cuenta cuenta = new Cuenta();
+			cuenta.setIdUsuario(usuarioSel.getId());
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdUsuario(usuarioSel.getId());
+			archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 			listPagos = genericSearchBs.findByExample(archivoPago);
 			return ResultConstants.ALUMNO;
 		} else {

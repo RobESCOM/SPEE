@@ -34,6 +34,9 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 	@Column(name = "id_tipo_comprobante")
 	private Integer idTipoComprobante;
 
+	@Column(name = "id_catalogo_servicio")
+	private Integer idCatalogoServicio;
+
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_catalogo_servicio", referencedColumnName = "id_catalogo_servicio", insertable = false, updatable = false)
 	private CatalogoServicio catalogoServicio;
@@ -46,6 +49,9 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 
 	@Column(name = "id_carpeta")
 	private Integer idCarpeta;
+
+	@Column(name = "folio_operacion")
+	private String folioOperacion;
 
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
@@ -125,6 +131,22 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 
 	public void setIdUsuario(Integer idUsuario) {
 		this.idUsuario = idUsuario;
+	}
+
+	public Integer getIdCatalogoServicio() {
+		return idCatalogoServicio;
+	}
+
+	public void setIdCatalogoServicio(Integer idCatalogoServicio) {
+		this.idCatalogoServicio = idCatalogoServicio;
+	}
+
+	public String getFolioOperacion() {
+		return folioOperacion;
+	}
+
+	public void setFolioOperacion(String folioOperacion) {
+		this.folioOperacion = folioOperacion;
 	}
 
 }

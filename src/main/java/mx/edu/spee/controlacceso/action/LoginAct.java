@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
+import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
@@ -30,7 +31,7 @@ import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/control-acceso")
-@AllowedMethods({ "cambiarMenu", "welcome" })
+@AllowedMethods({ "welcome" })
 @Results({ @Result(name = MenuAct.MENU, type = "redirectAction", params = { "actionName", "%{action}" }) })
 public class LoginAct extends GeneralActionSupport {
 

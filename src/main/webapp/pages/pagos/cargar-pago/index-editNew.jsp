@@ -40,8 +40,9 @@
 			<div class="text-left">
 				<ul>
 					<li>El formato debe ser .pdf o .png</li>
-					<li>Debe no mas de xk</li>
-					<li>Debe contener su nombre, numero de boleta...</li>
+					<li>Debe no mas de no más de 50 MB</li>
+					<li>Debe contener su nombre, identificador y la Folio de
+						operación.</li>
 					<li>Debe visualizarse claramente</li>
 				</ul>
 			</div>
@@ -61,7 +62,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-1">
 					<input type='file' id="fileUpload" name="archivo.fileUpload"
-						class="hide" accept=".pdf" value="" />
+						class="hide" accept=".pdf,png,jpeg" value="" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -69,7 +70,7 @@
 						name="Folio de operacion"></s:text>
 				</label>
 				<div class="col-md-6">
-				<s:textfield name="" value="" required="true" class="form-control"></s:textfield>
+					<s:textfield name="folio" required="true" class="form-control"></s:textfield>
 				</div>
 			</div>
 		</fieldset>

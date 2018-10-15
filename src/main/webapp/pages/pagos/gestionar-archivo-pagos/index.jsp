@@ -11,18 +11,13 @@
 	]]>
 </jsp:text>
 
-<s:set var="listArchivosPagoAnual"
-	value="{{'01/02/2018','Celex'},
-	 {'01/02/2018', 'Celex'},
-	 {'01/02/2018', 'Servicios Dentales'}}" />
-
 <s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
 <s:set var="varIconoVisualizar" value="'&#xE8F4;'" />
 
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="CU37_TITLE" />
+			<s:text name="Gestionar Archivo de Pagos" />
 		</h1>
 	</div>
 </div>
@@ -34,16 +29,20 @@
 				<table id="tblArchivosPagoAnual" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="CU37_THEAD1" /></th>
-							<th><s:text name="CU37_THEAD2" /></th>
-							<th><s:text name="CU37_THEAD3" /></th>
+						<th><s:text name="Nombre" /></th>
+							<th><s:text name="Fecha" /></th>
+							<th><s:text name="Concepto" /></th>
+							<th><s:text name="Cantidad" /></th>
+							<th><s:text name="Acciones" /></th>
 						</tr>
 					</thead>
 					<tbody>
 						<s:iterator value="listArchivosPagoAnual" var="pago">
 							<tr>
-								<td>${pago[0]}</td>
-								<td>${pago[1]}</td>
+								<td>${pago.fechaEnvio}</td>
+								<td>${pago.fechaEnvio}</td>
+								<td>${pago.fechaEnvio}</td>
+								<td>${pago.catalogoServicio.idArea}</td>
 								<td><a
 									href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show"
 									title="${ttbVisualizar}"> <i

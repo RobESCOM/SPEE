@@ -13,14 +13,11 @@ import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
-import mx.ipn.escom.spee.pagos.action.GestionarAutorizacionPagosAct;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/control-acceso")
-@Results({
-		@Result(name = GestionarAutorizacionPagosAct.ERROR, type = "redirectAction", params = { "actionName",
-				"registrar-usuario/new" }),
-		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "login" }) })
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
+		"registrar-usuario/new" }) })
 public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDriven<InformacionPersonal> {
 
 	private static final long serialVersionUID = 1L;
@@ -44,13 +41,17 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 	}
 
 	public void validateCreate() {
-		if (usuario != null) {
-			try {
-				usuarioBs.registrar(usuario, model);
-			} catch (UniqueException ue) {
-				addActionError("El usuario ya existe.");
+		try {
+			if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
+				Usuario usr = usuarioBs.registrar(usuario, model);
+				//usuarioBs.guardarInformacionPersonal(usr, model);
+			} else {
+				addActionError("Verifique su información.");
 			}
+		} catch (UniqueException ue) {
+			addActionError("El usuario ya existe.");
 		}
+
 	}
 
 	public String create() {
@@ -90,7 +91,6 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 		this.genericSearchBs = genericSearchBs;
 	}
 
-	@Override
 	@VisitorFieldValidator
 	public InformacionPersonal getModel() {
 		if (model == null) {

@@ -14,6 +14,8 @@
 </jsp:text>
 </head>
 <body>
+	<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
+
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
@@ -22,10 +24,10 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="row form-group">
 		<div class="col-md-8 col-md-offset-2">
-			<s:actionmessage cssClass="alert alert-success" />
-			<s:actionerror cssClass="alert alert-danger" />
+			<s:actionerror theme="%{varTheme}" />
+			<s:actionmessage theme="%{varTheme}" />
 		</div>
 	</div>
 
@@ -50,9 +52,10 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:select id="alumnoCheckId" class="form-control" headerKey="-1"
 						headerValue="Seleccione"
-						list="#{'1':'Alumno', '2':'Profesor', '3':'Externo'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="estatusNuevo" cssClass="error" theme="bootstrap" />
+						list="#{'8':'Alumno', '9':'Profesor', '10':'Externo'}"
+						name="model.idPerfil" cssErrorClass="field-error" />
+					<s:fielderror fieldName="model.idPerfil" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 
@@ -64,7 +67,8 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo"
 						cssClassError="input-error" name="model.nombre" id="txNombre" />
-					<s:fielderror fieldName="model.nombre" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.nombre" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -77,7 +81,7 @@
 						name="model.primerApellido" cssClassError="input-error"
 						id="txUsuario" />
 					<s:fielderror fieldName="model.primerApellido" cssClass="error"
-						theme="bootstrap" />
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -89,7 +93,8 @@
 					<s:textfield cssClass="form-control campo"
 						name="model.segundoApellido" cssClassError="input-error"
 						id="txSegundoApellido" />
-					<s:fielderror fieldName="model.segundoApellido" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.segundoApellido" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -99,8 +104,9 @@
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.curp"
-						cssClassError="input-error" id="txCurp" />
-					<s:fielderror fieldName="model.curp" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" id="txCurp" maxlength="18"/>
+					<s:fielderror fieldName="model.curp" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div id="divBoleta" class="form-group">
@@ -111,7 +117,8 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.boleta"
 						cssClassError="input-error" id="txBoleta" />
-					<s:fielderror fieldName="model.boleta" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.boleta" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div id="divNoEmpleado" class="form-group">
@@ -123,7 +130,8 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.noEmpleado"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="model.noEmpleado" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.noEmpleado" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -131,9 +139,10 @@
 					for=""> <s:text name="CU1_LBL7" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="usuario.login"
+					<s:textfield cssClass="form-control campo" name="model.correo"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="usuario.login" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.correo" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 			<div class="form-group">
@@ -143,7 +152,8 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo" name="model.celular"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="model.celular" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.celular" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 
@@ -153,8 +163,9 @@
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield type="password" cssClass="form-control campo"
-						name="usuario.password" cssClassError="input-error" />
-					<s:fielderror fieldName="usuario.password" cssClass="error" theme="bootstrap" />
+						name="usuario.password" cssClassError="input-error" maxlength="18"/>
+					<s:fielderror fieldName="usuario.password" cssClass="error"
+						theme="%{#varTheme}" />
 				</div>
 			</div>
 		</fieldset>
@@ -168,37 +179,6 @@
 			</div>
 		</div>
 	</s:form>
-
-	<sj:dialog id="dlgDeleteContact" modal="true"
-		title="Eliminar Medio de Contacto" autoOpen="false"
-		openTopics="showDlgDeleteContact" closeTopics="closeDlgDeleteContact"
-		resizable="true" draggable="false">
-		<s:url var="urlAction" action="gestionar-contactos/"
-			includeContext="true" />
-		<s:hidden id="hdnIdContactoDelete" value="%{#urlAction}" />
-		<div class="form-horizontal">
-			<s:form id="frmDeleteContacto"
-				action="%{#pageContext.request.contextPath}/aspirante/gestionar-contactos/%{#hdnIdContactoDelete}"
-				method="post">
-				<s:hidden name="_method" value="delete"></s:hidden>
-				<div class="form-group">
-					<div class="col-md-12 col-contact">
-						<s:text name="IU1.4-3_MSG_ELIMINAR" />
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-md-12 text-right">
-						<s:submit id="btnDialogDeleteAceptar"
-							class="btn btn-default btn-default-eld" title="%{#btnSi}"
-							value="%{#btnSi}">
-						</s:submit>
-						<a id="btnDialogDeleteCancelar"
-							class="btn btn-default btn-default-eld"><s:text name="No" /></a>
-					</div>
-				</div>
-			</s:form>
-		</div>
-	</sj:dialog>
 </body>
 	</html>
 </jsp:root>

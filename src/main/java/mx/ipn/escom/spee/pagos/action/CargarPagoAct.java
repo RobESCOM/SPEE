@@ -14,11 +14,14 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
+import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
+import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
-@Results({
-		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-pagos" }) })
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "cargar-pago/new" }),
+		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "cargar-pago/new" }) })
 public class CargarPagoAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -35,8 +38,11 @@ public class CargarPagoAct extends GeneralActionSupport {
 
 	private Archivo archivo;
 
+	private String folio;
+
 	public String editNew() {
-		//pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class, 11).getArchivo());
+		// pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class,
+		// 11).getArchivo());
 		return EDITNEW;
 	}
 
@@ -44,10 +50,19 @@ public class CargarPagoAct extends GeneralActionSupport {
 		getUsuarioSel();
 		getIdServicio();
 		try {
-			pagoBs.registrarPago(archivo, usuarioSel, idServicio);
+			if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
+				pagoBs.registrarPago(archivo, usuarioSel, idServicio, folio);
+			} else {
+				addActionError("Verifique su información.");
+			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			addActionError("No se pudo abrir su archivo");
+		} catch (TamanioArchivoException tae) {
+			addActionError("El archivo es demasiado grande");
+		} catch (FormatoArchivoException fae) {
+			addActionError("Formato no válido");
+		} catch (FolioDuplicadoException fde) {
+			addActionError("Folio no válido");
 		}
 	}
 
@@ -97,6 +112,14 @@ public class CargarPagoAct extends GeneralActionSupport {
 
 	public void setGenericSearchBs(GenericSearchBs genericSearchBs) {
 		this.genericSearchBs = genericSearchBs;
+	}
+
+	public String getFolio() {
+		return folio;
+	}
+
+	public void setFolio(String folio) {
+		this.folio = folio;
 	}
 
 }

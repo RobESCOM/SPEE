@@ -2,6 +2,7 @@ package mx.edu.spee.controlacceso.bs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,6 @@ import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.SHADigest;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
-import mx.ipn.escom.spee.util.bs.RNUnicidad;
 import mx.ipn.escom.spee.util.dao.GenericDao;
 
 @Service("usuarioBs")
@@ -29,10 +29,6 @@ import mx.ipn.escom.spee.util.dao.GenericDao;
 public class UsuarioBs implements Serializable {
 
 	private static final long serialVersionUID = -5310565999405879581L;
-
-	private static final String CORREO = "login";
-
-	private static final String ID_USUARIO = "id";
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
@@ -43,9 +39,6 @@ public class UsuarioBs implements Serializable {
 	@Autowired
 	private MailSender mailSender;
 
-	@Autowired
-	private RNUnicidad reglaUnicidad;
-
 	public Usuario buscarUsuario(String login) {
 		Usuario usuario = new Usuario();
 		usuario.setLogin(login);
@@ -55,41 +48,35 @@ public class UsuarioBs implements Serializable {
 
 	@Transactional(rollbackFor = Exception.class)
 	public Usuario registrar(Usuario usuario, InformacionPersonal info) throws UniqueException {
-		Map<String, Serializable> id = new HashMap<>();
-		Map<String, Object> object = new HashMap<>();
-
-		object.put(CORREO, usuario.getLogin());
-		object.put(ID_USUARIO, usuario.getId());
-
-//		if (!reglaUnicidad.validate(Usuario.class, id, object)) {
-//		throw new UniqueException();
-//	}
+		Usuario usuarioExample = new Usuario();
+		usuarioExample.setLogin(info.getCorreo());
+		if (!genericSearchBs.findByExample(usuarioExample).isEmpty()) {
+			throw new UniqueException();
+		}
 		usuario.setPassword(SHADigest.digest(usuario.getPassword()));
 		usuario.setActivo(Boolean.TRUE);
+		Date date = new Date();
+		usuario.setFechaAlta(date);
 		genericDao.save(usuario);
 		crearCuenta(usuario);
-		guardarInformacionPersonal(usuario, info);
+//		info.setClave("clave");
+//		genericDao.save(info);
+		usuario.setLogin(info.getCorreo());
 		enviarEmailConfirmacion(usuario);
-
 		return usuario;
 	}
 
 	public void guardarInformacionPersonal(Usuario usuario, InformacionPersonal info) {
-		info.setCorreo(usuario.getLogin());
-//		if (info.getBoleta() == null || info.getBoleta().equals("")) {
-//			info.setBoleta(Perfil.PerfilEnum.NO_APLICA.getNombre());
-//		} else if (info.getNoEmpleado() == null || info.getNoEmpleado().equals("")) {
-//			info.setNoEmpleado(Perfil.PerfilEnum.NO_APLICA.getNombre());
-//		}
-		Cuenta cuenta = new Cuenta();
-		cuenta.setIdUsuario(usuario.getId());
-		info.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
+
+		InformacionPersonal infoExample = new InformacionPersonal();
+
+		info.setClave("clave");
 		genericDao.save(info);
 	}
 
 	private void crearCuenta(Usuario usuario) {
 		Cuenta cuenta = new Cuenta();
-		cuenta.setIdUsuario(genericSearchBs.findByExample(usuario).get(0).getId());
+		cuenta.setIdUsuario(usuario.getId());
 		cuenta.setIdPerfil(Perfil.PerfilEnum.ALUMNO.getValor());
 		genericDao.save(cuenta);
 	}
@@ -110,7 +97,6 @@ public class UsuarioBs implements Serializable {
 		mailSender.sendEmail(templateParams, mailProperties.get(Constantes.TEMPLATE), destinatarios,
 				mailProperties.get(Constantes.SUBJECT), null);
 
-		// lanzar exception si no envia correo
 	}
 
 	public GenericSearchBs getGenericSearchBs() {

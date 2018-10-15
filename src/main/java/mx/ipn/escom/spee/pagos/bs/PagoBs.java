@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +23,12 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.Archivo;
+import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
+import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
@@ -48,31 +53,72 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(PagoBs.class);
 
+	public static final long CINCUENTA_MB = 6553600L;
+
+	public static final String FORMATO_JPEG = "image/jpeg";
+
+	public static final String FORMATO_JPG = "image/jpg";
+
+	public static final String FORMATO_PNG = "image/png";
+
+	public static final String FORMATO_PDF = "application/pdf";
+
 	@Autowired
 	private GenericSearchBs genericSearchBs;
 
-	/* TODO falta determinar lo de la carpeta */
 	@Transactional
-	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio) throws IOException {
+	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio, String folio)
+			throws IOException, TamanioArchivoException, FormatoArchivoException, FolioDuplicadoException {
+
+		ArchivoPagoDia archivoExample = new ArchivoPagoDia();
+		archivoExample.setFolioOperacion(folio);
+		if(!genericSearchBs.findByExample(archivoExample).isEmpty()) {
+			throw new FolioDuplicadoException();
+		}
+			
+		List<String> contentType = new ArrayList<>();
+		contentType.add(FORMATO_JPEG);
+		contentType.add(FORMATO_PNG);
+		contentType.add(FORMATO_PDF);
+		if (formatoArchivo(archivo, contentType)) {
+			throw new FormatoArchivoException();
+		} 
+		
 		CatalogoServicio catalogoServicio = new CatalogoServicio();
 		catalogoServicio.setClave(idServicio.toString());
 		Date currentDate = new Date();
 		ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-
 		byte[] bfile = new byte[(int) archivo.getFileUpload().length()];
 		FileInputStream fis = new FileInputStream(archivo.getFileUpload());
 		archivoPago.setArchivo(bfile);
 		fis.read(bfile);
 		CatalogoServicio catalogo = new CatalogoServicio();
 		catalogo.setId(idServicio);
-		archivoPago.setCatalogoServicio(catalogo);
-		archivoPago.setIdUsuario(usuario.getId());
+		Cuenta cuenta = new Cuenta();
+		cuenta.setIdUsuario(usuario.getId());
+		archivoPago.setIdCatalogoServicio(genericSearchBs.findByExample(catalogo).get(0).getId());
+		archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 		archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
 		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
 		archivoPago.setFechaEnvio(currentDate);
 		archivoPago.setIdCarpeta(1);
+		archivoPago.setFolioOperacion(folio);
+		if (tamanioArchivo(archivo, CINCUENTA_MB)) {
+			throw new TamanioArchivoException();
+		}	
 		save(archivoPago);
 		LOGGER.info("se ha registrado un pago");
+
+	}
+
+	private Boolean tamanioArchivo(Archivo archivo, long numeroBytes) {
+		System.err.println(archivo.getFileUpload().length());
+		return (archivo.getFileUpload().length() > numeroBytes) ? true : false;
+	}
+
+	private Boolean formatoArchivo(Archivo archivo, List<String> contentTypes) {
+		System.err.println((!contentTypes.contains(archivo.getFileUploadContentType())));
+		return (!contentTypes.contains(archivo.getFileUploadContentType())) ? true : false;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -90,7 +136,6 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 			fileOuputStream.write(genericSearchBs.findById(ArchivoPagoDia.class, 11).getArchivo());
 			System.err.println(fileOuputStream);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -139,7 +184,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	public List<ArchivoPagoDia> obtenerPagosPorAutorizar() {
 		return genericSearchBs.findAll(ArchivoPagoDia.class);
 	}
-	
+
 	public AjaxResult obtenerPagosUsuario(Integer idUsuario) {
 		AjaxResult ajaxResult = new AjaxResult();
 		ArchivoPagoDia pagoDia = new ArchivoPagoDia();

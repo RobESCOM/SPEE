@@ -2,6 +2,7 @@ package mx.edu.spee.controlacceso.mapeo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +27,10 @@ public class Cuenta implements Modelo {
 	@Column(name = "id_perfil")
 	private Integer idPerfil;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil", insertable = false, updatable = false)
 	private Perfil perfil;
+	
 
 	public Cuenta() {
 		super();
@@ -77,5 +79,6 @@ public class Cuenta implements Modelo {
 	public void setIdPerfil(Integer idPerfil) {
 		this.idPerfil = idPerfil;
 	}
+
 
 }
