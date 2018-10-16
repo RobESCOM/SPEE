@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
-import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
+import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 

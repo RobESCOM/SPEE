@@ -9,10 +9,10 @@ import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
+import mx.ipn.escom.spee.area.mapeo.CatalogoArea.CatalogoAreaEnum;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
-import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
-import mx.ipn.escom.spee.pagos.mapeo.CatalogoArea.CatalogoAreaEnum;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
+import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")

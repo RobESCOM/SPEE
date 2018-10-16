@@ -43,8 +43,8 @@
 					<tbody>
 						<s:iterator value="listAreas" var="area">
 							<tr>
-								<td>${area[0]}</td>
-								<td>${area[1]}</td>
+								<td><s:property value="%{#area.nombreArea}" /></td>
+								<td><s:property value="%{#area.descripcion}" /></td>
 								<td><a
 									href="${pageContext.request.contextPath}/area/gestionar-area/1/edit"
 									title="${ttbEditar}"> <i

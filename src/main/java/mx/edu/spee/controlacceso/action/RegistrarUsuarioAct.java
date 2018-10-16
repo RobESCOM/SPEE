@@ -55,7 +55,7 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 	}
 
 	public String create() {
-		addActionMessage("Usuario se registró exitosamente, revise su correo electrónico");
+		addActionMessage("El usuario se registró exitosamente, revise su correo electrónico");
 		return SUCCESS;
 	}
 

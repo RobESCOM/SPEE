@@ -1,4 +1,4 @@
-package mx.ipn.escom.spee.pagos.mapeo;
+package mx.ipn.escom.spee.servicio.mapeo;
 
 import java.io.Serializable;
 
@@ -19,9 +19,9 @@ public class TipoServicio implements Modelo, Serializable {
 	
 	public enum CatalogoTipoServicioEnum {
 
-		SIGAA(1, "Comprobante emitido por el subsistema"),
+		SIGAA(1, "Comprobante emitido por el subsistema SIG@"),
 
-		VOUCHER(2, "Comprobante de pago emitido por usuario");
+		VOUCHER(2, "Comprobante de pago emitido por institucion bancaria");
 
 		private Integer id;
 

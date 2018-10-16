@@ -31,6 +31,9 @@ public class Cuenta implements Modelo {
 	@JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil", insertable = false, updatable = false)
 	private Perfil perfil;
 	
+	@Column(name = "st_activa")
+	private Boolean estatus;
+	
 
 	public Cuenta() {
 		super();
@@ -79,6 +82,16 @@ public class Cuenta implements Modelo {
 	public void setIdPerfil(Integer idPerfil) {
 		this.idPerfil = idPerfil;
 	}
+
+	public Boolean getEstatus() {
+		return estatus;
+	}
+
+	public void setEstatus(Boolean estatus) {
+		this.estatus = estatus;
+	}
+	
+	
 
 
 }

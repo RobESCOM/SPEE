@@ -1,4 +1,4 @@
-package mx.ipn.escom.spee.pagos.mapeo;
+package mx.ipn.escom.spee.area.mapeo;
 
 import java.io.Serializable;
 
@@ -8,6 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
+import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
+import com.opensymphony.xwork2.validator.annotations.Validations;
+import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
@@ -81,6 +87,10 @@ public class CatalogoArea implements Modelo, Serializable {
 		this.id = id;
 	}
 
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(message = "Campo Obligatorio", type = ValidatorType.FIELD) }, requiredFields = {
+					@RequiredFieldValidator(message = "Campo Obligatorio", type = ValidatorType.FIELD) }, stringLengthFields = {
+							@StringLengthFieldValidator(maxLength = "25", minLength = "3", trim = true, message = "El nombre del área debe ser menor o igual a 25 caracteres") })
 	public String getNombreArea() {
 		return nombreArea;
 	}
@@ -105,6 +115,8 @@ public class CatalogoArea implements Modelo, Serializable {
 		this.estatus = estatus;
 	}
 
+	@Validations(requiredFields = {
+			@RequiredFieldValidator(message = "Campo Obligatorio", type = ValidatorType.FIELD) })
 	public Integer getIdResponsable() {
 		return idResponsable;
 	}

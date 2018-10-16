@@ -1,4 +1,4 @@
-package mx.ipn.escom.spee.pagos.mapeo;
+package mx.ipn.escom.spee.servicio.mapeo;
 
 import java.io.Serializable;
 
