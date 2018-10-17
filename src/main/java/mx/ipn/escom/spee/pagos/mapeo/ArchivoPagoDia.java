@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
