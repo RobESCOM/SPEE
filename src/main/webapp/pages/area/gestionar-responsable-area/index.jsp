@@ -34,21 +34,27 @@
 				<table id="tblResponsables" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="Nombre" /></th>
-							<th><s:text name="Area responsable" /></th>
-							<th><s:text name="Correo electronico" /></th>
-							<th><s:text name="Numero de contacto" /></th>
-							<th><s:text name="Acciones" /></th>
+							<th data-priority="1"><s:text name="Nombre" /></th>
+							<th data-priority="1"><s:text name="Area responsable" /></th>
+							<th data-priority="1"><s:text name="Correo electronico" /></th>
+							<th data-priority="2"><s:text name="Numero de contacto" /></th>
+							<th data-priority="2"><s:text name="Acciones" /></th>
 
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listResponsables" var="lsResponsable">
+						<s:iterator value="listResponsablesArea" var="lstResponsables">
 							<tr>
-								<td>${lsResponsable[0]}</td>
-								<td>${lsResponsable[1]}</td>
-								<td>${lsResponsable[2]}</td>
-								<td>${lsResponsable[3]}</td>
+								<td><s:property
+										value="%{#lstResponsables.nombre + ' ' + #lstResponsables.primerApellido + ' ' + #lstResponsables.segundoApellido}" /></td>
+								<td><s:property value="nbArea" /></td>
+								<td><s:property value="%{#lstResponsables.correo}" /></td>
+								<s:if test="%{#lstResponsables.celular != null}">
+									<td><s:property value="%{#lstResponsables.celular}" /></td>
+								</s:if>
+								<s:else>
+									<td><s:property value="'Sin teléfono'" /></td>
+								</s:else>
 								<td><a
 									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/1/edit"
 									title="${ttbEditar}"> <i

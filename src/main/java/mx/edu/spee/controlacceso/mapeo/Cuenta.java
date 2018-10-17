@@ -29,11 +29,10 @@ public class Cuenta implements Modelo {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_perfil", referencedColumnName = "id_perfil", insertable = false, updatable = false)
-	private Perfil perfil;
+	private Perfil perfil;	
 	
 	@Column(name = "st_activa")
 	private Boolean estatus;
-	
 
 	public Cuenta() {
 		super();

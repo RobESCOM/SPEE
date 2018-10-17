@@ -54,7 +54,6 @@ public class UsuarioBs implements Serializable {
 			throw new UniqueException();
 		}
 		usuario.setPassword(SHADigest.digest(usuario.getPassword()));
-		usuario.setActivo(Boolean.TRUE);
 		Date date = new Date();
 		usuario.setFechaAlta(date);
 		genericDao.save(usuario);
@@ -78,6 +77,7 @@ public class UsuarioBs implements Serializable {
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuario.getId());
 		cuenta.setIdPerfil(Perfil.PerfilEnum.ALUMNO.getValor());
+		cuenta.setEstatus(true);
 		genericDao.save(cuenta);
 	}
 

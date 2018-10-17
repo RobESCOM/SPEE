@@ -191,6 +191,8 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.noEmpleado = noEmpleado;
 	}
 	
-	
-
+	@Override
+	public String toString() {
+		return getNombre() + " " + getPrimerApellido() + " " + getSegundoApellido();
+	}
 }

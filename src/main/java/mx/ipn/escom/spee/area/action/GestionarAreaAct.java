@@ -55,7 +55,6 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	}
 
 	public String editNew() {
-		listResponsables = areaBs.obtenerResponsablesArea();
 		return EDITNEW;
 	}
 

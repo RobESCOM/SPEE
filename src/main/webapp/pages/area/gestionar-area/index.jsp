@@ -66,12 +66,5 @@
 		</div>
 	</div>
 </div>
-<div class="outter-section form-horiontal">
-	<div class="col-xs-12 col-md-12 col-md-12 text-center">
-		<a class="btn btn-default btn-default-spee"
-			href="${pageContext.request.contextPath}/area/gestionar-area/new">Registrar</a>
-	</div>
-</div>
-
 	</html>
 </jsp:root>
