@@ -14,6 +14,8 @@
 </jsp:text>
 </head>
 <body>
+<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
+
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
@@ -22,9 +24,16 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="row form-group">
 		<div class="col-md-8 col-md-offset-2">
-			<s:actionmessage cssClass="alert alert-success" />
+			<s:actionerror theme="%{varTheme}" />
+			<s:actionmessage theme="%{varTheme}" />
+		</div>
+	</div>
+	
+	<div class="col-md-12">
+		<div class="outter-section form-medium text-left">
+			<s:text name="mx.com.spee.label.camposObligatorios" />
 		</div>
 	</div>
 

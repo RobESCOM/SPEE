@@ -33,7 +33,7 @@
 
 	<div class="col-md-12">
 		<div class="outter-section form-medium text-left">
-			<s:text name="mx.com.spee.label.camposObligatorios" />
+			<s:text name="Campos Obligatorios" />
 		</div>
 	</div>
 

@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -85,10 +86,15 @@ public class UsuarioBs implements Serializable {
 		Map<String, String> mailProperties = new HashMap<>();
 		Map<String, Object> templateParams = new HashMap<>();
 
-		mailProperties.put(Constantes.SUBJECT, "Email de Prueba");
+		mailProperties.put(Constantes.SUBJECT, "Sistema de Pagos Electrónicos ESCOM");
 		mailProperties.put(Constantes.TEMPLATE, "mx/ipn/escom/spee/mail/templates/confirmacionCuenta.vm");
 
+		String ip = "http://localhost:8123";
+		String contextPath = ServletActionContext.getRequest().getContextPath();
+		String namespace = "/control-acceso/login";
+		
 		templateParams.put("usuario", usuario.getLogin());
+		templateParams.put("urlAcceso", ip + contextPath + namespace);
 		templateParams.put("password", usuario.getPassword());
 
 		List<String> destinatarios = new ArrayList<>();
