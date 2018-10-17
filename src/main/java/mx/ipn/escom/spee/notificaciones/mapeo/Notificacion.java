@@ -1,6 +1,7 @@
 package mx.ipn.escom.spee.notificaciones.mapeo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,6 +31,12 @@ public class Notificacion implements Modelo, Serializable {
 
 	@Column(name = "id_cuenta")
 	private Integer idCuenta;
+	
+	@Column(name = "id_destinatario")
+	private Integer idDestinatario;
+	
+	@Column(name = "fecha_envio")
+	private Date fechaEnvio;
 
 	public Notificacion() {
 		super();
@@ -64,6 +71,22 @@ public class Notificacion implements Modelo, Serializable {
 
 	public void setIdCuenta(Integer idCuenta) {
 		this.idCuenta = idCuenta;
+	}
+
+	public Integer getIdDestinatario() {
+		return idDestinatario;
+	}
+
+	public void setIdDestinatario(Integer idDestinatario) {
+		this.idDestinatario = idDestinatario;
+	}
+
+	public Date getFechaEnvio() {
+		return fechaEnvio;
+	}
+
+	public void setFechaEnvio(Date fechaEnvio) {
+		this.fechaEnvio = fechaEnvio;
 	}
 
 }

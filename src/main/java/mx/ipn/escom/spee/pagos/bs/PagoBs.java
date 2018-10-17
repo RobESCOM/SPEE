@@ -24,8 +24,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
+import mx.edu.spee.controlacceso.mapeo.Perfil;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
+import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
+import mx.ipn.escom.spee.notificaciones.mapeo.Notificacion;
 import mx.ipn.escom.spee.action.Archivo;
+import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
 import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
 import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
@@ -33,6 +37,7 @@ import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.pagos.mapeo.TipoServicio.CatalogoTipoServicioEnum;
+import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -62,6 +67,9 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	public static final String FORMATO_PNG = "image/png";
 
 	public static final String FORMATO_PDF = "application/pdf";
+	
+	@Autowired
+	private MailSender mailSender;
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
@@ -107,7 +115,36 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 			throw new TamanioArchivoException();
 		}	
 		save(archivoPago);
+		enviarEmailPago(usuario, archivoPago);
 		LOGGER.info("se ha registrado un pago");
+		Notificacion notificacion = new Notificacion();
+		notificacion.setFechaEnvio(currentDate);
+		notificacion.setIdCuenta(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
+		notificacion.setMotivo("se ha registrado un pago");
+		notificacion.setIdDestinatario(PerfilEnum.ENCARGADO_CAJA.getValor());
+		save(notificacion);
+	}
+	
+	public void enviarEmailPago(Usuario usuario, ArchivoPagoDia archivoPago) {
+		Map<String, String> mailProperties = new HashMap<>();
+		Map<String, Object> templateParams = new HashMap<>();
+
+		String ip = "http://localhost:8123";
+		String contextPath = ServletActionContext.getRequest().getContextPath();
+		String namespace = "/notificaciones/gestionar-notificaciones";
+		mailProperties.put(Constantes.SUBJECT, "Sistema de Pagos Electrónicos ESCOM");
+		mailProperties.put(Constantes.TEMPLATE, "mx/ipn/escom/spee/mail/templates/pagoEnviado.vm");
+
+		templateParams.put("usuario", usuario.getLogin());
+		templateParams.put("fechaEnvio", archivoPago.getFechaEnvio());
+		templateParams.put("conceptoPago", genericSearchBs.findById(CatalogoServicio.class, archivoPago.getIdCatalogoServicio()).getDescripcion());
+		templateParams.put("urlNotifiaciones", ip + contextPath + namespace);
+
+		List<String> destinatarios = new ArrayList<>();
+		destinatarios.add(usuario.getLogin());
+
+		mailSender.sendEmail(templateParams, mailProperties.get(Constantes.TEMPLATE), destinatarios,
+				mailProperties.get(Constantes.SUBJECT), null);
 
 	}
 
@@ -192,5 +229,23 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		ajaxResult.addCampo("pagos", genericSearchBs.findByExample(pagoDia));
 		return ajaxResult;
 	}
+
+	public MailSender getMailSender() {
+		return mailSender;
+	}
+
+	public void setMailSender(MailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+	public GenericSearchBs getGenericSearchBs() {
+		return genericSearchBs;
+	}
+
+	public void setGenericSearchBs(GenericSearchBs genericSearchBs) {
+		this.genericSearchBs = genericSearchBs;
+	}
+	
+	
 
 }
