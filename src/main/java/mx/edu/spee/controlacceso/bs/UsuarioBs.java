@@ -74,10 +74,18 @@ public class UsuarioBs implements Serializable {
 		genericDao.save(info);
 	}
 
-	private void crearCuenta(Usuario usuario) {
+	public void crearCuenta(Usuario usuario) {
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuario.getId());
 		cuenta.setIdPerfil(Perfil.PerfilEnum.ALUMNO.getValor());
+		cuenta.setEstatus(true);
+		genericDao.save(cuenta);
+	}
+	
+	public void crearCuentaPerfilDefault(Usuario usuario) {
+		Cuenta cuenta = new Cuenta();
+		cuenta.setIdUsuario(usuario.getId());
+		cuenta.setIdPerfil(Perfil.PerfilEnum.DEFAULT.getValor());
 		cuenta.setEstatus(true);
 		genericDao.save(cuenta);
 	}

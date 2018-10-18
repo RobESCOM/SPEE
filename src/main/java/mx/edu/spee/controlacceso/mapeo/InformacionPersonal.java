@@ -4,14 +4,11 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
-import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
@@ -26,7 +23,7 @@ public class InformacionPersonal implements Modelo, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "clave")
 	private String clave;
 
@@ -53,18 +50,16 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	@Transient
 	private String idPerfil;
-	
+
 	@Transient
 	private String boleta;
-	
+
 	@Transient
 	private String noEmpleado;
 
 	public InformacionPersonal() {
 		super();
 	}
-	
-	
 
 	public InformacionPersonal(String clave, String nombre, String primerApellido, String segundoApellido,
 			String celular, String correo, Integer idCuenta, String curp, String idPerfil, String boleta,
@@ -82,8 +77,6 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.boleta = boleta;
 		this.noEmpleado = noEmpleado;
 	}
-
-
 
 	@Validations(requiredStrings = {
 			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") })
@@ -105,8 +98,6 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.primerApellido = primerApellido;
 	}
 
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") })
 	public String getSegundoApellido() {
 		return segundoApellido;
 	}
@@ -126,9 +117,9 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.correo = correo;
 	}
 
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") }, regexFields = {
-					@RegexFieldValidator(regex = "[0-9]*", type = ValidatorType.FIELD, trim = true, key = "Formato no válido") })
+//	@Validations(requiredStrings = {
+//			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") }, regexFields = {
+//					@RegexFieldValidator(regex = "[0-9]*", type = ValidatorType.FIELD, trim = true, key = "Formato no válido") })
 	public String getCelular() {
 		return celular;
 	}
@@ -145,6 +136,9 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.idCuenta = idCuenta;
 	}
 
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") }, stringLengthFields = {
+					@StringLengthFieldValidator(type = ValidatorType.FIELD, minLength = "7", maxLength = "18", message = "Longitud no válida") })
 	public String getClave() {
 		return clave;
 	}
@@ -153,9 +147,9 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.clave = clave;
 	}
 
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") }, stringLengthFields = {
-					@StringLengthFieldValidator(type = ValidatorType.FIELD, message = "Longitud no válida", maxLength = "18") })
+//	@Validations(requiredStrings = {
+//			@RequiredStringValidator(type = ValidatorType.FIELD, message = "Campo obligatorio") }, stringLengthFields = {
+//					@StringLengthFieldValidator(type = ValidatorType.FIELD, message = "Longitud no válida", maxLength = "18") })
 	public String getCurp() {
 		return curp;
 	}
@@ -164,9 +158,9 @@ public class InformacionPersonal implements Modelo, Serializable {
 		this.curp = curp;
 	}
 
-	@Validations(requiredStrings = {
-			@RequiredStringValidator(fieldName = "idCuenta", trim = true, type = ValidatorType.FIELD, message = "Campo obligatorio") }, regexFields = {
-					@RegexFieldValidator(regex = "[0-9]", type = ValidatorType.FIELD, trim = true, key = "Formato incorrecto") })
+//	@Validations(requiredStrings = {
+//			@RequiredStringValidator(fieldName = "idCuenta", trim = true, type = ValidatorType.FIELD, message = "Campo obligatorio") }, regexFields = {
+//					@RegexFieldValidator(regex = "[0-9]", type = ValidatorType.FIELD, trim = true, key = "Formato incorrecto") })
 	public String getIdPerfil() {
 		return idPerfil;
 	}
@@ -190,7 +184,7 @@ public class InformacionPersonal implements Modelo, Serializable {
 	public void setNoEmpleado(String noEmpleado) {
 		this.noEmpleado = noEmpleado;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getNombre() + " " + getPrimerApellido() + " " + getSegundoApellido();

@@ -40,5 +40,4 @@ public class NombreObjetosSesion {
 	public static final String PROFESOR_ID = "profesor-id";
 	public static final String LIST_MATERIAS_HIJO = "list_materias-hijo";
 	public static final String USUARIO_ID = "usuario-id";
-
 }

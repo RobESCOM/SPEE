@@ -2,19 +2,26 @@ package mx.ipn.escom.spee.area.bs;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import mx.edu.spee.controlacceso.bs.UsuarioBs;
+import mx.edu.spee.controlacceso.exception.UniqueException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
+import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
 import mx.ipn.escom.spee.util.Numeros;
+import mx.ipn.escom.spee.util.SHADigest;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
+import mx.ipn.escom.spee.util.dao.GenericDao;
 
 /**
  * @author Robert
@@ -31,6 +38,12 @@ public class AreaBs implements Serializable {
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
+	
+	@Autowired
+	private GenericDao genericDao;
+	
+	@Autowired
+	private UsuarioBs usuarioBs;
 	
 	/**
 	 * Obtiene la información personal de todos los responsables de área
@@ -77,5 +90,38 @@ public class AreaBs implements Serializable {
 		area = infoArea.get(Numeros.CERO.getValor());
 		
 		return area.getNombreArea();
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void registrarResponsable(InformacionPersonal model) throws UniqueException {
+		Usuario usr= new Usuario();
+		usr.setLogin(model.getCorreo());
+		if(!genericSearchBs.findByExample(usr).isEmpty()){
+			throw new UniqueException();
+		}
+		else {
+			usr.setPassword(SHADigest.digest("password"));
+			Date fechaAlta = new Date();
+			usr.setFechaAlta(fechaAlta);
+			genericDao.save(usr);
+			usuarioBs.crearCuentaPerfilDefault(usr);
+			// Obtenemos el id_cuenta del usuario creado
+			Usuario usuarioCreado = new Usuario();
+			usuarioCreado.setLogin(model.getCorreo());
+			usuarioCreado = genericSearchBs.findByExample(usuarioCreado).get(Numeros.CERO.getValor());
+			Cuenta cuentaCreada = new Cuenta();
+			cuentaCreada.setIdUsuario(usuarioCreado.getId());
+			cuentaCreada = genericSearchBs.findByExample(cuentaCreada).get(Numeros.CERO.getValor());
+			Integer idCuenta = cuentaCreada.getIdCuenta();
+			
+			// Guardamos la info personal del responsable 
+			model.setIdCuenta(idCuenta);
+			genericDao.save(model);			
+			usuarioBs.enviarEmailConfirmacion(usuarioCreado);
+		}
+	}
+	
+	public void editarResponsable(InformacionPersonal model) throws UniqueException {
+		
 	}
 }
