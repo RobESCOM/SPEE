@@ -26,75 +26,63 @@
 		<legend class="form-section">
 			<s:text name="Informacion del responsable de area" />
 		</legend>
-		<!-- Nombres -->
-		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
-				<s:text name="Nombre(s)" />
-			</label>
-			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Roberto'" />
-			</div>
-		</div>
-		<!-- Primer apellido -->
-		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
-				<s:text name="Primer Apellido" />
-			</label>
-			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Mendoza'" />
-			</div>
-		</div>
-		<!-- Segundo apellido -->
-		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
-				<s:text name="Segundo Apellido" />
-			</label>
-			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Saavedra'" />
-			</div>
-		</div>
 		<!-- Número de empleado -->
 		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label"> <s:text
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label"> <s:text
 					name="Numero de empleado" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'1624568'" />
+				<s:property value="model.clave" />
+			</div>
+		</div>
+		<!-- Nombre completo -->
+		<div class="form-group">
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label" for="">
+				<s:text name="Nombre(s)" />
+			</label>
+			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
+				<s:property
+					value="model.nombre + ' ' + model.primerApellido + ' ' + model.segundoApellido" />
 			</div>
 		</div>
 		<!-- Área -->
 		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label" for="">
 				<s:text name="Area" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Celex'" />
+				<s:property value="nombreArea" />
 			</div>
 		</div>
 		<!-- Fecha de alta -->
 		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for=""><s:text
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label" for=""><s:text
 					name="Fecha de alta" /></label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'11/10/2018'" />
+				<s:date name="usuarioSel.fechaAlta" format="dd/MM/yyyy" />
 			</div>
 		</div>
 		<!-- Correo electrónico -->
 		<div class="form-group">
-			<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label" for="">
 				<s:text name="Correo electronico" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'isc.robertomendoza@gmail.com'" />
+				<s:property value="model.correo" />
 			</div>
 		</div>
 		<!-- Número telefónico -->
 		<div class="form-group">
-			<label class=" col-sm-4 col-md-4 control-label" for=""> <s:text
+			<label class="col-xs-12 col-sm-6 col-md-6 control-label" for=""> <s:text
 					name="Numero telefonico" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Sin telefono'" />
+				<s:if test="%{model.celular != ''}">
+					<s:property value="model.celular" />
+				</s:if>
+				<s:else>
+					<s:property value="'Sin teléfono'" />
+				</s:else>
 			</div>
 		</div>
 	</fieldset>

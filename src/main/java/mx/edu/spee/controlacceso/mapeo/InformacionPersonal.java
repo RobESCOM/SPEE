@@ -23,7 +23,6 @@ public class InformacionPersonal implements Modelo, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "clave")
 	private String clave;
 
@@ -56,6 +55,9 @@ public class InformacionPersonal implements Modelo, Serializable {
 
 	@Transient
 	private String noEmpleado;
+	
+	@Transient 
+	private String correoInicio;
 
 	public InformacionPersonal() {
 		super();
@@ -189,4 +191,14 @@ public class InformacionPersonal implements Modelo, Serializable {
 	public String toString() {
 		return getNombre() + " " + getPrimerApellido() + " " + getSegundoApellido();
 	}
+
+	public String getCorreoInicio() {
+		return correoInicio;
+	}
+
+	public void setCorreoInicio(String correoInicio) {
+		this.correoInicio = correoInicio;
+	}
+	
+	
 }

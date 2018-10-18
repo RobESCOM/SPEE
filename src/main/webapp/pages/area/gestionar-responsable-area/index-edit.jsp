@@ -40,6 +40,9 @@
 	<s:form
 		action="%{#pageContext.request.contextPath}/area/gestionar-responsable-area/%{idSel}"
 		method="post" theme="simple">
+		<s:hidden name="_method" value="PUT" />
+
+
 		<fieldset class="form form-horizontal form-medium">
 			<legend class="form-section">
 				<s:text name="Informacion del responsable de area" />
@@ -80,28 +83,23 @@
 					<s:textfield cssClass="form-control campo"
 						name="model.segundoApellido" cssClassError="input-error"
 						id="txSegundoApellido" />
-					<s:fielderror fieldName="model.segundoApellido" cssClass="error"
-						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Número de empleado -->
 			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio">
-					<s:text name="Numero de empleado" />
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label"> <s:text
+						name="Numero de empleado" />
 				</label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name="model.clave"
-						cssClassError="input-error" id="txNoEmpleado" />
-					<s:fielderror fieldName="model.clave" cssClass="error"
-						theme="bootstrap" />
+				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
+					<s:textfield cssClass="form-control campo"
+						name="model.clave" cssClassError="input-error"
+						id="txClave"/>
 				</div>
 			</div>
 			<!-- Área -->
 			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label"
-					for=""> <s:text name="Area" />
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
+					<s:text name="Area" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
 					<s:property value="nombreArea" />
@@ -109,11 +107,10 @@
 			</div>
 			<!-- Fecha de alta -->
 			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label"
-					for=""><s:text name="Fecha de alta" /></label>
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label" for=""><s:text
+						name="Fecha de alta" /></label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:date name="usuarioSel.fechaAlta" format="dd/MM/yyyy"/>
+					<s:date name="usuarioSel.fechaAlta" format="dd/MM/yyyy" />
 				</div>
 			</div>
 			<!-- Correo electrónico -->
@@ -123,9 +120,10 @@
 					for=""> <s:text name="Correo electronico" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo"
-						name="model.correo" cssClassError="input-error" />
-					<s:fielderror fieldName="model.correo" cssClass="error" theme="bootstrap" />
+					<s:textfield cssClass="form-control campo" name="model.correo"
+						cssClassError="input-error" />
+					<s:fielderror fieldName="model.correo" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Número telefónico -->
@@ -135,8 +133,7 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo" name="model.celular"
-						cssClassError="input-error" />
-					<s:fielderror fieldName="model.celular" cssClass="error" theme="bootstrap" />
+						maxlength="10" cssClassError="input-error" />
 				</div>
 			</div>
 		</fieldset>

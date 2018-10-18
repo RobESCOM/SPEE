@@ -28,12 +28,12 @@
 </div>
 
 <!-- Action messages -->
-	<div class="form-group">
-		<div class="col-md-8 col-md-offset-2">
-			<s:actionmessage cssClass="alert alert-success" />
-			<s:actionerror cssClass="alert alert-danger" />
-		</div>
+<div class="form-group">
+	<div class="col-md-8 col-md-offset-2">
+		<s:actionmessage cssClass="alert alert-success" />
+		<s:actionerror cssClass="alert alert-danger" />
 	</div>
+</div>
 
 <div class="form-section form-horizontal">
 	<div class="form-group">
@@ -69,20 +69,21 @@
 								</s:elseif>
 								<s:else>
 									<td><s:property value="nbCopia" /></td>
-								</s:else>								
+								</s:else>
 								<td><s:property value="%{#lstResponsables.correo}" /></td>
-								<s:if test="%{#lstResponsables.celular != null}">
-									<td><s:property value="%{#lstResponsables.celular}" /></td>
+								<s:if
+									test="%{#lstResponsables.celular == null || #lstResponsables.celular == ''}">
+									<td><s:property value="'Sin teléfono'" /></td>
 								</s:if>
 								<s:else>
-									<td><s:property value="'Sin teléfono'" /></td>
+									<td><s:property value="%{#lstResponsables.celular}" /></td>
 								</s:else>
 								<td><a
 									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/${lstResponsables.idCuenta}/edit"
 									title="${ttbEditar}"> <i
 										class="material-icons md-24 md-eld">edit</i>
 								</a> <a
-									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/1"
+									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/${lstResponsables.idCuenta}"
 									title="${ttbVisualizar}"> <i
 										class="material-icons md-24 md-eld">remove_red_eye </i>
 								</a> <a title="${ttbBaja}"> <i

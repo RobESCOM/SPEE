@@ -42,6 +42,7 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	private String nbBiblio;
 	private String nbCopia;
 	private String nombreArea;
+	private String clave;
 
 	private Integer idSel;
 
@@ -113,38 +114,56 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 
 	public String edit() {
 		getIdSel();
-		System.err.println("idSel -> " + idSel);
 		InformacionPersonal infoAux = new InformacionPersonal();
 		infoAux.setIdCuenta(idSel);
 		model = genericSearchBs.findByExample(infoAux).get(Numeros.CERO.getValor());
-
+		SessionManager.put("clave", model.getClave());
+		clave = getClave();
 		Cuenta cuenta = new Cuenta();
 		CatalogoArea area = new CatalogoArea();
 		cuenta = genericSearchBs.findById(Cuenta.class, model.getIdCuenta());
 		area.setIdResponsable(cuenta.getIdCuenta());
 		area = genericSearchBs.findByExample(area).get(Numeros.CERO.getValor());
 		usuarioSel = genericSearchBs.findById(Usuario.class, cuenta.getIdUsuario());
-		nombreArea = area.getNombreArea();
+		SessionManager.put(NombreObjetosSesion.NOMBRE_AREA, area.getNombreArea());
+		nombreArea = getNombreArea();
 		return EDIT;
 	}
 
 	public void validateUpdate() {
+		InformacionPersonal info = new InformacionPersonal();
+		info.setIdCuenta(idSel);
+		info = genericSearchBs.findByExample(info).get(Numeros.CERO.getValor());
+		model.setCorreoInicio(info.getCorreo());
 		try {
 			if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
-				areaBs.editarResponsable(model);
+				model.setIdCuenta(idSel);
+				System.err.println("Correo de inicio -> " + model.getCorreoInicio());
+				areaBs.editarResponsable(model, model.getCorreoInicio());
 			} else {
 				addActionError("Verifique su información.");
 			}
 		} catch (UniqueException e) {
-			addActionError("El usuario ya existe.");
+			addActionError("Ya existe un usuario asociado a ese correo electrónico.");
 		}
 	}
 	
 	public String update() {
+		addActionMessage("La información del responsable de área se actualizó correctamente.");
 		return SUCCESS;
 	}
 	
 	public String show() {
+		InformacionPersonal info = new InformacionPersonal();
+		info.setIdCuenta(idSel);
+		model = genericSearchBs.findByExample(info).get(Numeros.CERO.getValor());
+		Cuenta cuenta = new Cuenta();
+		cuenta = genericSearchBs.findById(Cuenta.class, idSel);
+		usuarioSel = genericSearchBs.findById(Usuario.class, cuenta.getIdUsuario());
+		CatalogoArea area = new CatalogoArea();
+		area.setIdResponsable(cuenta.getIdCuenta());
+		area = genericSearchBs.findByExample(area).get(Numeros.CERO.getValor());
+		nombreArea = area.getNombreArea();
 		return SHOW;
 	}
 
@@ -227,6 +246,9 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	public InformacionPersonal getModel() {
 		if (model == null) {
 			model = new InformacionPersonal();
+//			InformacionPersonal info = new InformacionPersonal();
+//			info.setIdCuenta(idSel);
+//			model = genericSearchBs.findByExample(info).get(Numeros.CERO.getValor());
 		}
 		return model;
 	}
@@ -256,10 +278,24 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	}
 
 	public String getNombreArea() {
+		if(SessionManager.get(NombreObjetosSesion.NOMBRE_AREA) != null) {
+			nombreArea = (String) SessionManager.get(NombreObjetosSesion.NOMBRE_AREA);
+		}
 		return nombreArea;
 	}
 
 	public void setNombreArea(String nombreArea) {
 		this.nombreArea = nombreArea;
 	}
+
+	public String getClave() {
+		if(SessionManager.get("clave") != null) {
+			clave = (String) SessionManager.get("clave");
+		}
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}	
 }
