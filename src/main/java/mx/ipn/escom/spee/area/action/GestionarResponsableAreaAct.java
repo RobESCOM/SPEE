@@ -139,7 +139,11 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 			addActionError("El usuario ya existe.");
 		}
 	}
-
+	
+	public String update() {
+		return SUCCESS;
+	}
+	
 	public String show() {
 		return SHOW;
 	}
