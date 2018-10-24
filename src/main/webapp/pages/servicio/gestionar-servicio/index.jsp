@@ -11,9 +11,6 @@
 	]]>
 </jsp:text>
 
-<s:set var="listServicios"
-	value="{{'0853','Curso','Curso de idiomas semanal o sabatino. 40 horas. Comunidad IPN.','$544.00','Celex'},{'0858','Curso','Curso de idiomas semanal o sabatino. 40 horas. Público en general. ','$1053.00','Celex'}}" />
-
 <s:set var="ttbVisualizar" value="%{getText('Visualizar')}" />
 <s:set var="ttbEditar" value="%{getText('Editar')}" />
 <s:set var="ttbBaja" value="%{getText('Dar de baja')}" />
@@ -45,11 +42,11 @@
 					<tbody>
 						<s:iterator value="listServicios" var="lstServ">
 							<tr>
-								<td>${lstServ[0]}</td>
-								<td>${lstServ[1]}</td>
-								<td>${lstServ[2]}</td>
-								<td>${lstServ[3]}</td>
-								<td>${lstServ[4]}</td>
+								<td><s:property value="%{#lstServ.clave}" /></td>
+								<td><s:property value="%{#lstServ.tipoServicio}" /></td>
+								<td><s:property value="%{#lstServ.descripcion}" /></td>
+								<td><s:property value="%{'$ ' + #lstServ.precio + ' MXN'}" /></td>
+								<td><s:property value="%{#lstServ.area}" /></td>
 								<td><a
 									href="${pageContext.request.contextPath}/servicio/gestionar-servicio/1/edit"
 									title="${ttbEditar}"> <i

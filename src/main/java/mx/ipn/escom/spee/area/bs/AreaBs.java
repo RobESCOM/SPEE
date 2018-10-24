@@ -139,7 +139,24 @@ public class AreaBs implements Serializable {
 		}
 	}
 	
-//	public List<InformacionPersonal> obtenerResponsablesArea() {
-//		
-//	}
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean darBajaResponsable(Integer idCuenta) {
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, idCuenta);
+		if(cuenta != null){
+			cuenta.setEstatus(false);
+			genericDao.update(cuenta);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public List<CatalogoArea> obtieneAreasActivas() {
+		CatalogoArea area = new CatalogoArea();
+		List<CatalogoArea> listAreas = new ArrayList<>();
+		area.setEstatus(true);
+		listAreas = genericSearchBs.findByExample(area);
+		return listAreas;		
+	}
 }
