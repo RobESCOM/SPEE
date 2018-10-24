@@ -53,6 +53,10 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 		addActionMessage("Se adjunto el comprobante exitosamente");
 		return SUCCESS;
 	}
+	
+	public String edit() {
+		return EDIT;
+	}
 
 	public String autorizarPago() {
 		getIdSel();

@@ -10,8 +10,8 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 
 @Namespace("/pagos")
 @Results({
-		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-pagos" }),
-		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "cargar-pago/new" })})
+		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-autorizacion-pagos" }),
+		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "gestionar-autorizacion-pagos" })})
 public class GestionarCorteCajaAct  extends GeneralActionSupport {
 	
 	private static final long serialVersionUID = 1L;
