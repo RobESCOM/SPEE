@@ -12,6 +12,7 @@
 </jsp:text>
 
 <s:set var="varIconoAdjuntar" value="'attach_file'" />
+<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
 
 <div class="row title">
 	<div class="col-md-12">
@@ -20,6 +21,13 @@
 		</h1>
 	</div>
 </div>
+
+<div class="row form-group">
+		<div class="col-md-8 col-md-offset-2">
+			<s:actionerror theme="%{varTheme}" />
+			<s:actionmessage theme="%{varTheme}" />
+		</div>
+	</div>
 
 <fieldset class="form-section form-horizontal text-justify">
 	<div class="form-horizontal text-left">

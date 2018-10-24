@@ -33,7 +33,7 @@
 	
 	<div class="col-md-12">
 		<div class="outter-section form-medium text-left">
-			<s:text name="mx.com.spee.label.camposObligatorios" />
+			<s:text name="Los campos marcados con * son obligatorios." />
 		</div>
 	</div>
 
@@ -56,7 +56,7 @@
 				</ul>
 			</div>
 			<div class="form-group">
-				<label class="col-md-4 control-label "> <s:text
+				<label class="col-md-4 control-label label-obligatorio "> <s:text
 						name="Nombre del archivo "></s:text>
 				</label>
 				<div class="col-md-6">
@@ -75,7 +75,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-4 control-label "> <s:text
+				<label class="col-md-4 control-label label-obligatorio "> <s:text
 						name="Folio de operacion"></s:text>
 				</label>
 				<div class="col-md-6">

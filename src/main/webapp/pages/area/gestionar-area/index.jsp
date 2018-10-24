@@ -46,18 +46,22 @@
 								<td><s:property value="%{#area.nombreArea}" /></td>
 								<td><s:property value="%{#area.descripcion}" /></td>
 								<td><a
-									href="${pageContext.request.contextPath}/area/gestionar-area/1/edit"
+									href="${pageContext.request.contextPath}/area/gestionar-area/${area.id}/edit"
 									title="${ttbEditar}"> <i
 										class="material-icons md-24 md-eld">edit</i>
 								</a> <a
 									href="${pageContext.request.contextPath}/area/gestionar-area/1"
 									title="${ttbVisualizar}"> <i
 										class="material-icons md-24 md-eld">remove_red_eye </i>
-								</a> <a title="${ttbBaja}"> <i
-										class="material-icons md-24 md-eld">cancel</i>
-								</a> <a title="${ttbReactivar}"> <i
-										class="material-icons md-24 md-eld">check_circle</i>
-								</a></td>
+								</a> <s:if test="%{#area.estatus == true}">
+										<a title="${ttbBaja}"> <i
+											class="material-icons md-24 md-eld">cancel</i>
+										</a>
+									</s:if> <s:else>
+										<a title="${ttbReactivar}"> <i
+											class="material-icons md-24 md-eld">check_circle</i>
+										</a>
+									</s:else></td>
 							</tr>
 						</s:iterator>
 					</tbody>
