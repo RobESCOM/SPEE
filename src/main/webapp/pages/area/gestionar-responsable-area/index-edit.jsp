@@ -17,7 +17,7 @@
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
-				<s:text name="Editar Responsable de Area"></s:text>
+				<s:text name="Editar Informacion de Responsable de Area"></s:text>
 			</h1>
 		</div>
 	</div>
@@ -38,8 +38,11 @@
 	</div>
 
 	<s:form
-		action="%{#pageContext.request.contextPath}/area/gestionar-responsable-area/1"
+		action="%{#pageContext.request.contextPath}/area/gestionar-responsable-area/%{idSel}"
 		method="post" theme="simple">
+		<s:hidden name="_method" value="PUT" />
+
+
 		<fieldset class="form form-horizontal form-medium">
 			<legend class="form-section">
 				<s:text name="Informacion del responsable de area" />
@@ -52,8 +55,9 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="'Roberto'" id="txNombre" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" name="model.nombre" id="txNombre" />
+					<s:fielderror fieldName="model.nombre" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Primer apellido -->
@@ -63,9 +67,11 @@
 					for=""> <s:text name="Primer Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name="'Mendoza'"
-						cssClassError="input-error" id="txPrimerApellido" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:textfield cssClass="form-control campo"
+						name="model.primerApellido" cssClassError="input-error"
+						id="txPrimerApellido" />
+					<s:fielderror fieldName="model.primerApellido" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Segundo apellido -->
@@ -74,71 +80,60 @@
 					<s:text name="Segundo Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name="'Saavedra'"
-						cssClassError="input-error" id="txSegundoApellido" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:textfield cssClass="form-control campo"
+						name="model.segundoApellido" cssClassError="input-error"
+						id="txSegundoApellido" />
 				</div>
 			</div>
 			<!-- Número de empleado -->
 			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio">
-					<s:text name="Numero de empleado" />
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label"> <s:text
+						name="Numero de empleado" />
 				</label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name="'1624568'"
-						cssClassError="input-error" id="txNoEmpleado" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
+					<s:textfield cssClass="form-control campo"
+						name="model.clave" cssClassError="input-error"
+						id="txClave"/>
 				</div>
 			</div>
 			<!-- Área -->
 			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="Area" />
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label" for="">
+					<s:text name="Area" />
 				</label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:select id="slcArea" class="form-control" headerKey="-1"
-						headerValue="Celex"
-						list="#{'1':'Celex', '2':'Biblioteca', '3':'Fotocopiado', '4':'Servicios Dentales'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="" cssClass="error"
-						theme="bootstrap" />
+				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
+					<s:property value="nombreArea" />
 				</div>
 			</div>
 			<!-- Fecha de alta -->
 			<div class="form-group">
-				<label class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio" for=""><s:text
+				<label class="col-xs-12 col-sm-4 col-md-4 control-label" for=""><s:text
 						name="Fecha de alta" /></label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<sj:datepicker id="dpALta" cssClass="form-control date-picker" name="'11/10/2018'"
-						showOn="focus" inputAppendIcon="calendar" changeYear="true"
-						changeMonth="true" readonly="true" showAnim="fadeIn"
-						parentTheme="bootstrap" />
+				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
+					<s:date name="usuarioSel.fechaAlta" format="dd/MM/yyyy" />
 				</div>
 			</div>
 			<!-- Correo electrónico -->
 			<div class="form-group">
-				<label class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
+				<label
+					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
 					for=""> <s:text name="Correo electronico" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name="'isc.robertomendoza@gmail.com'"
+					<s:textfield cssClass="form-control campo" name="model.correo"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error"
+					<s:fielderror fieldName="model.correo" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Número telefónico -->
 			<div class="form-group">
-				<label class=" col-sm-4 col-md-4 control-label"
-					for=""> <s:text name="Numero telefonico" />
+				<label class=" col-sm-4 col-md-4 control-label" for=""> <s:text
+						name="Numero telefonico" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
-						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error"
-						theme="bootstrap" />
+					<s:textfield cssClass="form-control campo" name="model.celular"
+						maxlength="10" cssClassError="input-error" />
 				</div>
 			</div>
 		</fieldset>

@@ -34,10 +34,7 @@ public class Usuario implements Modelo, Serializable {
 
 	@Column(name = "tx_password")
 	private String password;
-
-	@Column(name = "st_activo")
-	private Boolean activo;
-
+	
 	@Column(name = "fh_alta")
 	private Date fechaAlta;
 
@@ -93,14 +90,6 @@ public class Usuario implements Modelo, Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Boolean getActivo() {
-		return activo;
-	}
-
-	public void setActivo(Boolean activo) {
-		this.activo = activo;
 	}
 
 	public Perfil getPerfilActivo() {

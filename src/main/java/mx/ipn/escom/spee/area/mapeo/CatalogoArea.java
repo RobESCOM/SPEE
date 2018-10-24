@@ -1,12 +1,17 @@
 package mx.ipn.escom.spee.area.mapeo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -15,6 +20,8 @@ import com.opensymphony.xwork2.validator.annotations.StringLengthFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
+import mx.edu.spee.controlacceso.mapeo.Cuenta;
+import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
@@ -67,7 +74,14 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	@Column(name = "responsable")
 	private Integer idResponsable;
-
+	
+	@OneToOne
+	@JoinColumn(name = "responsable", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
+	private Cuenta cuenta;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	private List<CatalogoServicio> servicios;
+	
 	public CatalogoArea() {
 		super();
 	}
@@ -123,6 +137,11 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	public void setIdResponsable(Integer idResponsable) {
 		this.idResponsable = idResponsable;
+	}
+	
+	@Override
+	public String toString() {
+		return getNombreArea();
 	}
 
 }

@@ -20,7 +20,7 @@ import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
-@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "cargar-pago/new" }),
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-servicios" }),
 		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "cargar-pago/new" }) })
 public class CargarPagoAct extends GeneralActionSupport {
 

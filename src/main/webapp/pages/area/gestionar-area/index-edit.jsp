@@ -17,7 +17,7 @@
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
-				<s:text name="Editar Area"></s:text>
+				<s:text name="Editar Informacion de Area"></s:text>
 			</h1>
 		</div>
 	</div>
@@ -38,7 +38,7 @@
 	</div>
 
 	<s:form
-		action="%{#pageContext.request.contextPath}/area/gestionar-area/1"
+		action="%{#pageContext.request.contextPath}/area/gestionar-area/%{idSel}"
 		method="post" theme="simple">
 		<fieldset class="form form-horizontal form-medium">
 			<legend class="form-section">
@@ -52,15 +52,15 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="'Celex'" id="txNombreArea" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" name="model.nombreArea" id="txNombreArea" />
+					<s:fielderror fieldName="model.nombreArea" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Responsable de área -->
 			<div class="form-group">
 				<label
 					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="Nombre del area" />
+					for=""> <s:text name="Responsable del area" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:select id="slcArea" class="form-control" headerKey="-1"
@@ -79,9 +79,9 @@
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textarea cssClass="form-control campo"
 						cssClassError="input-error"
-						name="'Cursos extracurriculares de lenguas extranjeras de la ESCOM.'"
+						name="model.descripcion"
 						id="txDescripcion" maxlength="150" rows="5" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.descripcion" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 		</fieldset>

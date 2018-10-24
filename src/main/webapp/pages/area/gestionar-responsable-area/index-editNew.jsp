@@ -52,8 +52,8 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="" id="txNombre" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" name="model.nombre" id="txNombre" />
+					<s:fielderror fieldName="model.nombre" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Primer apellido -->
@@ -63,9 +63,9 @@
 					for=""> <s:text name="Primer Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.primerApellido"
 						cssClassError="input-error" id="txPrimerApellido" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.primerApellido" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Segundo apellido -->
@@ -74,9 +74,9 @@
 					<s:text name="Segundo Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.segundoApellido"
 						cssClassError="input-error" id="txSegundoApellido" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.segundoApellido" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Número de empleado -->
@@ -86,35 +86,9 @@
 					<s:text name="Numero de empleado" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.clave"
 						cssClassError="input-error" id="txNoEmpleado" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
-				</div>
-			</div>
-			<!-- Área -->
-			<div class="form-group">
-				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="Area" />
-				</label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:select id="slcArea" class="form-control" headerKey="-1"
-						headerValue="Seleccione"
-						list="#{'1':'Celex', '2':'Biblioteca', '3':'Fotocopiado', '4':'Servicios Dentales'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="" cssClass="error"
-						theme="bootstrap" />
-				</div>
-			</div>
-			<!-- Fecha de alta -->
-			<div class="form-group">
-				<label class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio" for=""><s:text
-						name="Fecha de alta" /></label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<sj:datepicker id="dpALta" cssClass="form-control date-picker"
-						showOn="focus" inputAppendIcon="calendar" changeYear="true"
-						changeMonth="true" readonly="true" showAnim="fadeIn"
-						parentTheme="bootstrap" />
+					<s:fielderror fieldName="model.clave" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Correo electrónico -->
@@ -123,33 +97,21 @@
 					for=""> <s:text name="Correo electronico" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.correo"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error"
+					<s:fielderror fieldName="model.correo" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Número telefónico -->
 			<div class="form-group">
 				<label class=" col-sm-4 col-md-4 control-label"
-					for=""> <s:text name="Numero telefonico" />
+					for=""> <s:text name="Numero celular" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.celular" maxlength="10"
 						cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error"
-						theme="bootstrap" />
-				</div>
-			</div>
-			<!-- Password -->
-			<div class="form-group">
-				<label class=" col-sm-4 col-md-4 control-label label-obligatorio"
-					for=""> <s:text name="Contrasenia" />
-				</label>
-				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield type="password" cssClass="form-control campo"
-						name="" cssClassError="input-error" />
-					<s:fielderror fieldName="" cssClass="error"
+					<s:fielderror fieldName="model.celular" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>

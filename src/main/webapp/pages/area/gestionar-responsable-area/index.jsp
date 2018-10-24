@@ -27,6 +27,14 @@
 	</div>
 </div>
 
+<!-- Action messages -->
+<div class="form-group">
+	<div class="col-md-8 col-md-offset-2">
+		<s:actionmessage cssClass="alert alert-success" />
+		<s:actionerror cssClass="alert alert-danger" />
+	</div>
+</div>
+
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">
@@ -34,27 +42,48 @@
 				<table id="tblResponsables" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="Nombre" /></th>
-							<th><s:text name="Area responsable" /></th>
-							<th><s:text name="Correo electronico" /></th>
-							<th><s:text name="Numero de contacto" /></th>
-							<th><s:text name="Acciones" /></th>
+							<th data-priority="1"><s:text name="Nombre" /></th>
+							<th data-priority="1"><s:text name="Area responsable" /></th>
+							<th data-priority="1"><s:text name="Correo electronico" /></th>
+							<th data-priority="2"><s:text name="Numero de contacto" /></th>
+							<th data-priority="2"><s:text name="Acciones" /></th>
 
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listResponsables" var="lsResponsable">
+						<s:iterator value="listResponsablesArea" var="lstResponsables">
 							<tr>
-								<td>${lsResponsable[0]}</td>
-								<td>${lsResponsable[1]}</td>
-								<td>${lsResponsable[2]}</td>
-								<td>${lsResponsable[3]}</td>
+								<td><s:property
+										value="%{#lstResponsables.nombre + ' ' + #lstResponsables.primerApellido + ' ' + #lstResponsables.segundoApellido}" /></td>
+								<s:if test="%{#lstResponsables.idCuenta == 2}">
+									<td><s:property value="nbCelex" /></td>
+								</s:if>
+								<s:elseif test="%{#lstResponsables.idCuenta == 3}">
+									<td><s:property value="nbDentalM" /></td>
+								</s:elseif>
+								<s:elseif test="%{#lstResponsables.idCuenta == 15}">
+									<td><s:property value="nbDentalV" /></td>
+								</s:elseif>
+								<s:elseif test="%{#lstResponsables.idCuenta == 4}">
+									<td><s:property value="nbBiblio" /></td>
+								</s:elseif>
+								<s:else>
+									<td><s:property value="nbCopia" /></td>
+								</s:else>
+								<td><s:property value="%{#lstResponsables.correo}" /></td>
+								<s:if
+									test="%{#lstResponsables.celular == null || #lstResponsables.celular == ''}">
+									<td><s:property value="'Sin teléfono'" /></td>
+								</s:if>
+								<s:else>
+									<td><s:property value="%{#lstResponsables.celular}" /></td>
+								</s:else>
 								<td><a
-									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/1/edit"
+									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/${lstResponsables.idCuenta}/edit"
 									title="${ttbEditar}"> <i
 										class="material-icons md-24 md-eld">edit</i>
 								</a> <a
-									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/1"
+									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/${lstResponsables.idCuenta}"
 									title="${ttbVisualizar}"> <i
 										class="material-icons md-24 md-eld">remove_red_eye </i>
 								</a> <a title="${ttbBaja}"> <i

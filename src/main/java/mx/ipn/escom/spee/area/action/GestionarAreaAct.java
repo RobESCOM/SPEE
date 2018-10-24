@@ -31,6 +31,8 @@ public class GestionarAreaAct extends GeneralActionSupport {
 
 	private Usuario usuarioSel;
 	
+	private Integer idSel;
+	
 	private List<CatalogoArea> listAreas;
 	
 	private List<InformacionPersonal> listResponsables;
@@ -54,13 +56,19 @@ public class GestionarAreaAct extends GeneralActionSupport {
 		}
 	}
 
-	public String editNew() {
-		listResponsables = areaBs.obtenerResponsablesArea();
-		return EDITNEW;
-	}
-
 	public String edit() {
+		model = genericSearchBs.findById(CatalogoArea.class, idSel);
+		
 		return EDIT;
+	}
+	
+	public void validateUpdate() {
+		
+	}
+	
+	public String update() {
+		addActionMessage("Se actualizó la información del área correctamente.");
+		return SUCCESS;
 	}
 
 	public String show() {
@@ -117,5 +125,18 @@ public class GestionarAreaAct extends GeneralActionSupport {
 
 	public void setAreaBs(AreaBs areaBs) {
 		this.areaBs = areaBs;
+	}
+
+	public Integer getIdSel() {
+		if(SessionManager.get(NombreObjetosSesion.SESSION_MODEL_ID) != null)
+			idSel = (Integer) SessionManager.get(NombreObjetosSesion.SESSION_MODEL_ID);
+		return idSel;
+	}
+
+	public void setIdSel(Integer idSel) {
+		SessionManager.put(NombreObjetosSesion.SESSION_MODEL_ID, idSel);
+		this.idSel = idSel;
 	}	
+	
+	
 }

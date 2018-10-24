@@ -51,7 +51,6 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 		} catch (UniqueException ue) {
 			addActionError("El usuario ya existe.");
 		}
-
 	}
 
 	public String create() {
