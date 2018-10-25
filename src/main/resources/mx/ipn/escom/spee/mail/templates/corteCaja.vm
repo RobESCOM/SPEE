@@ -4,6 +4,10 @@
 <title></title>
 </head>
 <body>
-	Se ha realizado un corte de caja el día xxx a las xxx por xxxx
+		Reciba un cordial saldo ${usuario}, el corte de caja se ha realizado con fecha ${fechaEnvio}.
+
+	<p>
+		Para ingresar al sistema <a href="${urlNotifiaciones}">aquí</a>
+	</p>
 </body>
 </html>

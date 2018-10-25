@@ -19,6 +19,7 @@ import org.apache.struts2.convention.annotation.Results;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
@@ -99,19 +100,22 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 
 	@SkipValidation
 	public String autorizarPago() {
-		getIdSel();
+		getModel();
 		pagoBs.autorizarPago(model.getId());
 		addActionMessage(getText("Se ha autorizado el pago"));
-		Usuario usuario = genericSearchBs.findById(Usuario.class, model.getIdUsuario());
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, model.getIdUsuario());
+		Usuario usuario = genericSearchBs.findById(Usuario.class, cuenta.getIdUsuario());
 		enviarEmailPago(usuario, model);
 		return SUCCESS;
 	}
 
 	@SkipValidation
 	public String rechazarPago() {
+		getModel();
 		pagoBs.rechazarPago(model.getId());
 		addActionMessage("Se ha rechazado el pago");
-		Usuario usuario = genericSearchBs.findById(Usuario.class, model.getIdUsuario());
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, model.getIdUsuario());
+		Usuario usuario = genericSearchBs.findById(Usuario.class, cuenta.getIdUsuario());
 		enviarEmailPagoRechazado(usuario, model);
 		return SUCCESS;
 	}
@@ -139,7 +143,7 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 			mailSender.sendEmail(templateParams, mailProperties.get(Constantes.TEMPLATE), destinatarios,
 					mailProperties.get(Constantes.SUBJECT), null);
 		} catch (Exception ex) {
-			addActionMessage("No se pudo envíar email");
+			addActionMessage("No se pudo notificar al usuario.");
 		}
 
 	}

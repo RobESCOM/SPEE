@@ -30,6 +30,7 @@ import mx.ipn.escom.spee.notificaciones.mapeo.Notificacion;
 import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
 import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
 import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
@@ -66,7 +67,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	public static final String FORMATO_PNG = "image/png";
 
 	public static final String FORMATO_PDF = "application/pdf";
-	
+
 	@Autowired
 	private MailSender mailSender;
 
@@ -74,23 +75,23 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	private GenericSearchBs genericSearchBs;
 
 	@Transactional
-	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio, String folio)
-			throws IOException, TamanioArchivoException, FormatoArchivoException, FolioDuplicadoException {
+	public void registrarPago(Archivo archivo, Usuario usuario, Integer idServicio, String folio) throws IOException,
+			TamanioArchivoException, FormatoArchivoException, FolioDuplicadoException, MailNoSendException {
 
 		ArchivoPagoDia archivoExample = new ArchivoPagoDia();
 		archivoExample.setFolioOperacion(folio);
-		if(!genericSearchBs.findByExample(archivoExample).isEmpty()) {
+		if (!genericSearchBs.findByExample(archivoExample).isEmpty()) {
 			throw new FolioDuplicadoException();
 		}
-			
+
 		List<String> contentType = new ArrayList<>();
 		contentType.add(FORMATO_JPEG);
 		contentType.add(FORMATO_PNG);
 		contentType.add(FORMATO_PDF);
 		if (formatoArchivo(archivo, contentType)) {
 			throw new FormatoArchivoException();
-		} 
-		
+		}
+
 		CatalogoServicio catalogoServicio = new CatalogoServicio();
 		catalogoServicio.setClave(idServicio.toString());
 		catalogoServicio.setIdArea(idServicio);
@@ -108,12 +109,17 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
 		archivoPago.setFechaEnvio(currentDate);
 		archivoPago.setIdCarpeta(1);
+		archivoPago.setCorte(Boolean.FALSE);
 		archivoPago.setFolioOperacion(folio);
 		if (tamanioArchivo(archivo, CINCUENTA_MB)) {
 			throw new TamanioArchivoException();
-		}	
+		}
 		save(archivoPago);
-		enviarEmailPago(usuario, archivoPago);
+		try {
+			enviarEmailPago(usuario, archivoPago);
+		} catch (Exception ex) {
+			throw new MailNoSendException();
+		}
 		LOGGER.info("se ha registrado un pago");
 		Notificacion notificacion = new Notificacion();
 		notificacion.setFechaEnvio(currentDate);
@@ -122,7 +128,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		notificacion.setIdDestinatario(PerfilEnum.ENCARGADO_CAJA.getValor());
 		save(notificacion);
 	}
-	
+
 	public void enviarEmailPago(Usuario usuario, ArchivoPagoDia archivoPago) {
 		Map<String, String> mailProperties = new HashMap<>();
 		Map<String, Object> templateParams = new HashMap<>();
@@ -135,7 +141,8 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 		templateParams.put("usuario", usuario.getLogin());
 		templateParams.put("fechaEnvio", archivoPago.getFechaEnvio());
-		templateParams.put("conceptoPago", genericSearchBs.findById(CatalogoServicio.class, archivoPago.getIdCatalogoServicio()).getDescripcion());
+		templateParams.put("conceptoPago",
+				genericSearchBs.findById(CatalogoServicio.class, archivoPago.getIdCatalogoServicio()).getDescripcion());
 		templateParams.put("urlNotifiaciones", ip + contextPath + namespace);
 
 		List<String> destinatarios = new ArrayList<>();
@@ -244,5 +251,5 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	public void setGenericSearchBs(GenericSearchBs genericSearchBs) {
 		this.genericSearchBs = genericSearchBs;
 	}
-	
+
 }

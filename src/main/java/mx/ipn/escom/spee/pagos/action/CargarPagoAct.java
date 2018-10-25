@@ -16,6 +16,7 @@ import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
 import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
 import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
@@ -61,7 +62,9 @@ public class CargarPagoAct extends GeneralActionSupport {
 			addActionError("Formato no válido");
 		} catch (FolioDuplicadoException fde) {
 			addActionError("Folio no válido");
-		}
+		} catch (MailNoSendException mnse) {
+			addActionError("No se pudo notificar al usuario");
+		} 
 	}
 
 	public String create() {
