@@ -1,3 +1,3 @@
 $(function() {
-	dataTableEMETH.createSortedDataTable("tblServicios", 1, "asc");
+	dataTableEMETH.createSortedDataTable("tblServicios", 5, "asc");
 });

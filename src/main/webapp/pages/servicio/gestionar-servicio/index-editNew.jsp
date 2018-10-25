@@ -52,8 +52,8 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="" id="txClave" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" name="model.clave" id="txClave" />
+					<s:fielderror fieldName="model.clave" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Tipo de servicio -->
@@ -65,9 +65,9 @@
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:select id="slcTipoServicio" class="form-control" headerKey="-1"
 						headerValue="Seleccione"
-						list="#{'1':'Curso', '2':'Servicio'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="" cssClass="error"
+						list="listTipoServicios" listValue="nombre" listKey="id"
+						name="model.idTipoServicio" cssErrorClass="field-error" />
+					<s:fielderror fieldName="model.idTipoServicio" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>
@@ -78,9 +78,9 @@
 					for=""> <s:text name="Descripcion" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textarea cssClass="form-control campo" name=""
+					<s:textarea cssClass="form-control campo" name="model.descripcion"
 						cssClassError="input-error" id="txDescripcion" maxlength="150" rows="5" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.descripcion" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Costo -->
@@ -90,9 +90,9 @@
 					<s:text name="Costo (MXN)" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:textfield cssClass="form-control campo" name=""
+					<s:textfield cssClass="form-control campo" name="model.precio"
 						cssClassError="input-error" id="txCosto" type="number" min="1" max="10000" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.precio" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Area a la que perteneces -->
@@ -104,9 +104,9 @@
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:select id="slcArea" class="form-control" headerKey="-1"
 						headerValue="Seleccione"
-						list="#{'1':'Celex', '2':'Biblioteca', '3':'Fotocopiado', '4':'Servicio dental'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="" cssClass="error"
+						list="listAreas" listValue="nombreArea" listKey="id"
+						name="model.idArea" cssErrorClass="field-error" />
+					<s:fielderror fieldName="model.idArea" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>
