@@ -55,6 +55,9 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 	@Column(name = "folio_operacion")
 	private String folioOperacion;
 
+	@Column(name = "corte_caja")
+	private Boolean corte;
+
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", insertable = false, updatable = false)
 //	private Usuario usuario;
@@ -149,6 +152,14 @@ public class ArchivoPagoDia implements Modelo, Serializable {
 
 	public void setFolioOperacion(String folioOperacion) {
 		this.folioOperacion = folioOperacion;
+	}
+
+	public Boolean getCorte() {
+		return corte;
+	}
+
+	public void setCorte(Boolean corte) {
+		this.corte = corte;
 	}
 
 }

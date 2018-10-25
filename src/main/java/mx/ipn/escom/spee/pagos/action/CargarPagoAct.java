@@ -20,7 +20,7 @@ import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
-@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-servicios" }),
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-pagos" }),
 		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "cargar-pago/new" }) })
 public class CargarPagoAct extends GeneralActionSupport {
 
@@ -41,8 +41,6 @@ public class CargarPagoAct extends GeneralActionSupport {
 	private String folio;
 
 	public String editNew() {
-		// pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class,
-		// 11).getArchivo());
 		return EDITNEW;
 	}
 

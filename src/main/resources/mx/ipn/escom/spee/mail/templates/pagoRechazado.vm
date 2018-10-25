@@ -4,7 +4,10 @@
 <title></title>
 </head>
 <body>
-	Tu pago por concepto de xxxx ha sido rechazado el día xxx a las xxxx por motivo de xxx
-	Si tienes alguna duda favor de comunicarse a xxx con xxx
+	Hola ${usuario}, tu pago por concepto de ${conceptoPago}, ha sido rechazado por caja, favor de ponerse en contacto.
+
+	<p>
+		Para ingresar al sistema <a href="${urlNotifiaciones}">aquí</a>
+	</p>
 </body>
 </html>

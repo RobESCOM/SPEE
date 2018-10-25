@@ -17,6 +17,9 @@
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos">
 								<s:text name="menu.cajero.gestionar.pagos" />
+						</a><a
+							href="${pageContext.request.contextPath}/pagos/gestionar-ser/new">
+								<s:text name="Pago en Caja" />
 						</a></li>
 					</ul></li>
 				<li class="dropdown"><a href="#"><s:text

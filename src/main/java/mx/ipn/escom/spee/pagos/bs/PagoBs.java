@@ -24,7 +24,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
-import mx.edu.spee.controlacceso.mapeo.Perfil;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.ipn.escom.spee.notificaciones.mapeo.Notificacion;
@@ -94,17 +93,16 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		
 		CatalogoServicio catalogoServicio = new CatalogoServicio();
 		catalogoServicio.setClave(idServicio.toString());
+		catalogoServicio.setIdArea(idServicio);
 		Date currentDate = new Date();
 		ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 		byte[] bfile = new byte[(int) archivo.getFileUpload().length()];
 		FileInputStream fis = new FileInputStream(archivo.getFileUpload());
 		archivoPago.setArchivo(bfile);
 		fis.read(bfile);
-		CatalogoServicio catalogo = new CatalogoServicio();
-		catalogo.setId(idServicio);
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuario.getId());
-		archivoPago.setIdCatalogoServicio(genericSearchBs.findByExample(catalogo).get(0).getId());
+		archivoPago.setIdCatalogoServicio(idServicio);
 		archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 		archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
 		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
@@ -149,12 +147,10 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	}
 
 	private Boolean tamanioArchivo(Archivo archivo, long numeroBytes) {
-		System.err.println(archivo.getFileUpload().length());
 		return (archivo.getFileUpload().length() > numeroBytes) ? true : false;
 	}
 
 	private Boolean formatoArchivo(Archivo archivo, List<String> contentTypes) {
-		System.err.println((!contentTypes.contains(archivo.getFileUploadContentType())));
 		return (!contentTypes.contains(archivo.getFileUploadContentType())) ? true : false;
 	}
 
@@ -167,14 +163,15 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		update(archivoPagoDia);
 	}
 
-	public void mostrarPago(byte[] archivo) {
+	public FileOutputStream mostrarPago(Integer id) {
 		try {
 			FileOutputStream fileOuputStream = new FileOutputStream("filename.pdf");
-			fileOuputStream.write(genericSearchBs.findById(ArchivoPagoDia.class, 11).getArchivo());
-			System.err.println(fileOuputStream);
+			fileOuputStream.write(genericSearchBs.findById(ArchivoPagoDia.class, id).getArchivo());
+			return fileOuputStream;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
@@ -219,7 +216,9 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	}
 
 	public List<ArchivoPagoDia> obtenerPagosPorAutorizar() {
-		return genericSearchBs.findAll(ArchivoPagoDia.class);
+		ArchivoPagoDia archivo = new ArchivoPagoDia();
+		archivo.setCorte(Boolean.FALSE);
+		return genericSearchBs.findByExample(archivo);
 	}
 
 	public AjaxResult obtenerPagosUsuario(Integer idUsuario) {
@@ -246,6 +245,4 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		this.genericSearchBs = genericSearchBs;
 	}
 	
-	
-
 }

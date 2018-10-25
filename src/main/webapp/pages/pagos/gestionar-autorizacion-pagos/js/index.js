@@ -4,6 +4,7 @@ $(function() {
 
 function corteCaja() {
 	var action = $("#hdnUrlAction").val();
+	action = action;
 	$("#frmCorteCaja").attr("action", action);
 	$.publish("showDlgCorteCaja");
 }

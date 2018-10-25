@@ -27,7 +27,7 @@
 </div>
 
 <div class="row form-group">
-	<div class="col-md-8 col-md-offset-2">
+	<div class="col-md-12">
 		<s:actionerror theme="%{varTheme}" />
 		<s:actionmessage theme="%{varTheme}" />
 	</div>
@@ -73,7 +73,7 @@
 								<td>${pagoPorAutorizar.catalogoServicio.descripcion}</td>
 								<td>$ ${pagoPorAutorizar.catalogoServicio.precio} MXN</td>
 								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/idSel=${pagoPorAutorizar.id}"
+									href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/${pagoPorAutorizar.id}"
 									title="Visualizar Comprobante"> <i
 										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
 								</a></td>
@@ -98,16 +98,14 @@
 <sj:dialog id="corteCajaId" modal="true" title="Corte de Caja"
 	autoOpen="false" openTopics="showDlgCorteCaja"
 	closeTopics="closeDlgCorte" resizable="false" draggable="false">
-	<s:url var="urlAction" action="gestionar-corte-caja/"
-		includeContext="true" />
+	<s:url var="urlAction" action="gestionar-corte-caja/" includeContext="true" />
 	<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
 
 	<s:form id="frmCorteCaja" action="" method="post" theme="simple"
 		cssClass="form-horizontal">
 		<div class="row">
 			<div class="col-md-12">
-				<s:text
-					name="Esta apunto de realizar el corte de caja, esto no le permitirá iniciar sesión hasta su siguiente turno" />
+				<s:text name="Esta apunto de realizar el corte de caja" />
 			</div>
 		</div>
 
