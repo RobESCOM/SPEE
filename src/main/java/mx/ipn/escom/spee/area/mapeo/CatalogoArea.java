@@ -80,10 +80,26 @@ public class CatalogoArea implements Modelo, Serializable {
 	private Cuenta cuenta;
 	
 	@OneToMany(fetch = FetchType.LAZY)
-	private List<CatalogoServicio> servicios;
+	private List<CatalogoServicio> listServicios;
 	
 	public CatalogoArea() {
 		super();
+	}
+
+	public Cuenta getCuenta() {
+		return cuenta;
+	}
+
+	public void setCuenta(Cuenta cuenta) {
+		this.cuenta = cuenta;
+	}
+
+	public List<CatalogoServicio> getListServicios() {
+		return listServicios;
+	}
+
+	public void setListServicios(List<CatalogoServicio> listServicios) {
+		this.listServicios = listServicios;
 	}
 
 	public CatalogoArea(Integer id, String nombreArea, String descripcion) {

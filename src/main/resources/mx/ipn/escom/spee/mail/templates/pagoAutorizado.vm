@@ -4,7 +4,10 @@
 <title></title>
 </head>
 <body>
-	Felicidades tu pago por concepto de xxx ha sido autorizado.
-	si tienes alguna duda favor de comunicarte al xxxx ext xxx
+		Hola ${usuario}, tu pago por concepto de ${conceptoPago}, ha sido autorizado por caja.
+
+	<p>
+		Para ingresar al sistema <a href="${urlNotifiaciones}">aquí</a>
+	</p>
 </body>
 </html>

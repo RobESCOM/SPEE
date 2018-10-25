@@ -59,11 +59,15 @@
 										</s:elseif></td>
 									<td><s:date name="%{#pagAutorizado.fechaEnvio}"
 											format="yyyy-MM-dd" /></td>
-									<td><s:text name="%{#pagAutorizado.catalogoServicio.descripcion}"/></td>
+									<td>${pagAutorizado.catalogoServicio.descripcion}</td>
 									<td>$ ${pagAutorizado.catalogoServicio.precio} MXN</td>
-									<td><a href="#" title="Visualizar Archivo de Pago"> <i
-											class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-									</a></td>
+									<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos!visualizarArchivo?idPago=${pagAutorizado.id}"
+										title="Visualizar Archivo de Pago"> <i
+											class="material-icons md-24">${varIconoVisualizar}</i>
+									</a>
+									</td>
 								</tr>
 							</s:iterator>
 						</tbody>

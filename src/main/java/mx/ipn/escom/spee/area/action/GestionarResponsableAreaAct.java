@@ -2,9 +2,11 @@ package mx.ipn.escom.spee.area.action;
 
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -25,6 +27,7 @@ import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 @Namespace("/area")
 @Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
 		"gestionar-responsable-area" }) })
+@AllowedMethods({ "bajaResponsable" })
 public class GestionarResponsableAreaAct extends GeneralActionSupport {
 
 	/**
@@ -147,12 +150,12 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 			addActionError("Ya existe un usuario asociado a ese correo electrónico.");
 		}
 	}
-	
+
 	public String update() {
 		addActionMessage("La información del responsable de área se actualizó correctamente.");
 		return SUCCESS;
 	}
-	
+
 	public String show() {
 		InformacionPersonal info = new InformacionPersonal();
 		info.setIdCuenta(idSel);
@@ -165,6 +168,16 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 		area = genericSearchBs.findByExample(area).get(Numeros.CERO.getValor());
 		nombreArea = area.getNombreArea();
 		return SHOW;
+	}
+
+	@SkipValidation
+	public String bajaResponsable() {
+		getIdSel();
+		if (areaBs.darBajaResponsable(idSel)) {
+			return SUCCESS;
+		} else {
+			return NO_AUTORIZADO;
+		}
 	}
 
 	public Usuario getUsuarioSel() {
@@ -246,9 +259,6 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	public InformacionPersonal getModel() {
 		if (model == null) {
 			model = new InformacionPersonal();
-//			InformacionPersonal info = new InformacionPersonal();
-//			info.setIdCuenta(idSel);
-//			model = genericSearchBs.findByExample(info).get(Numeros.CERO.getValor());
 		}
 		return model;
 	}
@@ -278,7 +288,7 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	}
 
 	public String getNombreArea() {
-		if(SessionManager.get(NombreObjetosSesion.NOMBRE_AREA) != null) {
+		if (SessionManager.get(NombreObjetosSesion.NOMBRE_AREA) != null) {
 			nombreArea = (String) SessionManager.get(NombreObjetosSesion.NOMBRE_AREA);
 		}
 		return nombreArea;
@@ -289,7 +299,7 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	}
 
 	public String getClave() {
-		if(SessionManager.get("clave") != null) {
+		if (SessionManager.get("clave") != null) {
 			clave = (String) SessionManager.get("clave");
 		}
 		return clave;
@@ -297,5 +307,5 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 
 	public void setClave(String clave) {
 		this.clave = clave;
-	}	
+	}
 }

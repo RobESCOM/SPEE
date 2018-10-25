@@ -86,7 +86,7 @@
 									href="${pageContext.request.contextPath}/area/gestionar-responsable-area/${lstResponsables.idCuenta}"
 									title="${ttbVisualizar}"> <i
 										class="material-icons md-24 md-eld">remove_red_eye </i>
-								</a> <a title="${ttbBaja}"> <i
+								</a> <a onclick="myclickDialog('${lstResponsables.idCuenta}')" title="${ttbBaja}"> <i
 										class="material-icons md-24 md-eld">cancel</i>
 								</a></td>
 							</tr>
@@ -96,6 +96,35 @@
 			</div>
 		</div>
 	</div>
+	<!-- Diálogo de confirmación para dar de baja a un responsable de área -->
+	<sj:dialog id="bajaResponsable" modal="true" title="Dar de baja a responsable de área" autoOpen="false"
+		openTopics="showDlgBaja" closeTopics="closeDlgBaja" resizable="false"
+		draggable="false" cssClass="hidden" >
+		<s:url var="urlAction"
+			action="gestionar-responsable-area!bajaResponsable?idSel=%{lstResponsables.idCuenta}"
+			includeContext="true" />
+		<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
+		<s:form id="frmBajaResponsable" action="" theme="simple"
+			method="post">
+			<div class="row">
+				<div class="col-md-12">
+					<s:text
+						name="Esta seguro que desea dar de baja al responsable de area? Este responsable quedara deshabilitado del sistema.">
+					</s:text>
+				</div>
+			</div>
+			<!-- Botones de si y no -->
+			<div class="row">
+				<div class="text-right col-md-12">
+					<s:submit cssClass="btn btn-default btn-default-eld"
+						value="Si" />
+					<a onclick="closeBajaDlg()"
+						class="btn btn-default btn-default-eld"><s:text
+							name="No" /></a>
+				</div>
+			</div>
+		</s:form>
+		</sj:dialog>
 </div>
 <div class="outter-section form-horiontal">
 	<div class="col-xs-12 col-md-12 col-md-12 text-center">

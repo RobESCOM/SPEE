@@ -6,6 +6,7 @@ import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.validator.annotations.EmailValidator;
-import com.opensymphony.xwork2.validator.annotations.RegexFieldValidator;
 import com.opensymphony.xwork2.validator.annotations.RequiredStringValidator;
 import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
@@ -29,10 +29,12 @@ import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
+import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Namespace("/control-acceso")
-@AllowedMethods({ "welcome" })
-@Results({ @Result(name = MenuAct.MENU, type = "redirectAction", params = { "actionName", "%{action}" }) })
+@AllowedMethods({ "welcome", "getLoginService" })
+@Results({ @Result(name = MenuAct.MENU, type = "redirectAction", params = { "actionName", "%{action}" }),
+		@Result(name = "getLoginService", type = "json", params = { "root", "action", "includeProperties", "ajaxResult.*" }) })
 public class LoginAct extends GeneralActionSupport {
 
 	protected static final String WELCOME = "welcome";
@@ -40,14 +42,16 @@ public class LoginAct extends GeneralActionSupport {
 	private static final Logger log = LoggerFactory.getLogger(LoginAct.class);
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final String BIENVENIDA = "../control-acceso/gestionar-bienvenida";
 
 	public static final String MENU = "menu";
-	
+
+	public static final String GET_LOGIN = "getLoginService";
+
 	@Autowired
 	private GenericSearchBs genericSearchBs;
-	
+
 	@Autowired
 	private LoginBs loginBs;
 
@@ -56,6 +60,8 @@ public class LoginAct extends GeneralActionSupport {
 	private String login;
 
 	private String password;
+
+	private AjaxResult ajaxResult;
 
 	public HttpHeaders index() {
 		Usuario usuario = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
@@ -73,6 +79,21 @@ public class LoginAct extends GeneralActionSupport {
 		} catch (LoginIncorrectoException e) {
 			addActionError(getText("Usuario o Password icorrectos"));
 		}
+	}
+
+	@SkipValidation
+	public String getLoginService() {
+		getAjaxResult();
+		try {
+			AjaxResult ajaxResult = new AjaxResult();
+			ajaxResult.addCampo("usuario", loginBs.ingresar(login, password));
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+		} catch (UsuarioNoEncontradoException e) {
+			addActionError(getText("Usuario o Password icorrectos"));
+		} catch (LoginIncorrectoException e) {
+			addActionError(getText("Usuario o Password icorrectos"));
+		}
+		return GET_LOGIN;
 	}
 
 	public String create() {
@@ -151,4 +172,26 @@ public class LoginAct extends GeneralActionSupport {
 	public void setAction(String action) {
 		this.action = action;
 	}
+
+	public GenericSearchBs getGenericSearchBs() {
+		return genericSearchBs;
+	}
+
+	public void setGenericSearchBs(GenericSearchBs genericSearchBs) {
+		this.genericSearchBs = genericSearchBs;
+	}
+
+	public AjaxResult getAjaxResult() {
+		this.ajaxResult = (AjaxResult) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
+		if (ajaxResult == null) {
+			ajaxResult = new AjaxResult();
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+		}
+		return ajaxResult;
+	}
+
+	public void setAjaxResult(AjaxResult ajaxResult) {
+		this.ajaxResult = ajaxResult;
+	}
+
 }

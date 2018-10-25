@@ -12,6 +12,7 @@
 </jsp:text>
 
 <s:set var="varIconoAdjuntar" value="'attach_file'" />
+<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
 
 <div class="row title">
 	<div class="col-md-12">
@@ -21,62 +22,69 @@
 	</div>
 </div>
 
-<fieldset class="form-section form-horizontal text-justify">
-	<div class="form-horizontal text-left">
-		<div class="row">
-			<label class="col-md-6 text-left control-label"> <s:text
-					name="Identificador">
-				</s:text>
-			</label>
-			<div class="col-md-6 text-left">
-				<s:property value="infoUsuario.clave" />
-			</div>
-		</div>
+<div class="row form-group">
+	<div class="col-md-8 col-md-offset-2">
+		<s:actionerror theme="%{varTheme}" />
+		<s:actionmessage theme="%{varTheme}" />
 	</div>
+</div>
+
+<fieldset class="text-justify">
 	<div class="form-section form-horizontal">
 		<div class="form-group">
 			<div class="row">
 				<div class="col-md-12">
-					<table id="tblServicios" class="table table-striped">
-						<thead>
-							<tr>
-								<th><s:text name="Concepto" /></th>
-								<th><s:text name="Costo" /></th>
-								<th><s:text name="Area" /></th>
-								<th><s:text name="Acciones" /></th>
-							</tr>
-						</thead>
-						<tbody>
-							<s:iterator value="listCatalogoServicios" var="oservicio">
-								<tr>
-									<td>${oservicio.descripcion	}</td>
-									<td><s:text name="$"></s:text>${oservicio.precio}<s:text
-											name=" MXN"></s:text></td>
-									<td><s:if
-											test="%{#oservicio.id eq @mx.ipn.escom.spee.pagos.mapeo.CatalogoArea$CatalogoAreaEnum@CELEX.getIdEstatus()}">
+					<label class="col-md-6 text-left control-label"> <s:text
+							name="Identificador">
+						</s:text>
+					</label>
+					<div class="col-md-6 text-left">
+						<s:property value="infoUsuario.clave" />
+					</div>
+				</div>
+			</div>
+
+			<table id="tblServicios" class="table table-striped">
+				<thead>
+					<tr>
+						<th><s:text name="Concepto" /></th>
+						<th><s:text name="Costo" /></th>
+						<th><s:text name="Area" /></th>
+						<th><s:text name="Acciones" /></th>
+					</tr>
+				</thead>
+				<tbody>
+					<s:iterator value="listCatalogoServicios" var="oservicio">
+						<tr>
+							<td>${oservicio.descripcion	}</td>
+							<td><s:text name="$"></s:text>${oservicio.precio}<s:text
+									name=" MXN"></s:text></td>
+							<td><s:if
+									test="%{#oservicio.idArea eq @mx.ipn.escom.spee.area.mapeo.CatalogoArea$CatalogoAreaEnum@CELEX.getIdEstatus()}">
 										CELEX
 									</s:if> <s:elseif
-											test="%{#oservicio.id eq @mx.ipn.escom.spee.pagos.mapeo.CatalogoArea$CatalogoAreaEnum@DENTALES.getIdEstatus()}">
+									test="%{#oservicio.idArea eq @mx.ipn.escom.spee.area.mapeo.CatalogoArea$CatalogoAreaEnum@DENTALES.getIdEstatus()}">
 										Servicios Dentales
 									</s:elseif> <s:elseif
-											test="%{#oservicio.id eq @mx.ipn.escom.spee.pagos.mapeo.CatalogoArea$CatalogoAreaEnum@FOTOCOPIADO.getIdEstatus()}">
+									test="%{#oservicio.idArea eq @mx.ipn.escom.spee.area.mapeo.CatalogoArea$CatalogoAreaEnum@FOTOCOPIADO.getIdEstatus()}">
 										Servicios Fotocopiado
 									</s:elseif> <s:else>
 										Servicios Biblioteca
 									</s:else></td>
-									<td><a
-										href="${pageContext.request.contextPath}/pagos/cargar-pago/new?idServicio=${oservicio.id}"
-										title="Adjuntar comprobante de pago"> <i
-											class="material-icons md-24 md-eld">${varIconoAdjuntar}</i>
-									</a></td>
-								</tr>
-							</s:iterator>
-						</tbody>
-					</table>
-				</div>
-			</div>
+							<td><a
+								href="${pageContext.request.contextPath}/pagos/cargar-pago/new?idServicio=${oservicio.id}"
+								title="Adjuntar comprobante de pago"> <i
+									class="material-icons md-24">${varIconoAdjuntar}</i>
+							</a></td>
+						</tr>
+					</s:iterator>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </fieldset>
+<div class="text-left">
+	<div class="col-md-12"></div>
+</div>
 	</html>
 </jsp:root>

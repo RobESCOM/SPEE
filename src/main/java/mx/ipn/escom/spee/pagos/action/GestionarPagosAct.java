@@ -1,6 +1,11 @@
 package mx.ipn.escom.spee.pagos.action;
-
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +44,10 @@ import net.sf.jasperreports.engine.JRException;
 		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }),
 		@Result(name = "getPaymentsByUserId", type = "json", params = { "root", "action", "includeProperties",
 				"ajaxResult.*" }),
-		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
-				"archivoVisualizar.fileInputStream", "contentDisposition",
-				"inline;filename=\"${archivoVisualizar.fileUploadFileName}\"", "bufferSize", "1024" }) })
-@AllowedMethods({ "generarReporte", "vizualizarArchivo", "getPaymentsByUserId" })
+		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf,application/png,application/jpg", "inputName",
+				"inputStream", "contentDisposition", "inline;filename=\"${inputStream.fileUploadFileName}\"",
+				"bufferSize", "1024" }) })
+@AllowedMethods({ "generarReporte", "visualizarArchivo", "getPaymentsByUserId" })
 public class GestionarPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -72,6 +77,12 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	private Integer idUser;
 
+	private Integer idPago;
+
+	private byte[] arch;
+
+	public InputStream inputStream;
+
 	public String index() {
 		getUsuarioSel();
 		if (usuarioSel.getPerfilActivo()
@@ -83,8 +94,39 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			archivoPago.setCatalogoServicio(catalogo);
 			listPagos = genericSearchBs.findByExample(archivoPago);
 			return ResultConstants.ADMINISTRADOR_CELEX;
+		} else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			CatalogoServicio catalogo = new CatalogoServicio();
+			catalogo.setIdArea(CatalogoAreaEnum.DENTALES.getIdEstatus());
+			archivoPago.setCatalogoServicio(catalogo);
+			listPagos = genericSearchBs.findByExample(archivoPago);
+			return ResultConstants.ADMINISTRADOR_DENTALES;
+		} else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			CatalogoServicio catalogo = new CatalogoServicio();
+			catalogo.setIdArea(CatalogoAreaEnum.BIBLIOTECA.getIdEstatus());
+			archivoPago.setCatalogoServicio(catalogo);
+			listPagos = genericSearchBs.findByExample(archivoPago);
+			return ResultConstants.ADMINISTRADOR_BIBLIOTECA;
+		} else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			CatalogoServicio catalogo = new CatalogoServicio();
+			catalogo.setIdArea(CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus());
+			archivoPago.setCatalogoServicio(catalogo);
+			listPagos = genericSearchBs.findByExample(archivoPago);
+			return ResultConstants.ADMINISTRADOR_IMPRESIONES;
 		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
-				.getValor()) {
+				.getValor()
+				|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
+						.getValor()
+				|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
+						.getValor()) {
 			Cuenta cuenta = new Cuenta();
 			cuenta.setIdUsuario(usuarioSel.getId());
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
@@ -118,13 +160,27 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			addActionError(getText("Archivo no se pudo crear"));
 		}
 
-		return vizualizarArchivo(archivo);
+		return visualizarArchivo(archivo);
 	}
 
 	@SkipValidation
-	public HttpHeaders vizualizarArchivo(Archivo archivo) {
+	public HttpHeaders visualizarArchivo(Archivo archivo) {
 		archivoVisualizar = new Archivo();
-		setArchivoVisualizar(archivo);
+		FileOutputStream file = pagoBs.mostrarPago(idPago);
+		return new DefaultHttpHeaders("filesuccess").disableCaching();
+	}
+
+	@SkipValidation
+	public HttpHeaders visualizarArchivo() {
+		try {
+			FileOutputStream fileOuputStream = new FileOutputStream("filename.pdf");
+			fileOuputStream.write(genericSearchBs.findById(ArchivoPagoDia.class, idPago).getArchivo());
+			File file = new File("filename.pdf");
+			inputStream = new DataInputStream(new FileInputStream(file));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		return new DefaultHttpHeaders("filesuccess").disableCaching();
 	}
 
@@ -224,6 +280,30 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public void setIdUser(Integer idUser) {
 		this.idUser = idUser;
+	}
+
+	public Integer getIdPago() {
+		return idPago;
+	}
+
+	public void setIdPago(Integer idPago) {
+		this.idPago = idPago;
+	}
+
+	public byte[] getArch() {
+		return arch;
+	}
+
+	public void setArch(byte[] arch) {
+		this.arch = arch;
+	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
+	public void setInputStream(InputStream inputStream) {
+		this.inputStream = inputStream;
 	}
 
 }

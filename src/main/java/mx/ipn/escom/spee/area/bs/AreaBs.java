@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.mail.Session;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +17,6 @@ import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
-import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
 import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.SHADigest;
@@ -140,5 +137,26 @@ public class AreaBs implements Serializable {
 			genericDao.update(usr);
 			genericDao.updateMerge(model);
 		}
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean darBajaResponsable(Integer idCuenta) {
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, idCuenta);
+		if(cuenta != null){
+			cuenta.setEstatus(false);
+			genericDao.update(cuenta);
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public List<CatalogoArea> obtieneAreasActivas() {
+		CatalogoArea area = new CatalogoArea();
+		List<CatalogoArea> listAreas = new ArrayList<>();
+		area.setEstatus(true);
+		listAreas = genericSearchBs.findByExample(area);
+		return listAreas;		
 	}
 }

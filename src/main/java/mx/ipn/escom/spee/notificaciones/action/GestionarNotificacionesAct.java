@@ -51,43 +51,38 @@ public class GestionarNotificacionesAct extends GeneralActionSupport {
 			notificacion.setIdCuenta(usuarioSel.getId());
 			listNotificaciones = genericSearchBs.findByExample(notificacion);
 			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ENCARGADO_CAJA
+		} else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ENCARGADO_CAJA.getValor()) {
+		
+			Notificacion notificacion = new Notificacion();
+			notificacion.setIdCuenta(usuarioSel.getId());
+			listNotificaciones = genericSearchBs.findByExample(notificacion);
+			return INDEX;
+		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.CONTADOR
 				.getValor()) {
 			Notificacion notificacion = new Notificacion();
 			notificacion.setIdCuenta(usuarioSel.getId());
 			listNotificaciones = genericSearchBs.findByExample(notificacion);
 			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.CONTADOR
+		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
 				.getValor()) {
 			Notificacion notificacion = new Notificacion();
 			notificacion.setIdCuenta(usuarioSel.getId());
 			listNotificaciones = genericSearchBs.findByExample(notificacion);
 			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
-				.getValor()) {
-			Notificacion notificacion = new Notificacion();
-			notificacion.setIdCuenta(usuarioSel.getId());
-			listNotificaciones = genericSearchBs.findByExample(notificacion);
-			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo()
+		} else if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
 			Notificacion notificacion = new Notificacion();
 			notificacion.setIdCuenta(usuarioSel.getId());
 			listNotificaciones = genericSearchBs.findByExample(notificacion);
 			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
+		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
 				.getValor()) {
 			Notificacion notificacion = new Notificacion();
 			notificacion.setIdCuenta(usuarioSel.getId());
 			listNotificaciones = genericSearchBs.findByExample(notificacion);
 			return INDEX;
-		}
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
+		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
 				.getValor()) {
 			Notificacion notificacion = new Notificacion();
 			notificacion.setIdCuenta(usuarioSel.getId());

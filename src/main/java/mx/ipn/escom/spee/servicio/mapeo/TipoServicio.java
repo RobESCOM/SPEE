@@ -1,12 +1,14 @@
 package mx.ipn.escom.spee.servicio.mapeo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import mx.ipn.escom.spee.util.mapeo.Modelo;
@@ -45,7 +47,16 @@ public class TipoServicio implements Modelo, Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_tipo_servicio")
 	private Integer id;
-
+	
+	@Column(name = "tx_nombre")
+	private String nombre;
+	
+	@Column(name = "tx_descripcion")
+	private String descripcion;
+	
+	@OneToMany(mappedBy = "tipoServicio")
+	private List<CatalogoServicio> listServicios;
+	
 	public TipoServicio() {
 		super();
 	}
@@ -56,6 +67,34 @@ public class TipoServicio implements Modelo, Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public List<CatalogoServicio> getListServicios() {
+		return listServicios;
+	}
+
+	public void setListServicios(List<CatalogoServicio> listServicios) {
+		this.listServicios = listServicios;
+	}
+	
+	public String toString() {
+		return getNombre();
 	}
 
 }

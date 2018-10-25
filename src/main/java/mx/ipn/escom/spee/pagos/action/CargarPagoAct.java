@@ -16,11 +16,12 @@ import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
 import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
 import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
-@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "cargar-pago/new" }),
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-pagos" }),
 		@Result(name = ActionSupport.ERROR, type = "redirectAction", params = { "actionName", "cargar-pago/new" }) })
 public class CargarPagoAct extends GeneralActionSupport {
 
@@ -41,8 +42,6 @@ public class CargarPagoAct extends GeneralActionSupport {
 	private String folio;
 
 	public String editNew() {
-		// pagoBs.mostrarPago(genericSearchBs.findById(ArchivoPagoDia.class,
-		// 11).getArchivo());
 		return EDITNEW;
 	}
 
@@ -63,7 +62,9 @@ public class CargarPagoAct extends GeneralActionSupport {
 			addActionError("Formato no válido");
 		} catch (FolioDuplicadoException fde) {
 			addActionError("Folio no válido");
-		}
+		} catch (MailNoSendException mnse) {
+			addActionError("No se pudo notificar al usuario");
+		} 
 	}
 
 	public String create() {
