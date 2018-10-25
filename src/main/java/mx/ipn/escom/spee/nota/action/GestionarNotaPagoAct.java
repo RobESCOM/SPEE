@@ -23,7 +23,7 @@ public class GestionarNotaPagoAct extends GeneralActionSupport {
 	private static final String NOTA_BIBLIOTECA = "notaBiblioteca";
 	private static final String SHOW_NOTA_DENTAL = "showDental";
 
-	private Integer banderaPrueba = 1;
+	private Integer banderaPrueba = 2;
 
 	public String index() {
 		if (banderaPrueba == 1)

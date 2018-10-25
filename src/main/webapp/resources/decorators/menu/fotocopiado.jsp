@@ -22,6 +22,16 @@
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
+				<li class="dropdown"><a
+					href="${pageContext.request.contextPath}/impresiones/control-impresiones"><s:text
+					 		name="menu.fotocopiado.impresiones" /><span class="fa arrow"></span> </a>
+					 <ul class="nav nav-second-lebel">
+					 	<li class="dropdown">
+					 	<a href="${pageContext.request.contextPath}/impresiones/control-impresiones">
+					 			<s:text name="menu.fotocopiado.impresiones.control_impresiones"/> </a>
+					 	</li>
+					 </ul>
+				</li>
 			</ul>
 		</div>
 	</div>

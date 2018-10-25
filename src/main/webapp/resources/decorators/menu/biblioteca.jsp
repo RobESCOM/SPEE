@@ -22,6 +22,16 @@
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
+					
+				<li class="dropdown"><a
+					href="${pageContext.request.contextPath}/nota-pago"><s:text
+							name="menu.biblioteca.servicio" /><span class="fa arrow"></span> </a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/nota-pago/gestionar-nota-pago">
+								<s:text name="menu.biblioteca.servicio.multa" />
+						</a></li>
+					</ul></li>
 			</ul>
 		</div>
 	</div>

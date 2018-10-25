@@ -41,6 +41,8 @@ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
 				<value>mx.ipn.escom.spee.servicio.mapeo.*</value>
 				<value>mx.ipn.escom.spee.area.mapeo</value>
 				<value>mx.ipn.escom.spee.area.mapeo.*</value>
+				<value>mx.ipn.escom.spee.impresiones.mapeo</value>
+				<value>mx.ipn.escom.spee.impresiones.mapeo.*</value>
 			</list>
 		</property>
 	</bean>
