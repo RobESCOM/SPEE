@@ -174,6 +174,7 @@ public class GestionarResponsableAreaAct extends GeneralActionSupport {
 	public String bajaResponsable() {
 		getIdSel();
 		if (areaBs.darBajaResponsable(idSel)) {
+			addActionMessage("El responsable se dio de baja correctamente.");
 			return SUCCESS;
 		} else {
 			return NO_AUTORIZADO;
