@@ -93,6 +93,7 @@ public class TipoServicio implements Modelo, Serializable {
 		this.listServicios = listServicios;
 	}
 	
+	@Override
 	public String toString() {
 		return getNombre();
 	}

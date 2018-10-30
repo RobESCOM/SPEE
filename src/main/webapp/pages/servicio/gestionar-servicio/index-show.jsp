@@ -33,7 +33,7 @@
 					for=""> <s:text name="Clave del servicio" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:property value="'0853'"/>
+					<s:property value="model.clave"/>
 				</div>
 			</div>
 			<!-- Tipo de servicio -->
@@ -43,7 +43,7 @@
 					for=""> <s:text name="Tipo de servicio" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:property value="'Curso'"/>
+					<s:property value="model.tipoServicio"/>
 				</div>
 			</div>
 			<!-- Descripción -->
@@ -53,7 +53,7 @@
 					for=""> <s:text name="Descripcion" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:property value="'Curso de idiomas semanal o sabatino, 40 horas. Comunidad IPN'"/>
+					<s:property value="model.descripcion"/>
 				</div>
 			</div>
 			<!-- Costo -->
@@ -63,7 +63,7 @@
 					<s:text name="Costo (MXN)" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:property value="'$ 544.00'"/>
+					<s:property value="model.precio"/>
 				</div>
 			</div>
 			<!-- Area a la que perteneces -->
@@ -73,16 +73,15 @@
 					for=""> <s:text name="Area a la que pertenece" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-					<s:property value="'Celex'"/>
+					<s:property value="model.area"/>
 				</div>
 			</div>
 		</fieldset>
 		<!-- Botones de Aceptar y Cancelar -->
 		<div class="outter-section form-medium text-right">
 			<div class="col-xs-12 col-md-12 col-md-12 text-right">
-				<s:submit cssClass="btn btn-default-spee" value="Aceptar" />
 				<a class="btn btn-default-spee"
-					href="${pageContext.request.contextPath}/servicio/gestionar-servicio">Cancelar</a>
+					href="${pageContext.request.contextPath}/servicio/gestionar-servicio">Regresar</a>
 			</div>
 		</div>
 </body>

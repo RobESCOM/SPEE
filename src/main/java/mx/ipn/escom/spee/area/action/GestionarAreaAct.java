@@ -57,8 +57,8 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	}
 
 	public String edit() {
+		getIdSel();
 		model = genericSearchBs.findById(CatalogoArea.class, idSel);
-		
 		return EDIT;
 	}
 	
