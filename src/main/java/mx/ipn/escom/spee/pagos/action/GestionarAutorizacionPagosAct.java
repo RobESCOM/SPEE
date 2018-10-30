@@ -1,10 +1,6 @@
 package mx.ipn.escom.spee.pagos.action;
 
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,12 +54,16 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 	private ArchivoPagoDia model;
 
 	private ArchivoPagoDia pago;
+	
+	private String tipoArchivo;
 
 	private File file;
 
 	private List<ArchivoPagoDia> listArchivoPagosRevision;
 
 	public InputStream inputStream;
+	
+	
 
 	public String index() {
 		getUsuarioSel();
@@ -73,15 +73,17 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 
 	public String show() {
 		getUsuarioSel();
-		try {
-			FileOutputStream fileOuputStream;
-			fileOuputStream = new FileOutputStream("filename.pdf");
-			fileOuputStream.write(model.getArchivo());
-			file = new File("filename.pdf");
-			inputStream = new DataInputStream(new FileInputStream(file));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		pago = genericSearchBs.findById(ArchivoPagoDia.class, idSel);
+		tipoArchivo = getImageType(pago.getArchivo());
+//		try {
+//			FileOutputStream fileOuputStream;
+//			fileOuputStream = new FileOutputStream("filename.pdf");
+//			fileOuputStream.write(model.getArchivo());
+//			file = new File("filename.pdf");
+//			inputStream = new DataInputStream(new FileInputStream(file));
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		return SHOW;
 	}
 
@@ -174,6 +176,35 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 			addActionMessage("No se pudo envíar email");
 		}
 	}
+	
+	private boolean isMatch(byte[] pattern, byte[] data) {
+        if (pattern.length <= data.length) {
+            for (int idx = 0; idx < pattern.length; ++idx) {
+                if (pattern[idx] != data[idx])
+                    return false;
+            }
+            return true;
+        }
+ 
+        return false;
+    }
+	
+	 private String getImageType(byte[] data) {
+//       filetype    magic number(hex)
+//       jpg         FF D8 FF
+//       png         89 50 4E 47 0D 0A 1A 0A
+		 
+       final byte[] pngPattern = new byte[] { (byte)0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A};
+       final byte[] jpgPattern = new byte[] { (byte)0xFF, (byte)0xD8, (byte)0xFF};
+       
+       if (isMatch(pngPattern, data))
+           return "image/png";
+
+       else if (isMatch(jpgPattern, data))
+           return "image/jpg";
+
+       return "application/pdf";
+   }
 
 	public GenericSearchBs getGenericSearchBs() {
 		return genericSearchBs;
@@ -261,4 +292,14 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 		this.usuarioSel = usuarioSel;
 	}
 
+	public String getTipoArchivo() {
+		return tipoArchivo;
+	}
+
+	public void setTipoArchivo(String tipoArchivo) {
+		this.tipoArchivo = tipoArchivo;
+	}
+
+	
+	
 }

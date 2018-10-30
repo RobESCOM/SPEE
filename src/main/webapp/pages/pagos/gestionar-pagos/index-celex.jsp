@@ -58,13 +58,13 @@
 					<tbody>
 						<s:iterator value="listPagos" var="pagAutorizadoCelex">
 							<s:set var="alumno"
-								value="%{pagoBs.obtenerAlumno(#pagAutorizadoCelex.idUsuario)}"></s:set>
+								value="%{pagoBs.obtenerAlumno(#pagAutorizadoCelex)}"></s:set>
 							<tr>
-								<td>${usuarioSel}</td>
-								<td>${infoUsuario.clave }</td>
+								<td>${alumno}</td>
+								<td>${alumno.clave }</td>
 								<td><s:date name="%{#pagAutorizadoCelex.fechaEnvio}"
 										format="yyyy-MM-dd" /></td>
-								<td>Servicio</td>
+								<td>${pagAutorizadoCelex.idCatalogoServicio.}</td>
 								<td>$ monto MXN</td>
 							</tr>
 						</s:iterator>

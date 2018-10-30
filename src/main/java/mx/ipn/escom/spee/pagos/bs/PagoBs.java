@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
+import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.ipn.escom.spee.notificaciones.mapeo.Notificacion;
@@ -36,6 +38,7 @@ import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.Constantes;
+import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.servicio.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.PropertyAccess;
@@ -234,6 +237,27 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		pagoDia.setIdUsuario(idUsuario);
 		ajaxResult.addCampo("pagos", genericSearchBs.findByExample(pagoDia));
 		return ajaxResult;
+	}
+	
+	public InformacionPersonal obtenerAlumno(ArchivoPagoDia pago) {
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, pago.getIdUsuario());
+		return obtenerPersona(cuenta);
+	}
+	
+	public InformacionPersonal obtenerPersona(Cuenta cuentaImpresiones) {
+		InformacionPersonal infoPersonal = new InformacionPersonal();
+		infoPersonal.setIdCuenta(cuentaImpresiones.getIdCuenta());
+		List<InformacionPersonal> infoPersona = genericSearchBs.findByExample(infoPersonal);
+		return infoPersona.get(Numeros.CERO.getValor());
+	}
+	
+	public String obtenerArchivo(ArchivoPagoDia archivo) throws IOException {
+		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
+		return new String(encoded);
+	}
+	
+	public String obtenerTipo(String tipo) {
+		return tipo;
 	}
 
 	public MailSender getMailSender() {

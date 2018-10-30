@@ -52,8 +52,7 @@
 					<tbody>
 						<s:iterator value="listArchivoPagosRevision"
 							var="pagoPorAutorizar">
-							<s:set var="alumno"
-								value="%{pagoBs.obtenerAlumno(#pagoPorAutorizar.idUsuario)}"></s:set>
+							<s:set var="alumno"	value="%{pagoBs.obtenerAlumno(#pagoPorAutorizar)}"></s:set>
 							<tr>
 								<td><s:if
 										test="%{#pagoPorAutorizar.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@AUTORIZADO.getIdEstatus()}">
@@ -66,8 +65,8 @@
 										<i class="material-icons  md-24 md-sem-rojo ">&#xE061;</i>
 									</s:elseif></td>
 
-								<td>${alumno}</td>
-								<td>${alumno.curp}</td>
+								<td>${alumno.nombre}</td>
+								<td>${alumno.clave }</td>
 								<td><s:date name="%{#pagoPorAutorizar.fechaEnvio}"
 										format="yyyy-MM-dd" /></td>
 								<td>${pagoPorAutorizar.catalogoServicio.descripcion}</td>

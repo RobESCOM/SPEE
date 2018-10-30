@@ -61,5 +61,41 @@
 		</div>
 	</div>
 </div>
+
+<div class="row">
+	<div class="col-md-12">
+		<button onclick="myClickDialog">Registrar impresiones</button>
+	</div>
+</div>
+
+<sj:dialog id="registroPago" modal="true" title="Registrar Pago" autoOpen="false"
+		openTopics="showRegistro" closeTopics="closeRegistro" resizable="false"
+		draggable="false" cssClass="hidden" >
+	<s:url var="urlAction"
+		action="control-Impresiones!bajaResponsable?idSel=%{lstResponsables.idCuenta}"
+		includeContext="true" />
+	<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
+	<s:form id="frmBajaResponsable" action="" theme="simple"
+		method="post">
+		<div class="row">
+			<div class="col-md-12">
+				<s:text
+					name="Esta seguro que desea dar de baja al responsable de area? Este responsable quedara deshabilitado del sistema.">
+				</s:text>
+			</div>
+		</div>
+		<!-- Botones de si y no -->
+		<div class="row">
+			<div class="text-right col-md-12">
+				<s:submit cssClass="btn btn-default btn-default-eld"
+					value="Si" />
+				<a onclick="closeBajaDlg()"
+					class="btn btn-default btn-default-eld"><s:text
+						name="No" /></a>
+			</div>
+		</div>
+	</s:form>
+	</sj:dialog>
+
 	</html>
 </jsp:root>

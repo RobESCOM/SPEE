@@ -18,6 +18,7 @@
 	</div>
 </div>
 
+<s:set var="typeMime" value="application/pdf" />
 
 <div class="text-left">
 	<label class="col-md-6 text-left control-label"> <s:text
@@ -32,11 +33,18 @@
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">
-			<object data="${pageContext.request.contextPath}/files/pago.pdf"
-				type="application/pdf" width="600" height="600">
-				<p></p>
-			</object>
-
+			<s:iterator value="pago" var="archivoPago"></s:iterator>
+			<s:iterator value="tipoArchivo" var="tipo"></s:iterator>
+				<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>
+				<s:if test="%{#tipo == 'application/pdf'}">
+					<object data="data:application/pdf;base64, ${archivo}" type="application/pdf" width="600" height="500"/>
+				</s:if>
+				<s:elseif test="%{#tipo == 'imagen/jpg'}">
+					<img src="data:imagen/jpg;base64, ${archivo}" alt="img" />
+				</s:elseif>
+				<s:else>
+					<img src="data:imagen/png;base64, ${archivo}" alt="img" />
+				</s:else>
 		</div>
 	</div>
 </div>
