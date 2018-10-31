@@ -40,6 +40,7 @@
 	<s:form
 		action="%{#pageContext.request.contextPath}/area/gestionar-area/%{idSel}"
 		method="post" theme="simple">
+		<s:hidden name="_method" value="PUT" />
 		<fieldset class="form form-horizontal form-medium">
 			<legend class="form-section">
 				<s:text name="Informacion del area" />
@@ -52,8 +53,10 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
-						cssClassError="input-error" name="model.nombreArea" id="txNombreArea" />
-					<s:fielderror fieldName="model.nombreArea" cssClass="error" theme="bootstrap" />
+						cssClassError="input-error" name="model.nombreArea"
+						id="txNombreArea" />
+					<s:fielderror fieldName="model.nombreArea" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Responsable de área -->
@@ -63,25 +66,28 @@
 					for=""> <s:text name="Responsable del area" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:select id="slcArea" class="form-control" headerKey="-1"
-						headerValue="Rocío Gómez Ruíz"
-						list="#{'1':'Rocío Gómez Ruíz', '2':'Gabriela Sanabria Paredes'}"
-						name="selectValue" cssErrorClass="field-error" />
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:select id="slcArea" class="form-control"
+						headerKey="%{model.idResponsable}"
+						headerValue="%{nombreResponsable}" list="listResponsables"
+						listValue="%{nombre + ' ' + primerApellido + ' ' + segundoApellido}"
+						listKey="%{idCuenta}" name="model.idResponsable"
+						cssErrorClass="field-error" />
+					<s:fielderror fieldName="model.idResponsable" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Descripción -->
 			<div class="form-group">
 				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label"
+					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
 					for=""> <s:text name="Descripcion" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textarea cssClass="form-control campo"
-						cssClassError="input-error"
-						name="model.descripcion"
+						cssClassError="input-error" name="model.descripcion"
 						id="txDescripcion" maxlength="150" rows="5" />
-					<s:fielderror fieldName="model.descripcion" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.descripcion" cssClass="error"
+						theme="bootstrap" />
 				</div>
 			</div>
 		</fieldset>

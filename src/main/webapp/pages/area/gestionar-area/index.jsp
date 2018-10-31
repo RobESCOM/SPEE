@@ -27,6 +27,14 @@
 	</div>
 </div>
 
+<!-- Action messages -->
+<div class="form-group">
+	<div class="col-md-8 col-md-offset-2">
+		<s:actionmessage cssClass="alert alert-success" />
+		<s:actionerror cssClass="alert alert-danger" />
+	</div>
+</div>
+
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">

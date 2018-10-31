@@ -74,14 +74,14 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	@Column(name = "responsable")
 	private Integer idResponsable;
-	
+
 	@OneToOne
 	@JoinColumn(name = "responsable", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
 	private Cuenta cuenta;
-	
+
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<CatalogoServicio> listServicios;
-	
+
 	public CatalogoArea() {
 		super();
 	}
@@ -129,6 +129,9 @@ public class CatalogoArea implements Modelo, Serializable {
 		this.nombreArea = nombreArea;
 	}
 
+	@Validations(requiredStrings = {
+			@RequiredStringValidator(message = "Campo Obligatorio", type = ValidatorType.FIELD) }, requiredFields = {
+					@RequiredFieldValidator(message = "Campo Obligatorio", type = ValidatorType.FIELD) })
 	public String getDescripcion() {
 		return descripcion;
 	}
@@ -154,7 +157,7 @@ public class CatalogoArea implements Modelo, Serializable {
 	public void setIdResponsable(Integer idResponsable) {
 		this.idResponsable = idResponsable;
 	}
-	
+
 	@Override
 	public String toString() {
 		return getNombreArea();
