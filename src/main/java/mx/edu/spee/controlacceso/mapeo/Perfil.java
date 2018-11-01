@@ -42,7 +42,9 @@ public class Perfil implements Modelo, Catalogo, Serializable {
 
 		EXTERNO(10, ""),
 
-		DEFAULT(11, "Perfil Default");
+		DEFAULT(11, "Perfil Default"),
+		
+		BAJA(12, "Perfil Baja");
 
 		private Integer valor;
 

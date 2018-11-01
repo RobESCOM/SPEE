@@ -2,15 +2,18 @@ package mx.ipn.escom.spee.area.action;
 
 import java.util.List;
 
+import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 import mx.edu.spee.controlacceso.exception.UserActiveException;
+import mx.edu.spee.controlacceso.exception.UserInactiveException;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
@@ -18,11 +21,13 @@ import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.area.bs.AreaBs;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
+import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/area")
 @Results({
 		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName", "gestionar-area" }) })
+@AllowedMethods({ "bajaArea", "reactivarArea" })
 public class GestionarAreaAct extends GeneralActionSupport {
 
 	/**
@@ -33,7 +38,7 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	private Usuario usuarioSel;
 
 	private Integer idSel;
-	
+
 	private Integer idResponsableDefault;
 
 	private String nombreResponsable;
@@ -64,7 +69,9 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	public String edit() {
 		getIdSel();
 		model = genericSearchBs.findById(CatalogoArea.class, idSel);
-		//idResponsableDefault = model.getIdResponsable();
+		if(areaBs.validaResponsableActivo(model.getIdResponsable())) {
+			addActionError("El responsable del área se encuentra inactivo. Asigna un nuevo responsable.");
+		}
 		listResponsables = areaBs.obtenerInfoResponsablesDefault();
 		InformacionPersonal infoAux = new InformacionPersonal();
 		for (InformacionPersonal info : listResponsables) {
@@ -90,6 +97,10 @@ public class GestionarAreaAct extends GeneralActionSupport {
 					"El responsable del área actual sigue activo. Dirígete a \"Gestionar responsables de área\" para darlo de baja.");
 			listResponsables = areaBs.obtenerInfoResponsablesDefault();
 		}
+		catch (UserInactiveException ui) {
+			addActionError("El responsable del área se encuentra inactivo. Asigna un nuevo responsable.");
+			listResponsables = areaBs.obtenerInfoResponsablesDefault();
+		}
 	}
 
 	public String update() {
@@ -97,7 +108,36 @@ public class GestionarAreaAct extends GeneralActionSupport {
 		return SUCCESS;
 	}
 
+	@SkipValidation
+	public String bajaArea() {
+		getIdSel();
+		if (areaBs.darBajaArea(idSel)) {
+			addActionMessage("El área se dio de baja exitosamente.");
+			return SUCCESS;
+		} else {
+			return NO_AUTORIZADO;
+		}
+	}
+	
+	@SkipValidation
+	public String reactivarArea() {
+		getIdSel();
+		if(areaBs.reactivarArea(idSel)) {
+			addActionMessage("El área se reactivó exitosamente.");
+			return SUCCESS;
+		}
+		else {
+			return NO_AUTORIZADO;
+		}
+	}
+
 	public String show() {
+		getIdSel();
+		model = genericSearchBs.findById(CatalogoArea.class, idSel);
+		InformacionPersonal info = new InformacionPersonal();
+		info.setIdCuenta(model.getIdResponsable());
+		info = genericSearchBs.findByExample(info).get(Numeros.CERO.getValor());
+		nombreResponsable = info.getNombre() + " " + info.getPrimerApellido() + " " + info.getSegundoApellido();
 		return SHOW;
 	}
 
@@ -182,5 +222,5 @@ public class GestionarAreaAct extends GeneralActionSupport {
 
 	public void setIdResponsableDefault(Integer idResponsableDefault) {
 		this.idResponsableDefault = idResponsableDefault;
-	}	
+	}
 }

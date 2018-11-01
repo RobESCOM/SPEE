@@ -53,22 +53,32 @@
 							<tr>
 								<td><s:property value="%{#area.nombreArea}" /></td>
 								<td><s:property value="%{#area.descripcion}" /></td>
-								<td><a
-									href="${pageContext.request.contextPath}/area/gestionar-area/${area.id}/edit"
-									title="${ttbEditar}"> <i
-										class="material-icons md-24 md-eld">edit</i>
-								</a> <a
-									href="${pageContext.request.contextPath}/area/gestionar-area/1"
-									title="${ttbVisualizar}"> <i
-										class="material-icons md-24 md-eld">remove_red_eye </i>
-								</a> <s:if test="%{#area.estatus == true}">
-										<a title="${ttbBaja}"> <i
+								<td><s:if test="%{#area.estatus == true}">
+										<a
+											href="${pageContext.request.contextPath}/area/gestionar-area/${area.id}/edit"
+											title="${ttbEditar}"> <i
+											class="material-icons md-24 md-eld">edit</i>
+										</a>
+										<a
+											href="${pageContext.request.contextPath}/area/gestionar-area/${area.id}"
+											title="${ttbVisualizar}"> <i
+											class="material-icons md-24 md-eld">remove_red_eye </i>
+										</a>
+										<a onclick="myclickDialogBajaArea('${area.id}')"
+											title="${ttbBaja}"> <i
 											class="material-icons md-24 md-eld">cancel</i>
 										</a>
 									</s:if> <s:else>
-										<a title="${ttbReactivar}"> <i
+										<a
+											href="${pageContext.request.contextPath}/area/gestionar-area/${area.id}"
+											title="${ttbVisualizar}"> <i
+											class="material-icons md-24 md-eld">remove_red_eye </i>
+										</a>
+										<a onclick="myclickDialogReactivaArea('${area.id}')"
+											title="${ttbReactivar}"> <i
 											class="material-icons md-24 md-eld">check_circle</i>
 										</a>
+
 									</s:else></td>
 							</tr>
 						</s:iterator>
@@ -77,6 +87,60 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Diálogo de confirmación para dar de baja un área -->
+	<sj:dialog id="dlgBajaArea" modal="true" title="Dar de baja el área"
+		autoOpen="false" openTopics="showDlgBaja" closeTopics="closeDlgBaja"
+		resizable="false" draggable="false" cssClass="hidden">
+		<s:url var="urlAction"
+			action="gestionar-area!bajaArea?idSel=%{area.id}"
+			includeContext="true" />
+		<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
+		<s:form id="frmBajaArea" action="" theme="simple" method="post">
+			<div class="row">
+				<div class="col-md-12">
+					<s:text
+						name="Esta seguro que desea dar de baja el area? Esta area junto con el responsable asociado quedaran deshabilitados del sistema.">
+					</s:text>
+				</div>
+			</div>
+			<!-- Botones de si y no -->
+			<div class="row">
+				<div class="text-right col-md-12">
+					<s:submit cssClass="btn btn-default btn-default-eld" value="Si" />
+					<a onclick="closeBajaDlg()" class="btn btn-default btn-default-eld"><s:text
+							name="No" /></a>
+				</div>
+			</div>
+		</s:form>
+	</sj:dialog>
+
+	<!-- Diálogo de confirmación para reactivar un área -->
+	<sj:dialog id="reactivaArea" modal="true" title="Reactivar un servicio"
+		autoOpen="false" openTopics="showDlgReact" closeTopics="closeDlgReact"
+		resizable="false" draggable="false" cssClass="hidden">
+		<s:url var="urlActionReact"
+			action="gestionar-area!reactivarArea?idSel=%{area.id}"
+			includeContext="true" />
+		<s:hidden id="hdnUrlActionReact" value="%{#urlActionReact}" />
+		<s:form id="frmRectivaArea" action="" theme="simple" method="post">
+			<div class="row">
+				<div class="col-md-12">
+					<s:text
+						name="Esta seguro que desea reactivar el area? Esta area se habiitara de nuevo en el sistema. Tendra que asignar a un nuevo responsable.">
+					</s:text>
+				</div>
+			</div>
+			<!-- Botones de si y no -->
+			<div class="row">
+				<div class="text-right col-md-12">
+					<s:submit cssClass="btn btn-default btn-default-eld" value="Si" />
+					<a onclick="closeReactivaDlg()"
+						class="btn btn-default btn-default-eld"><s:text name="No" /></a>
+				</div>
+			</div>
+		</s:form>
+	</sj:dialog>
 </div>
 	</html>
 </jsp:root>

@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional;
 import mx.edu.spee.controlacceso.bs.UsuarioBs;
 import mx.edu.spee.controlacceso.exception.UniqueException;
 import mx.edu.spee.controlacceso.exception.UserActiveException;
+import mx.edu.spee.controlacceso.exception.UserInactiveException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
+import mx.edu.spee.controlacceso.mapeo.Perfil;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
@@ -145,6 +147,7 @@ public class AreaBs implements Serializable {
 		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, idCuenta);
 		if (cuenta != null) {
 			cuenta.setEstatus(false);
+			cuenta.setIdPerfil(PerfilEnum.BAJA.getValor());
 			genericDao.update(cuenta);
 			return true;
 		} else {
@@ -196,17 +199,78 @@ public class AreaBs implements Serializable {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public void editarArea(CatalogoArea area, Integer idArea) throws UserActiveException {
+	public void editarArea(CatalogoArea area, Integer idArea) throws UserActiveException, UserInactiveException {
 		CatalogoArea areaAux = genericSearchBs.findById(CatalogoArea.class, idArea);
-		if (areaAux.getIdResponsable() == area.getIdResponsable()) {
-			genericDao.update(area);
-		} else {
-			Cuenta cuentaResponsable = genericSearchBs.findById(Cuenta.class, areaAux.getIdResponsable());
+		Cuenta cuentaResponsable = genericSearchBs.findById(Cuenta.class, areaAux.getIdResponsable());
+		Cuenta cuentaNuevoResponsable = genericSearchBs.findById(Cuenta.class, area.getIdResponsable());
+		Integer id = area.getId();
+		if (cuentaResponsable.getIdCuenta() != cuentaNuevoResponsable.getIdCuenta()) {
 			if (cuentaResponsable.getEstatus()) {
 				throw new UserActiveException();
 			} else {
+				switch (id) {
+				case 1:
+					cuentaNuevoResponsable.setIdPerfil(PerfilEnum.ADMINISTRADOR_CELEX.getValor());
+					;
+					break;
+				case 2:
+					cuentaNuevoResponsable.setIdPerfil(PerfilEnum.ADMINISTRADOR_CELEX.getValor());
+					break;
+				case 3:
+					cuentaNuevoResponsable.setIdPerfil(PerfilEnum.ADMINISTRADOR_FOTOCOPIADO.getValor());
+					break;
+				case 4:
+					cuentaNuevoResponsable.setIdPerfil(PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor());
+					break;
+				default:
+					break;
+				}
+				genericDao.update(cuentaNuevoResponsable);
 				genericDao.update(area);
 			}
+		} else {
+			if(cuentaNuevoResponsable.getEstatus()) {
+				genericDao.update(area);
+			}
+			else {
+				throw new UserInactiveException();
+			}
 		}
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean darBajaArea(Integer idArea) {
+		CatalogoArea area = genericSearchBs.findById(CatalogoArea.class, idArea);
+		Cuenta cuentaResponsable = genericSearchBs.findById(Cuenta.class, area.getIdResponsable());
+
+		if (area != null && cuentaResponsable != null) {
+			cuentaResponsable.setEstatus(false);
+			area.setEstatus(false);
+			genericDao.update(cuentaResponsable);
+			genericDao.update(area);
+
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public Boolean reactivarArea(Integer idArea) {
+		CatalogoArea area = genericSearchBs.findById(CatalogoArea.class, idArea);
+		if (area != null) {
+			area.setEstatus(true);
+			genericDao.update(area);
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public Boolean validaResponsableActivo(Integer idCuenta) {
+		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, idCuenta);
+		if(cuenta.getEstatus() == false) 
+			return true;
+		return false;
 	}
 }
