@@ -26,6 +26,7 @@ import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
+import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea.CatalogoAreaEnum;
 import mx.ipn.escom.spee.pagos.bs.GestionarServiciosBs;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
@@ -89,37 +90,53 @@ public class GestionarPagosAct extends GeneralActionSupport {
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			CatalogoServicio catalogo = new CatalogoServicio();
-			catalogo.setIdArea(CatalogoAreaEnum.CELEX.getIdEstatus());
-			archivoPago.setCatalogoServicio(catalogo);
-			listPagos = genericSearchBs.findByExample(archivoPago);
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			listPagos = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.CELEX.getIdEstatus()) {
+					listPagos.add(pagado);
+				}
+			}
 			return ResultConstants.ADMINISTRADOR_CELEX;
 		} else if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			CatalogoServicio catalogo = new CatalogoServicio();
-			catalogo.setIdArea(CatalogoAreaEnum.DENTALES.getIdEstatus());
-			archivoPago.setCatalogoServicio(catalogo);
-			listPagos = genericSearchBs.findByExample(archivoPago);
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			listPagos = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.DENTALES.getIdEstatus()) {
+					listPagos.add(pagado);
+				}
+			}
 			return ResultConstants.ADMINISTRADOR_DENTALES;
 		} else if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			CatalogoServicio catalogo = new CatalogoServicio();
-			catalogo.setIdArea(CatalogoAreaEnum.BIBLIOTECA.getIdEstatus());
-			archivoPago.setCatalogoServicio(catalogo);
-			listPagos = genericSearchBs.findByExample(archivoPago);
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			listPagos = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
+					listPagos.add(pagado);
+				}
+			}
 			return ResultConstants.ADMINISTRADOR_BIBLIOTECA;
 		} else if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			CatalogoServicio catalogo = new CatalogoServicio();
-			catalogo.setIdArea(CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus());
-			archivoPago.setCatalogoServicio(catalogo);
-			listPagos = genericSearchBs.findByExample(archivoPago);
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			listPagos = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
+					listPagos.add(pagado);
+				}
+			}
 			return ResultConstants.ADMINISTRADOR_IMPRESIONES;
 		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
 				.getValor()
@@ -166,7 +183,6 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	@SkipValidation
 	public HttpHeaders visualizarArchivo(Archivo archivo) {
 		archivoVisualizar = new Archivo();
-		FileOutputStream file = pagoBs.mostrarPago(idPago);
 		return new DefaultHttpHeaders("filesuccess").disableCaching();
 	}
 

@@ -38,11 +38,11 @@
 				
 				<!-- Pagos -->
 				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
+					href="${pageContext.request.contextPath}/pagos"><s:text
 							name="menu.dentales.pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
+							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
 								<s:text name="menu.dentales.pagos.gestionar_pagos" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">

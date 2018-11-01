@@ -11,11 +11,11 @@
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
 				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
+					href="${pageContext.request.contextPath}/pagos"><s:text
 							name="menu.contador.pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
+							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
 								<s:text name="Pagos Autorizados" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">

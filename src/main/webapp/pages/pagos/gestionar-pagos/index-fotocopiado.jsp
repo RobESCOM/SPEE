@@ -25,25 +25,6 @@
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">
-			<div class="col-md-8">
-				<fieldset
-					class="form-section form-horizontal form-medium text-justify">
-					<legend class="form-section">
-						<s:text name="Generar Reporte" />
-						<a
-							href="${pageContext.request.contextPath}/pagos/gestionar-pagos!generarReporte"
-							title="Generar Comprobante"> <i class="material-icons">${varIconoVisualizar}</i>
-						</a>
-					</legend>
-				</fieldset>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="form-section form-horizontal">
-	<div class="form-group">
-		<div class="row">
 			<div class="col-md-12">
 				<table id="tblPagosEnviados" class="table table-striped">
 					<thead>
@@ -56,16 +37,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listPagos" var="pagAutorizadoCelex">
+						<s:iterator value="listPagos" var="pagAutorizadoFotocopiado">
 							<s:set var="alumno"
-								value="%{pagoBs.obtenerAlumno(#pagAutorizadoCelex)}"></s:set>
+								value="%{pagoBs.obtenerAlumno(#pagAutorizadoFotocopiado)}"></s:set>
 							<tr>
 								<td>${alumno}</td>
 								<td>${alumno.clave }</td>
-								<td><s:date name="%{#pagAutorizadoCelex.fechaEnvio}"
+								<td><s:date name="%{#pagAutorizadoFotocopiado.fechaEnvio}"
 										format="yyyy-MM-dd" /></td>
-								<td>${pagAutorizadoCelex.catalogoServicio.descripcion}</td>
-								<td>$  ${pagAutorizadoCelex.catalogoServicio.precio}</td>
+								<td>${pagAutorizadoFotocopiado.catalogoServicio.descripcion}</td>
+								<td>$  ${pagAutorizadoFotocopiado.catalogoServicio.precio}</td>
 							</tr>
 						</s:iterator>
 					</tbody>

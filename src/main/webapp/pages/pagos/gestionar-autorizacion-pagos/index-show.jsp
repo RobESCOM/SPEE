@@ -37,7 +37,9 @@
 			<s:iterator value="tipoArchivo" var="tipo"></s:iterator>
 				<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>
 				<s:if test="%{#tipo == 'application/pdf'}">
-					<object data="data:application/pdf;base64, ${archivo}" type="application/pdf" width="600" height="500"/>
+					<object data="data:application/pdf;base64, ${archivo}" type="application/pdf" width="600" height="500">
+						<a download="comprobante"></a>
+					</object>
 				</s:if>
 				<s:elseif test="%{#tipo == 'imagen/jpg'}">
 					<img src="data:imagen/jpg;base64, ${archivo}" alt="img" />

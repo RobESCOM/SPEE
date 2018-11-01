@@ -32,13 +32,13 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	public enum CatalogoAreaEnum {
 
-		CELEX(1, "Centro de Lenguas Extrangeras"),
+		CELEX(1, "Centro de Lenguas Extrangeras ESCOM"),
 
-		DENTALES(2, "Servicios Dentales"),
+		DENTALES(2, "Servicios Dentales ESCOM"),
 
-		FOTOCOPIADO(3, "Servicios Fotocopiado"),
+		FOTOCOPIADO(3, "Servicios Fotocopiado ESCOM"),
 
-		BIBLIOTECA(4, "Servicios Biblioteca");
+		BIBLIOTECA(4, "Servicios Biblioteca ESCOM");
 
 		private Integer idArea;
 
