@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import mx.edu.spee.controlacceso.bs.UsuarioBs;
 import mx.edu.spee.controlacceso.exception.UniqueException;
+import mx.edu.spee.controlacceso.exception.UserActiveException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
@@ -120,7 +121,7 @@ public class AreaBs implements Serializable {
 			model.setIdCuenta(idCuenta);
 			model.setCorreoInicio(model.getCorreo());
 			genericDao.save(model);
-			//usuarioBs.enviarEmailConfirmacion(usuarioCreado);
+			// usuarioBs.enviarEmailConfirmacion(usuarioCreado);
 		}
 	}
 
@@ -138,25 +139,74 @@ public class AreaBs implements Serializable {
 			genericDao.updateMerge(model);
 		}
 	}
-	
+
 	@Transactional(rollbackFor = Exception.class)
 	public Boolean darBajaResponsable(Integer idCuenta) {
 		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, idCuenta);
-		if(cuenta != null){
+		if (cuenta != null) {
 			cuenta.setEstatus(false);
 			genericDao.update(cuenta);
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
-	
+
 	public List<CatalogoArea> obtieneAreasActivas() {
 		CatalogoArea area = new CatalogoArea();
 		List<CatalogoArea> listAreas = new ArrayList<>();
 		area.setEstatus(true);
 		listAreas = genericSearchBs.findByExample(area);
-		return listAreas;		
+		return listAreas;
+	}
+
+	public String obtenerNombreResponsable(Integer idCuenta) {
+		InformacionPersonal infoResponsable = new InformacionPersonal();
+		infoResponsable.setIdCuenta(idCuenta);
+		infoResponsable = genericSearchBs.findByExample(infoResponsable).get(Numeros.CERO.getValor());
+		String nombre = infoResponsable.getNombre();
+		String primerAp = infoResponsable.getPrimerApellido();
+		String segundoAp = infoResponsable.getSegundoApellido();
+		return nombre + " " + primerAp + " " + segundoAp;
+	}
+
+	public List<InformacionPersonal> obtenerInfoResponsablesDefault() {
+		List<Cuenta> cuentasResponsables = new ArrayList<>();
+		List<InformacionPersonal> infoResposables = new ArrayList<>();
+
+		// Genera una lista con las cuentas de los responsables de áreas con
+		// perfil default
+		List<Cuenta> cuentas = genericSearchBs.findAll(Cuenta.class);
+		for (Cuenta cuenta : cuentas) {
+			if (cuenta.getIdPerfil() == PerfilEnum.DEFAULT.getValor()) {
+				cuentasResponsables.add(cuenta);
+			}
+		}
+
+		// Genera una lista con la info personal de cada responsable de área
+		for (Cuenta cuenta : cuentasResponsables) {
+			if (cuenta.getEstatus()) {
+				InformacionPersonal info = new InformacionPersonal();
+				info.setIdCuenta(cuenta.getIdCuenta());
+				List<InformacionPersonal> infoPersonal = genericSearchBs.findByExample(info);
+				infoResposables.add(infoPersonal.get(Numeros.CERO.getValor()));
+			}
+		}
+		return infoResposables;
+	}
+
+	@Transactional(rollbackFor = Exception.class)
+	public void editarArea(CatalogoArea area, Integer idArea) throws UserActiveException {
+		CatalogoArea areaAux = genericSearchBs.findById(CatalogoArea.class, idArea);
+		if (areaAux.getIdResponsable() == area.getIdResponsable()) {
+			genericDao.update(area);
+		} else {
+			Cuenta cuentaResponsable = genericSearchBs.findById(Cuenta.class, areaAux.getIdResponsable());
+			if (cuentaResponsable.getEstatus()) {
+				throw new UserActiveException();
+			} else {
+				genericDao.update(area);
+			}
+		}
 	}
 }

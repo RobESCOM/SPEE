@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
+import mx.edu.spee.controlacceso.exception.UserActiveException;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
@@ -30,18 +31,22 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	private static final long serialVersionUID = -6795647250867383176L;
 
 	private Usuario usuarioSel;
-	
+
 	private Integer idSel;
 	
+	private Integer idResponsableDefault;
+
+	private String nombreResponsable;
+
 	private List<CatalogoArea> listAreas;
-	
+
 	private List<InformacionPersonal> listResponsables;
-	
+
 	private CatalogoArea model;
-	
+
 	@Autowired
 	private GenericSearchBs genericSearchBs;
-	
+
 	@Autowired
 	private AreaBs areaBs;
 
@@ -59,13 +64,34 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	public String edit() {
 		getIdSel();
 		model = genericSearchBs.findById(CatalogoArea.class, idSel);
+		//idResponsableDefault = model.getIdResponsable();
+		listResponsables = areaBs.obtenerInfoResponsablesDefault();
+		InformacionPersonal infoAux = new InformacionPersonal();
+		for (InformacionPersonal info : listResponsables) {
+			if (info.getIdCuenta() == model.getIdResponsable()) {
+				infoAux = info;
+			}
+		}
+		listResponsables.remove(infoAux);
+		nombreResponsable = areaBs.obtenerNombreResponsable(model.getIdResponsable());
 		return EDIT;
 	}
-	
+
 	public void validateUpdate() {
-		
+		try {
+			if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
+				areaBs.editarArea(model, idSel);
+			} else {
+				addActionError("Verifique su información.");
+				listResponsables = areaBs.obtenerInfoResponsablesDefault();
+			}
+		} catch (UserActiveException ua) {
+			addActionError(
+					"El responsable del área actual sigue activo. Dirígete a \"Gestionar responsables de área\" para darlo de baja.");
+			listResponsables = areaBs.obtenerInfoResponsablesDefault();
+		}
 	}
-	
+
 	public String update() {
 		addActionMessage("Se actualizó la información del área correctamente.");
 		return SUCCESS;
@@ -128,15 +154,33 @@ public class GestionarAreaAct extends GeneralActionSupport {
 	}
 
 	public Integer getIdSel() {
-		if(SessionManager.get(NombreObjetosSesion.SESSION_MODEL_ID) != null)
+		if (SessionManager.get(NombreObjetosSesion.SESSION_MODEL_ID) != null)
 			idSel = (Integer) SessionManager.get(NombreObjetosSesion.SESSION_MODEL_ID);
 		return idSel;
 	}
 
 	public void setIdSel(Integer idSel) {
-		SessionManager.put(NombreObjetosSesion.SESSION_MODEL_ID, idSel);
+		if (idSel != null) {
+			SessionManager.put(NombreObjetosSesion.SESSION_MODEL_ID, idSel);
+			model = genericSearchBs.findById(CatalogoArea.class, idSel);
+		}
+
 		this.idSel = idSel;
+	}
+
+	public String getNombreResponsable() {
+		return nombreResponsable;
+	}
+
+	public void setNombreResponsable(String nombreResponsable) {
+		this.nombreResponsable = nombreResponsable;
+	}
+
+	public Integer getIdResponsableDefault() {
+		return idResponsableDefault;
+	}
+
+	public void setIdResponsableDefault(Integer idResponsableDefault) {
+		this.idResponsableDefault = idResponsableDefault;
 	}	
-	
-	
 }
