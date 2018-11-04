@@ -25,23 +25,23 @@ public class CuentaImpresiones implements Modelo, Serializable{
 	
 	@Column(name="nu_impresiones")
 	private Integer nu_impresiones;
-
 	
 	public CuentaImpresiones() {
 		
+	}
+	
+	public CuentaImpresiones(Cuenta id, Integer nu_impresiones) {
+		this.id=id;
+		this.nu_impresiones=nu_impresiones;
 	}
 
 	public Cuenta getId() {
 		return id;
 	}
 
-
-
 	public void setId(Cuenta id) {
 		this.id = id;
 	}
-
-
 
 	public Integer getNu_impresiones() {
 		return nu_impresiones;
@@ -51,4 +51,5 @@ public class CuentaImpresiones implements Modelo, Serializable{
 		this.nu_impresiones = nu_impresiones;
 	}
 
+	
 }

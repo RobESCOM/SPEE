@@ -18,14 +18,14 @@
 							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
 								<s:text name="Pagos Autorizados" />
 						</a> <a
-							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
 				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/impresiones/control-impresiones"><s:text
+					href="${pageContext.request.contextPath}/impresiones"><s:text
 					 		name="menu.fotocopiado.impresiones" /><span class="fa arrow"></span> </a>
-					 <ul class="nav nav-second-lebel">
+					 <ul class="nav nav-second-level">
 					 	<li class="dropdown">
 					 	<a href="${pageContext.request.contextPath}/impresiones/control-impresiones">
 					 			<s:text name="menu.fotocopiado.impresiones.control_impresiones"/> </a>

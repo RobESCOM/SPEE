@@ -45,7 +45,7 @@
 							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
 								<s:text name="menu.dentales.pagos.gestionar_pagos" />
 						</a> <a
-							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="menu.dentales.pagos.gestionar_historial_pagos" />
 						</a></li>
 					</ul></li>

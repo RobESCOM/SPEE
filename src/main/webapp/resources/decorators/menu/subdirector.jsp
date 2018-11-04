@@ -36,14 +36,11 @@
 
 				<!-- Pagos -->
 				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
+					href="${pageContext.request.contextPath}/pagos"><s:text
 							name="Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-concepto-pago">
-								<s:text name="Pagos Autorizados" />
-						</a> <a
-							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="Gestionar Historial Pagos" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-actividad-cajero">

@@ -1,5 +1,6 @@
 package mx.ipn.escom.spee.impresiones.action;
 
+import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import mx.edu.spee.controlacceso.exception.UsuarioNoEncontradoException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
@@ -19,9 +21,13 @@ import java.io.Serializable;
 import java.util.List;
 
 @Namespace("/impresiones")
-@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName","control-impresiones" }) })
+@Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName","control-impresiones" }),
+		@Result(name= "agregar", type = "redirectAction", params = {"actionName","control-impresiones" }) })
+@AllowedMethods({"agregarImpresiones"})
 public class ControlImpresionesAct extends GeneralActionSupport {
 
+	protected static final String AGREGAR = "agregar";
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
@@ -39,7 +45,7 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	
 	private CuentaImpresiones usrImpresiones;
 	
-	private int tipoImpresion, numeroImpresion;
+	private int tipoImpresion, numeroImpresion, tipoUsuario, clave;
 	
 	private GenericSearchBs genericSearchBs;
 		
@@ -60,6 +66,13 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 		usrInformacion = impresionesBs.obtenerPersona(usr);
 		usrImpresiones = impresionesBs.obtenerCuentaImpresion(usr.getIdCuenta());
 		return EDITNEW;
+	}
+	
+	public String agregarImpresiones() throws UsuarioNoEncontradoException {
+		if(impresionesBs.agregarImpresiones(clave, numeroImpresion, tipoUsuario)) {
+			return AGREGAR;
+		}
+		return NO_AUTORIZADO;
 	}
 
 	public ImpresionesBs getImpresionesBs() {
@@ -144,7 +157,21 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	public void setUsrImpresiones(CuentaImpresiones usrImpresiones) {
 		this.usrImpresiones = usrImpresiones;
 	}
+	
+	public int getClave() {
+		return clave;
+	}
 
-	
-	
+	public void setClave(int clave) {
+		this.clave = clave;
+	}
+
+	public int getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(int tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
 }

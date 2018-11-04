@@ -35,24 +35,31 @@
 		<div class="row">
 			<div class="col-md-12">
 				<table id="tblArchivoPagoMes" class="table table-striped">
+					<s:set var="admin" value="permisos" />
 					<thead>
 						<tr>
 							<th><s:text name="CU38_THEAD1" /></th>
 							<th><s:text name="CU38_THEAD2" /></th>
 							<th><s:text name="CU38_THEAD3" /></th>
 							<th><s:text name="CU38_THEAD4" /></th>
+							<s:if test="admin">
+								<th><s:text name="Area servicio"/></th>
+							</s:if>
 							<th><s:text name="CU38_THEAD5" /></th>
-							<th><s:text name="CU38_THEAD6" /></th>
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listArchivoPagoMes" var="pagoMes">
+						<s:iterator value="pagosDate" var="pagoMes">
+						<s:set var="date" value="%{pagoBs.dateForm(#pagoMes)}" />
+						<s:set var="money" value="%{pagoBs.moneyForm(#pagoMes)}" />
 							<tr>
-								<td>${pagoMes[0]}</td>
-								<td>${pagoMes[1]}</td>
-								<td>${pagoMes[2]}</td>
-								<td>${pagoMes[3]}</td>
-								<td>${pagoMes[4]}</td>
+								<td>${pagoMes.folioOperacion}</td>
+								<td>${date}</td>
+								<td>${pagoMes.catalogoServicio.descripcion }</td>
+								<td>$ ${money}</td>
+								<s:if test="admin">
+									<td>${pagoMes.catalogoServicio.area.nombreArea}</td>
+								</s:if>
 								<td><a
 									href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show"
 									title="${ttbVisualizar}"> <i

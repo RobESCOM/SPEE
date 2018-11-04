@@ -18,7 +18,7 @@
 							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
 								<s:text name="Pagos Autorizados" />
 						</a> <a
-							href="${pageContext.request.contextPath}/pagos/gestionar-costo-concepto/new">
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>

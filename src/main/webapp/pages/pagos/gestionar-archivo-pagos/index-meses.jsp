@@ -17,7 +17,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="Gestionar Archivo de Pagos" />
+			<s:text name="Pagos anio" />
 		</h1>
 	</div>
 </div>
@@ -37,7 +37,8 @@
 					</thead>
 					<tbody>
 						<s:iterator var="pagoAnio" value="listArchivosPago">
-							<s:set var="cantidad" value="%{pagoBs.obtenerTotalAnio(#pagoAnio)}"/>
+							<s:set var="mes" value="listAnio"/>
+							<s:set var="cantidad" value="%{pagoBs.obtenerTotalMes(#pagoAnio)}"/>
 							<s:if test="#cantidad[1] != 0">
 								<tr>
 									<td>${cantidad[0]}</td>
@@ -45,7 +46,7 @@
 									<td>$ ${cantidad[2]}</td>
 									<td>
 										<a
-											href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos!Meses?listAnio=${cantidad[0]}"
+											href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show?listAnio=${mes}&amp;listMes=${cantidad[0]}"
 											title="Ver pagos del año"> <i
 												class="material-icons md-24 md-eld">redo</i>
 										</a>
