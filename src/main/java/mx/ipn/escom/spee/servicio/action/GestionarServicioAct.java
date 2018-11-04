@@ -13,6 +13,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 import mx.edu.spee.controlacceso.exception.UniqueException;
+import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
+import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
@@ -35,6 +37,8 @@ public class GestionarServicioAct extends GeneralActionSupport {
 	private static final long serialVersionUID = -7222787025037672268L;
 
 	private CatalogoServicio model;
+	
+	private Usuario usuarioSel;
 
 	private List<CatalogoServicio> listServicios;
 
@@ -54,8 +58,15 @@ public class GestionarServicioAct extends GeneralActionSupport {
 	private GenericSearchBs genericSearchBs;
 
 	public String index() {
-		listServicios = genericSearchBs.findAll(CatalogoServicio.class);
-		return INDEX;
+		getUsuarioSel();
+		if(usuarioSel.getPerfilActivo().getId() == PerfilEnum.SUBDIRECTOR.getValor()) {
+			listServicios = genericSearchBs.findAll(CatalogoServicio.class);
+			return INDEX;
+		}
+		else {
+			return NO_AUTORIZADO;
+		}
+		
 	}
 
 	public String editNew() {
@@ -222,4 +233,16 @@ public class GestionarServicioAct extends GeneralActionSupport {
 	public void setListTipos(List<TipoServicio> listTipos) {
 		this.listTipos = listTipos;
 	}
+	
+	public Usuario getUsuarioSel() {
+		if (SessionManager.get(NombreObjetosSesion.USUARIO_SESION) != null) {
+			usuarioSel = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
+		}
+		return usuarioSel;
+	}
+
+	public void setUsuarioSel(Usuario usuarioSel) {
+		this.usuarioSel = usuarioSel;
+	}
+	
 }

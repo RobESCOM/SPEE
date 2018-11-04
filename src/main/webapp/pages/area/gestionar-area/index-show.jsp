@@ -32,17 +32,17 @@
 				for=""> <s:text name="Nombre del area" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Celex'"/>
+				<s:property value="model.nombreArea"/>
 			</div>
 		</div>
 		<!-- Responsable de área -->
 		<div class="form-group">
 			<label
 				class="col-xs-12 col-sm-4 col-md-4 control-label"
-				for=""> <s:text name="Nombre del area" />
+				for=""> <s:text name="Responsable del area" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Angélica Pérez Beltrán'"/>
+				<s:property value="nombreResponsable"/>
 			</div>
 		</div>
 		<!-- Descripción -->
@@ -52,7 +52,7 @@
 				for=""> <s:text name="Descripcion" />
 			</label>
 			<div class="col-xs-12 col-sm-6 col-md-6 text-justify">
-				<s:property value="'Cursos extracurriculares de lenguas extranjeras de la ESCOM.'"/>
+				<s:property value="model.descripcion"/>
 			</div>
 		</div>
 	</fieldset>
