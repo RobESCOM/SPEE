@@ -11,7 +11,7 @@
 	]]>
 </jsp:text>
 
-<s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
+<s:set var="ttbverSIGA" value="%{getText('Visualizar SIG@')}" />
 <s:set var="varIconoVisualizar" value="'attach_file'" />
 
 <div class="row title">
@@ -53,6 +53,7 @@
 							<th><s:text name="Fecha" /></th>
 							<th><s:text name="Concepto" /></th>
 							<th><s:text name="Cantidad" /></th>
+							<th><s:text name="Comprobante"/></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,6 +67,13 @@
 										format="yyyy-MM-dd" /></td>
 								<td>${pagAutorizadoCelex.catalogoServicio.descripcion}</td>
 								<td>$  ${pagAutorizadoCelex.catalogoServicio.precio}</td>
+								<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPag=${pagAutorizadoCelex.id}&amp;idSel=${pagAutorizadoCelex.idUsuario}"
+										title="${ttbverSIGA}"><i
+											class="material-icons md-24 md-eld">find_in_page</i>
+									</a>
+								</td>
 							</tr>
 						</s:iterator>
 					</tbody>

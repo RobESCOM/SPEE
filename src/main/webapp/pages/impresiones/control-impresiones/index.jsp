@@ -17,11 +17,20 @@
 <s:set var="ttbReducirImpresiones" value="%{getText('Reducir Impresión')}" />
 <s:set var="ttbBaja" value="%{getText('Agregar Impresiones')}" />
 
+<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
+
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
 			<s:text name="Control impresiones"/>
 		</h1>
+	</div>
+</div>
+
+<div class="row form-group">
+	<div class="col-md-12">
+		<s:actionerror theme="%{varTheme}" />
+		<s:actionmessage theme="%{varTheme}" />
 	</div>
 </div>
 
@@ -60,56 +69,6 @@
 		</div>
 	</div>
 </div>
-
-<div class="row">
-	<div class="col-md-12">
-		<a class="btn btn-primary" onclick="myClickDialog()"><s:text name="Registrar Pago" /></a>
-	</div>
-</div>
-
-<sj:dialog id="registroPago" modal="true" title="Registrar Pago" autoOpen="false"
-		openTopics="showRegistro" closeTopics="closeRegistro" resizable="false"
-		draggable="false" cssClass="hidden" >
-	<s:url var="urlAction"
-		action="control-impresiones!agregarImpresiones"
-		includeContext="true" />
-	<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
-	<s:form id="frmRegistroImpresiones" action="" theme="simple"
-		method="post">
-			<div class="row">
-				<div class="col-md-12">
-					<s:text name="Usuario:"></s:text>
-					<s:select id="tipoUsuario" class="form-control"
-						list="#{'1':'Alumno', '2':'Empleado', '3':'Externo'}"
-						name="tipoUsuario">
-					</s:select>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<s:text name="clave"></s:text>
-					<s:textfield name="clave"></s:textfield>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<s:text name="Número Impresiones"></s:text>
-					<s:textfield type="number" class="form-control" name="numeroImpresion" min="15" value="15" step="15"></s:textfield>
-				</div>
-			</div>
-		<!-- Botones de si y no -->
-		<div class="row">
-			<div class="text-right col-md-12">
-				<s:submit cssClass="btn btn-default btn-default-eld"
-					value="Agregar" />
-				<a onclick="closeBajaDlg()"
-					class="btn btn-default btn-default-eld"><s:text
-						name="Cancelar" /></a>
-			</div>
-		</div>
-		
-	</s:form>
-	</sj:dialog>
 
 	</html>
 </jsp:root>

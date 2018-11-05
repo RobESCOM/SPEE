@@ -94,7 +94,7 @@ public class ImpresionesBs implements Serializable{
 		}
 	}
 	
-	public boolean agregarImpresiones(int clave, int numeroImp, int tipoUsuario) throws UsuarioNoEncontradoException {
+	public void agregarImpresiones(int clave, int numeroImp, int tipoUsuario) throws UsuarioNoEncontradoException {
 		setCuentaImpresiones(new CuentaImpresiones());
 		setCuentaImpresiones(genericSearchBs.findById(CuentaImpresiones.class, clave));
 		if(getCuentaImpresiones() == null) {
@@ -102,15 +102,14 @@ public class ImpresionesBs implements Serializable{
 			if(cuenta != null) {
 				setCuentaImpresiones(new CuentaImpresiones(cuenta, numeroImp));
 				genericBs.save(getCuentaImpresiones());
-				return true;
 			}
-			return false;
-			
+			else {
+				throw new UsuarioNoEncontradoException();
+			}
 		}
 		else {
 			getCuentaImpresiones().setNu_impresiones(getCuentaImpresiones().getNu_impresiones()+numeroImp);
 			genericBs.update(getCuentaImpresiones());
-			return true;
 		}
 	}
 	

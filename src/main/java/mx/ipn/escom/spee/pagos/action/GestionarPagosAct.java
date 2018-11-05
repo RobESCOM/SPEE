@@ -179,6 +179,10 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 		return visualizarArchivo(archivo);
 	}
+	
+	public String show() {
+		return SHOW;
+	}
 
 	@SkipValidation
 	public HttpHeaders visualizarArchivo(Archivo archivo) {
