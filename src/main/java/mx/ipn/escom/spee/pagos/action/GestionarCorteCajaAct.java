@@ -62,7 +62,6 @@ import net.sf.jasperreports.engine.JasperReport;
 		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
 				"archivoVisualizar.fileInputStream", "contentDisposition",
 				"inline;filename=\"${archivoVisualizar.fileUploadFileName}\"", "bufferSize", "1024" }) })
-@AllowedMethods({ "imprimirReporte", "vizualizarArchivo" })
 public class GestionarCorteCajaAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -72,9 +71,6 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 
 	@Autowired
 	private GenericBs genericBs;
-
-	@Autowired
-	protected SessionFactory sessionFactory;
 
 	@Autowired
 	private MailSender mailSender;
@@ -97,10 +93,10 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 				listPagosCorte.add(archivoPagoDia);
 			}
 			genericBs.update(listPagosCorte);
-			System.err.println(listPagosCorte);
 			CorteCaja corteCaja = new CorteCaja();
 			corteCaja.setEstado(true);
 			corteCaja.setFechaCorte(new Date());
+			corteCaja.setTotal(sumarTotalCorteCaja(listPagosCorte));
 			Cuenta cuenta = genericSearchBs.findById(Cuenta.class, usuarioSel.getId());
 			corteCaja.setIdCuenta(cuenta.getIdCuenta());
 			genericBs.save(corteCaja);
@@ -112,60 +108,15 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		}
 		return SUCCESS;
 	}
-
-	public HttpHeaders imprimirReporte() {
-		try {
-			getUsuarioSel();
-			ArchivoPagoDia archivo = new ArchivoPagoDia();
-			archivo.setCorte(Boolean.FALSE);
-			archivo.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> listPagosCorte = genericSearchBs.findByExample(archivo);
-			return vizualizarArchivo(generarReporte(listPagosCorte));
-		} catch (FileNotFoundException | JRException e) {
-			return new DefaultHttpHeaders(ERROR).disableCaching();
+	
+	private Double sumarTotalCorteCaja(List<ArchivoPagoDia> listPagosCorte) {
+		Double total = 0.0;
+		for (ArchivoPagoDia archivoPagoDia : listPagosCorte) {
+			total += archivoPagoDia.getCatalogoServicio().getPrecio();
 		}
+		return total;
 	}
 
-	@SkipValidation
-	public HttpHeaders vizualizarArchivo(Archivo archivo) {
-		archivoVisualizar = new Archivo();
-		setArchivoVisualizar(archivo);
-		return new DefaultHttpHeaders("filesuccess").disableCaching();
-	}
-
-	public Archivo generarReporte(List<ArchivoPagoDia> listPagosCorte) throws FileNotFoundException, JRException {
-		String ruta = "\\resources\\reportes\\reporte-pago-autorizados\\reporte-subdirector\\";
-		System.err.println(ruta);
-		ServletContext servletContext = ServletActionContext.getServletContext();
-		String context = servletContext.getRealPath("/");
-
-		return compilarReporteSubdirector(context, ruta, listPagosCorte);
-	}
-
-	private Archivo compilarReporteSubdirector(String context, String ruta, List<ArchivoPagoDia> listPagosCorte)
-			throws JRException, FileNotFoundException {
-		Archivo archivo = new Archivo();
-		DateFormat outputFormatter = new SimpleDateFormat(PropertyAccess.getProperty("mx.edu.spee.formatDate"));
-		String output = outputFormatter.format(new Date());
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("fecha", output);
-		parameters.put("listCorte", listPagosCorte);
-
-		Session session = (Session) sessionFactory.getCurrentSession().getDelegate();
-		SessionImpl sessionImpl = (SessionImpl) session;
-		Connection conn = sessionImpl.connection();
-
-		String r = context + ruta + "SubdirectorReporte.jrxml";
-		System.err.println(context + ruta + "SubdirectorReporte.jrxml");
-		JasperReport reporte = JasperCompileManager.compileReport(context + ruta + "SubdirectorReporte.jrxml");
-		JasperPrint jasperPrint = JasperFillManager.fillReport(reporte, parameters, conn);
-		JasperExportManager.exportReportToPdfFile(jasperPrint, context + ruta + "SubdirectorReporte.pdf");
-		File file = new File(context + ruta + "SubdirectorReporte.pdf");
-		archivo.setFileUploadFileName(file.getName());
-		archivo.setFileInputStream(new FileInputStream(file));
-
-		return archivo;
-	}
 
 	public void corteCaja() throws SinPagosConCorteException {
 		getUsuarioSel();

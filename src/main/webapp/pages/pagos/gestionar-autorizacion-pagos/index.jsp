@@ -100,15 +100,6 @@
 					name="Corte de Caja" /></a>
 		</div>
 	</div>
-
-
-	<div class="row">
-		<div class="text-right col-md-12">
-			<a
-				href="${pageContext.request.contextPath}/pagos/gestionar-corte-caja!imprimirReporte"
-				class="btn btn-primary"><s:text name="Reporte" /></a>
-		</div>
-	</div>
 </div>
 
 <sj:dialog id="corteCajaId" modal="true" title="Corte de Caja"
