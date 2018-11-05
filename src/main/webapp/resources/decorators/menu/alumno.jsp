@@ -48,7 +48,7 @@
 							name="Historial de Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-historial-pagos">
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>

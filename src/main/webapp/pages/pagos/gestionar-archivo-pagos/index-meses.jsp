@@ -17,7 +17,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="Pagos anio" />
+			<s:text name="Pagos anuales" />
 		</h1>
 	</div>
 </div>

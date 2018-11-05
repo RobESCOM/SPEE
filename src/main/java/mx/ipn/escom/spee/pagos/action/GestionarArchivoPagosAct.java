@@ -54,6 +54,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 		List<ArchivoPagoDia> anioTres = new ArrayList<>();
 		List<ArchivoPagoDia> anioCuatro = new ArrayList<>();
 		List<ArchivoPagoDia> anioCinco = new ArrayList<>();
+		
 		if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
 			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
@@ -193,6 +194,78 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 			}
 		}
 		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getIdUsuario() == usuarioSel.getId()) {
+					anio = pagoBs.obtenerAnio(pagado);
+					if(anio == Numeros.ANIO_ACTUAL.getValor()) 
+						anioActual.add(pagado);
+					else if(anio == Numeros.ANIO_UNO.getValor()) 
+						anioUno.add(pagado);
+					else if(anio == Numeros.ANIO_DOS.getValor()) 
+						anioDos.add(pagado);
+					else if(anio == Numeros.ANIO_TRES.getValor()) 
+						anioTres.add(pagado);
+					else if(anio == Numeros.ANIO_CUATRO.getValor()) 
+						anioCuatro.add(pagado);
+					else if(anio == Numeros.ANIO_CINCO.getValor()) 
+						anioCinco.add(pagado);
+				}
+			}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getIdUsuario() == usuarioSel.getId()) {
+					anio = pagoBs.obtenerAnio(pagado);
+					if(anio == Numeros.ANIO_ACTUAL.getValor()) 
+						anioActual.add(pagado);
+					else if(anio == Numeros.ANIO_UNO.getValor()) 
+						anioUno.add(pagado);
+					else if(anio == Numeros.ANIO_DOS.getValor()) 
+						anioDos.add(pagado);
+					else if(anio == Numeros.ANIO_TRES.getValor()) 
+						anioTres.add(pagado);
+					else if(anio == Numeros.ANIO_CUATRO.getValor()) 
+						anioCuatro.add(pagado);
+					else if(anio == Numeros.ANIO_CINCO.getValor()) 
+						anioCinco.add(pagado);
+				}
+			}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagado.getIdUsuario() == usuarioSel.getId()) {
+					anio = pagoBs.obtenerAnio(pagado);
+					if(anio == Numeros.ANIO_ACTUAL.getValor()) 
+						anioActual.add(pagado);
+					else if(anio == Numeros.ANIO_UNO.getValor()) 
+						anioUno.add(pagado);
+					else if(anio == Numeros.ANIO_DOS.getValor()) 
+						anioDos.add(pagado);
+					else if(anio == Numeros.ANIO_TRES.getValor()) 
+						anioTres.add(pagado);
+					else if(anio == Numeros.ANIO_CUATRO.getValor()) 
+						anioCuatro.add(pagado);
+					else if(anio == Numeros.ANIO_CINCO.getValor()) 
+						anioCinco.add(pagado);
+				}
+			}
+		}
+		
 		else {
 			return NO_AUTORIZADO;
 		}
@@ -266,7 +339,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 						else if(anioMes.equals(Meses.NOV.getNombre())) {
 							nov.add(pagado);
 						}
-						else if(anioMes.equals(Meses.ENE.getNombre())) {
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
 							dic.add(pagado);
 						}
 					}
@@ -316,7 +389,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 						else if(anioMes.equals(Meses.NOV.getNombre())) {
 							nov.add(pagado);
 						}
-						else if(anioMes.equals(Meses.ENE.getNombre())) {
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
 							dic.add(pagado);
 						}
 					}
@@ -366,7 +439,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 						else if(anioMes.equals(Meses.NOV.getNombre())) {
 							nov.add(pagado);
 						}
-						else if(anioMes.equals(Meses.ENE.getNombre())) {
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
 							dic.add(pagado);
 						}
 					}
@@ -417,7 +490,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 						else if(anioMes.equals(Meses.NOV.getNombre())) {
 							nov.add(pagado);
 						}
-						else if(anioMes.equals(Meses.ENE.getNombre())) {
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
 							dic.add(pagado);
 						}
 					}
@@ -466,7 +539,7 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 					else if(anioMes.equals(Meses.NOV.getNombre())) {
 						nov.add(pagado);
 					}
-					else if(anioMes.equals(Meses.ENE.getNombre())) {
+					else if(anioMes.equals(Meses.DIC.getNombre())) {
 						dic.add(pagado);
 					}
 				}
@@ -515,8 +588,161 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 					else if(anioMes.equals(Meses.NOV.getNombre())) {
 						nov.add(pagado);
 					}
-					else if(anioMes.equals(Meses.ENE.getNombre())) {
+					else if(anioMes.equals(Meses.DIC.getNombre())) {
 						dic.add(pagado);
+					}
+				}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				
+				String anioMes;
+				int anio = Integer.parseInt(listAnio);
+				for(ArchivoPagoDia pagado:pagoArea) {
+					anioMes = pagoBs.obtenerAnioMes(pagado,anio);
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						if(anioMes.equals(Meses.ENE.getNombre())) {
+							ene.add(pagado);
+						}
+						else if(anioMes.equals(Meses.FEB.getNombre())) {
+							feb.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAR.getNombre())) {
+							mar.add(pagado);
+						}
+						else if(anioMes.equals(Meses.ABR.getNombre())) {
+							abr.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAY.getNombre())) {
+							may.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUN.getNombre())) {
+							jun.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUL.getNombre())) {
+							jul.add(pagado);
+						}
+						else if(anioMes.equals(Meses.AGO.getNombre())) {
+							ago.add(pagado);
+						}
+						else if(anioMes.equals(Meses.SEP.getNombre())) {
+							sep.add(pagado);
+						}
+						else if(anioMes.equals(Meses.OCT.getNombre())) {
+							oct.add(pagado);
+						}
+						else if(anioMes.equals(Meses.NOV.getNombre())) {
+							nov.add(pagado);
+						}
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
+							dic.add(pagado);
+						}
+					}
+				}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				
+				String anioMes;
+				int anio = Integer.parseInt(listAnio);
+				for(ArchivoPagoDia pagado:pagoArea) {
+					anioMes = pagoBs.obtenerAnioMes(pagado,anio);
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						if(anioMes.equals(Meses.ENE.getNombre())) {
+							ene.add(pagado);
+						}
+						else if(anioMes.equals(Meses.FEB.getNombre())) {
+							feb.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAR.getNombre())) {
+							mar.add(pagado);
+						}
+						else if(anioMes.equals(Meses.ABR.getNombre())) {
+							abr.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAY.getNombre())) {
+							may.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUN.getNombre())) {
+							jun.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUL.getNombre())) {
+							jul.add(pagado);
+						}
+						else if(anioMes.equals(Meses.AGO.getNombre())) {
+							ago.add(pagado);
+						}
+						else if(anioMes.equals(Meses.SEP.getNombre())) {
+							sep.add(pagado);
+						}
+						else if(anioMes.equals(Meses.OCT.getNombre())) {
+							oct.add(pagado);
+						}
+						else if(anioMes.equals(Meses.NOV.getNombre())) {
+							nov.add(pagado);
+						}
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
+							dic.add(pagado);
+						}
+					}
+				}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				
+				String anioMes;
+				int anio = Integer.parseInt(listAnio);
+				for(ArchivoPagoDia pagado:pagoArea) {
+					anioMes = pagoBs.obtenerAnioMes(pagado,anio);
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						if(anioMes.equals(Meses.ENE.getNombre())) {
+							ene.add(pagado);
+						}
+						else if(anioMes.equals(Meses.FEB.getNombre())) {
+							feb.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAR.getNombre())) {
+							mar.add(pagado);
+						}
+						else if(anioMes.equals(Meses.ABR.getNombre())) {
+							abr.add(pagado);
+						}
+						else if(anioMes.equals(Meses.MAY.getNombre())) {
+							may.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUN.getNombre())) {
+							jun.add(pagado);
+						}
+						else if(anioMes.equals(Meses.JUL.getNombre())) {
+							jul.add(pagado);
+						}
+						else if(anioMes.equals(Meses.AGO.getNombre())) {
+							ago.add(pagado);
+						}
+						else if(anioMes.equals(Meses.SEP.getNombre())) {
+							sep.add(pagado);
+						}
+						else if(anioMes.equals(Meses.OCT.getNombre())) {
+							oct.add(pagado);
+						}
+						else if(anioMes.equals(Meses.NOV.getNombre())) {
+							nov.add(pagado);
+						}
+						else if(anioMes.equals(Meses.DIC.getNombre())) {
+							dic.add(pagado);
+						}
 					}
 				}
 		}
@@ -638,6 +864,60 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 			for(ArchivoPagoDia pagado:pagoArea) {
 				if(pagoBs.obtenerPagos(pagado,anio,listMes)) {
 					pagosDate.add(pagado);
+				}
+			}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			permisos = true;
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			
+			int anio = Integer.parseInt(listAnio);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagoBs.obtenerPagos(pagado,anio,listMes)) {
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						pagosDate.add(pagado);
+					}
+				}
+			}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			permisos = true;
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			
+			int anio = Integer.parseInt(listAnio);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagoBs.obtenerPagos(pagado,anio,listMes)) {
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						pagosDate.add(pagado);
+					}
+				}
+			}
+		}
+		
+		else if (usuarioSel.getPerfilActivo()
+				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO.getValor()) {
+			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+			permisos = true;
+			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+			pagoArea = genericSearchBs.findByExample(archivoPago);
+			
+			int anio = Integer.parseInt(listAnio);
+			for(ArchivoPagoDia pagado:pagoArea) {
+				if(pagoBs.obtenerPagos(pagado,anio,listMes)) {
+					if(pagado.getIdUsuario() == usuarioSel.getId()) {
+						pagosDate.add(pagado);
+					}
 				}
 			}
 		}

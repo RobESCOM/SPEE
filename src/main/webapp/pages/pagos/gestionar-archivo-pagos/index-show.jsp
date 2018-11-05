@@ -11,11 +11,6 @@
 	]]>
 </jsp:text>
 
-<s:set var="listArchivoPagoMes"
-	value="{{'000001', '01/02/2018', 'Celex', 'Idioma Inglés Alumno','480.00 MXN'},
-	 {'000002','01/02/2018','Celex','Reinscripción','580.00 MXN'},
-	 {'000003','01/02/2018','Servicios Dentales','Amalgama','1080.00 MXN'}}" />
-
 <s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
 <s:set var="ttbImprimir" value="%{getText('tooltipImprimir')}" />
 
@@ -25,7 +20,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="CU38_TITLE" />
+			<s:text name="Lista de pagos" />
 		</h1>
 	</div>
 </div>
@@ -38,14 +33,14 @@
 					<s:set var="admin" value="permisos" />
 					<thead>
 						<tr>
-							<th><s:text name="CU38_THEAD1" /></th>
-							<th><s:text name="CU38_THEAD2" /></th>
-							<th><s:text name="CU38_THEAD3" /></th>
-							<th><s:text name="CU38_THEAD4" /></th>
+							<th><s:text name="Folio" /></th>
+							<th><s:text name="Fecha" /></th>
+							<th><s:text name="Concepto" /></th>
+							<th><s:text name="Monto" /></th>
 							<s:if test="admin">
 								<th><s:text name="Area servicio"/></th>
 							</s:if>
-							<th><s:text name="CU38_THEAD5" /></th>
+							<th><s:text name="Acciones" /></th>
 						</tr>
 					</thead>
 					<tbody>
