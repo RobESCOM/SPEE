@@ -66,7 +66,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PagoBs.class);
 
 	public static final long CINCUENTA_MB = 6553600L;
-	
+
 	public static final String FORMATO_JPEG = "image/jpeg";
 
 	public static final String FORMATO_JPG = "image/jpg";
@@ -77,7 +77,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 
 	@Autowired
 	private MailSender mailSender;
-	
+
 	@Autowired
 	private GenericSearchBs genericSearchBs;
 
@@ -134,6 +134,20 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		notificacion.setMotivo("se ha registrado un pago");
 		notificacion.setIdDestinatario(PerfilEnum.ENCARGADO_CAJA.getValor());
 		save(notificacion);
+	}
+
+	@Transactional
+	public void pagoEnCaja(Archivo archivo, Usuario usuario, ArchivoPagoDia model, String correo) {
+		model.setFechaEnvio(new Date());
+		model.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+		model.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
+		model.setIdCarpeta(Numeros.UNO.getValorInteger());
+		model.setCorte(Boolean.FALSE);
+		model.setFolioOperacion("Pago en Caja");
+
+		byte[] bfile = new byte[30];
+		model.setArchivo(bfile);
+		genericDao.save(model);
 	}
 
 	public void enviarEmailPago(Usuario usuario, ArchivoPagoDia archivoPago) {
@@ -224,7 +238,6 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 				context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
 		File file = new File(context + ruta + PropertyAccess.getProperty("mx.edu.spee.pagos.celex.nombre.archivoPDF"));
 		archivo.setFileUploadFileName(file.getName());
-		// archivo.setFileInputStream(new FileInputStream(file));
 
 		return archivo;
 	}
@@ -242,175 +255,164 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		ajaxResult.addCampo("pagos", genericSearchBs.findByExample(pagoDia));
 		return ajaxResult;
 	}
-	
+
 	public InformacionPersonal obtenerAlumno(ArchivoPagoDia pago) {
 		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, pago.getIdUsuario());
 		return obtenerPersona(cuenta);
 	}
-	
+
 	public InformacionPersonal obtenerPersona(Cuenta cuentaImpresiones) {
 		InformacionPersonal infoPersonal = new InformacionPersonal();
 		infoPersonal.setIdCuenta(cuentaImpresiones.getIdCuenta());
 		List<InformacionPersonal> infoPersona = genericSearchBs.findByExample(infoPersonal);
 		return infoPersona.get(Numeros.CERO.getValor());
 	}
-	
+
 	public String obtenerArchivo(ArchivoPagoDia archivo) throws IOException {
 		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
 		return new String(encoded);
 	}
-	
-	public int obtenerAnio (ArchivoPagoDia pago) {
+
+	public int obtenerAnio(ArchivoPagoDia pago) {
 		Calendar anio = Calendar.getInstance();
 		anio.setTime(pago.getFechaEnvio());
-		if(anio.get(Calendar.YEAR) == Numeros.ANIO_ACTUAL.getValor())
+		if (anio.get(Calendar.YEAR) == Numeros.ANIO_ACTUAL.getValor())
 			return Numeros.ANIO_ACTUAL.getValor();
-		else if(anio.get(Calendar.YEAR) == Numeros.ANIO_UNO.getValor())
+		else if (anio.get(Calendar.YEAR) == Numeros.ANIO_UNO.getValor())
 			return Numeros.ANIO_UNO.getValor();
-		else if(anio.get(Calendar.YEAR) == Numeros.ANIO_DOS.getValor())
+		else if (anio.get(Calendar.YEAR) == Numeros.ANIO_DOS.getValor())
 			return Numeros.ANIO_DOS.getValor();
-		else if(anio.get(Calendar.YEAR) == Numeros.ANIO_TRES.getValor())
+		else if (anio.get(Calendar.YEAR) == Numeros.ANIO_TRES.getValor())
 			return Numeros.ANIO_TRES.getValor();
-		else if(anio.get(Calendar.YEAR) == Numeros.ANIO_CUATRO.getValor())
+		else if (anio.get(Calendar.YEAR) == Numeros.ANIO_CUATRO.getValor())
 			return Numeros.ANIO_CUATRO.getValor();
-		else if(anio.get(Calendar.YEAR) == Numeros.ANIO_CINCO.getValor())
+		else if (anio.get(Calendar.YEAR) == Numeros.ANIO_CINCO.getValor())
 			return Numeros.ANIO_CINCO.getValor();
 		return Numeros.UNO_NEGATIVO.getValor();
 	}
-	
+
 	public String obtenerAnioMes(ArchivoPagoDia pago, int anios) {
 		Calendar anio = Calendar.getInstance();
 		anio.setTime(pago.getFechaEnvio());
-		if(anio.get(Calendar.YEAR) == anios) {
+		if (anio.get(Calendar.YEAR) == anios) {
 			System.out.println();
-			if(anio.get(Calendar.MONTH) == Meses.ENE.getIdValor()) {
+			if (anio.get(Calendar.MONTH) == Meses.ENE.getIdValor()) {
 				return Meses.ENE.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.FEB.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.FEB.getIdValor()) {
 				return Meses.FEB.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.MAR.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.MAR.getIdValor()) {
 				return Meses.MAR.getNombre();
-			} 
-			else if(anio.get(Calendar.MONTH) == Meses.ABR.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.ABR.getIdValor()) {
 				return Meses.ABR.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.MAY.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.MAY.getIdValor()) {
 				return Meses.MAY.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.JUN.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.JUN.getIdValor()) {
 				return Meses.JUN.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.JUL.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.JUL.getIdValor()) {
 				return Meses.JUL.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.AGO.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.AGO.getIdValor()) {
 				return Meses.AGO.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.SEP.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.SEP.getIdValor()) {
 				return Meses.SEP.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.OCT.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.OCT.getIdValor()) {
 				return Meses.OCT.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.NOV.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.NOV.getIdValor()) {
 				return Meses.NOV.getNombre();
-			}
-			else if(anio.get(Calendar.MONTH) == Meses.DIC.getIdValor()) {
+			} else if (anio.get(Calendar.MONTH) == Meses.DIC.getIdValor()) {
 				return Meses.DIC.getNombre();
 			}
 		}
 		return "";
 	}
-	
-	public boolean obtenerPagos (ArchivoPagoDia pago, int year, String mes) {
+
+	public boolean obtenerPagos(ArchivoPagoDia pago, int year, String mes) {
 		Calendar anio = Calendar.getInstance();
 		anio.setTime(pago.getFechaEnvio());
-		if(anio.get(Calendar.YEAR) == year) {
-			if(anio.get(Calendar.MONTH) == getMes(mes)) {
+		if (anio.get(Calendar.YEAR) == year) {
+			if (anio.get(Calendar.MONTH) == getMes(mes)) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
+
 	public int getMes(String mes) {
-		if(mes.equals(Meses.ENE.getNombre()))
+		if (mes.equals(Meses.ENE.getNombre()))
 			return Numeros.CERO.getValor();
-		else if(mes.equals(Meses.FEB.getNombre()))
+		else if (mes.equals(Meses.FEB.getNombre()))
 			return Numeros.UNO.getValor();
-		else if(mes.equals(Meses.MAR.getNombre()))
+		else if (mes.equals(Meses.MAR.getNombre()))
 			return Numeros.DOS.getValor();
-		else if(mes.equals(Meses.ABR.getNombre()))
+		else if (mes.equals(Meses.ABR.getNombre()))
 			return Numeros.TRES.getValor();
-		else if(mes.equals(Meses.MAY.getNombre()))
+		else if (mes.equals(Meses.MAY.getNombre()))
 			return Numeros.CUATRO.getValor();
-		else if(mes.equals(Meses.JUN.getNombre()))
+		else if (mes.equals(Meses.JUN.getNombre()))
 			return Numeros.CINCO.getValor();
-		else if(mes.equals(Meses.JUL.getNombre()))
+		else if (mes.equals(Meses.JUL.getNombre()))
 			return Numeros.SEIS.getValor();
-		else if(mes.equals(Meses.AGO.getNombre()))
+		else if (mes.equals(Meses.AGO.getNombre()))
 			return Numeros.SIETE.getValor();
-		else if(mes.equals(Meses.SEP.getNombre()))
+		else if (mes.equals(Meses.SEP.getNombre()))
 			return Numeros.OCHO.getValor();
-		else if(mes.equals(Meses.OCT.getNombre()))
+		else if (mes.equals(Meses.OCT.getNombre()))
 			return Numeros.NUEVE.getValor();
-		else if(mes.equals(Meses.NOV.getNombre()))
+		else if (mes.equals(Meses.NOV.getNombre()))
 			return Numeros.DIEZ.getValor();
-		else if(mes.equals(Meses.DIC.getNombre()))
+		else if (mes.equals(Meses.DIC.getNombre()))
 			return Numeros.ONCE.getValor();
-		
+
 		return Numeros.UNO_NEGATIVO.getValor();
 	}
-	
+
 	public String[] obtenerTotalAnio(List<ArchivoPagoDia> pagos) {
-		String [] anio = new String[3];
+		String[] anio = new String[3];
 		int cantidad = 0;
 		Double total = 0.00;
 		boolean fecha = true;
-		for(ArchivoPagoDia pag:pagos) {
-			if(fecha) 
+		for (ArchivoPagoDia pag : pagos) {
+			if (fecha)
 				anio[Numeros.CERO.getValor()] = obtenerAnio(pag) + "";
 			cantidad++;
 			total = total + pag.getCatalogoServicio().getPrecio();
 		}
-		anio[Numeros.UNO.getValor()]=cantidad+"";
-		anio[Numeros.DOS.getValor()]=String.format("%.2f", total);
-		
+		anio[Numeros.UNO.getValor()] = cantidad + "";
+		anio[Numeros.DOS.getValor()] = String.format("%.2f", total);
+
 		return anio;
 	}
-	
+
 	public String[] obtenerTotalMes(List<ArchivoPagoDia> pagos) {
-		String [] anio = new String[3];
+		String[] anio = new String[3];
 		int cantidad = 0;
 		Double total = 0.00;
-		for(ArchivoPagoDia pag:pagos) { 
-			anio[Numeros.CERO.getValor()] = obtenerAnioMes(pag,obtenerAnio(pag));
+		for (ArchivoPagoDia pag : pagos) {
+			anio[Numeros.CERO.getValor()] = obtenerAnioMes(pag, obtenerAnio(pag));
 			cantidad++;
 			total = total + pag.getCatalogoServicio().getPrecio();
 		}
-		anio[Numeros.UNO.getValor()]=cantidad+"";
-		anio[Numeros.DOS.getValor()]=String.format("%.2f", total);
+		anio[Numeros.UNO.getValor()] = cantidad + "";
+		anio[Numeros.DOS.getValor()] = String.format("%.2f", total);
 		return anio;
 	}
-	
+
 	public String dateForm(ArchivoPagoDia pago) {
 		Calendar anio = Calendar.getInstance();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		return format1.format(anio.getTime());
 	}
-	
+
 	public String moneyForm(ArchivoPagoDia pago) {
 		return String.format("%.2f", pago.getCatalogoServicio().getPrecio());
 	}
-	
+
 	public boolean findSigaAsociado(Integer idPago) {
 		PagoSiga comprobante = new PagoSiga();
 		comprobante.setIdPago(idPago);
 		System.err.println(!genericSearchBs.findByExample(comprobante).isEmpty());
 		return !genericSearchBs.findByExample(comprobante).isEmpty();
 	}
-	
+
 	public String obtenerTipo(String tipo) {
 		return tipo;
 	}
