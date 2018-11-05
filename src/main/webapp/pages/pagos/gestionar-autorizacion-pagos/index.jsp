@@ -52,7 +52,8 @@
 					<tbody>
 						<s:iterator value="listArchivoPagosRevision"
 							var="pagoPorAutorizar">
-							<s:set var="alumno"	value="%{pagoBs.obtenerAlumno(#pagoPorAutorizar)}"></s:set>
+							<s:set var="alumno"
+								value="%{pagoBs.obtenerAlumno(#pagoPorAutorizar)}"></s:set>
 							<tr>
 								<td><s:if
 										test="%{#pagoPorAutorizar.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@AUTORIZADO.getIdEstatus()}">
@@ -71,11 +72,18 @@
 										format="yyyy-MM-dd" /></td>
 								<td>${pagoPorAutorizar.catalogoServicio.descripcion}</td>
 								<td>$ ${pagoPorAutorizar.catalogoServicio.precio} MXN</td>
-								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/${pagoPorAutorizar.id}"
-									title="Visualizar Comprobante"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-								</a></td>
+								<td><s:if
+										test="%{pagoBs.findSigaAsociado(#pagoPorAutorizar.id) == false}">
+										<a
+											href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/${pagoPorAutorizar.id}"
+											title="Visualizar Comprobante"> <i
+											class="material-icons md-24">${varIconoVisualizar}</i>
+										</a>
+									</s:if> <s:else>
+										<a href="#" title="Pago gestionado"> <i
+											class="material-icons"> done </i>
+										</a>
+									</s:else></td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -97,7 +105,8 @@
 <sj:dialog id="corteCajaId" modal="true" title="Corte de Caja"
 	autoOpen="false" openTopics="showDlgCorteCaja"
 	closeTopics="closeDlgCorte" resizable="false" draggable="false">
-	<s:url var="urlAction" action="gestionar-corte-caja/" includeContext="true" />
+	<s:url var="urlAction" action="gestionar-corte-caja/"
+		includeContext="true" />
 	<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
 
 	<s:form id="frmCorteCaja" action="" method="post" theme="simple"

@@ -79,7 +79,7 @@
 						name="Folio de operacion"></s:text>
 				</label>
 				<div class="col-md-6">
-					<s:textfield name="folio" required="true" class="form-control"></s:textfield>
+					<s:textfield name="folio" required="true" class="form-control" maxlength="6"></s:textfield>
 				</div>
 			</div>
 		</fieldset>

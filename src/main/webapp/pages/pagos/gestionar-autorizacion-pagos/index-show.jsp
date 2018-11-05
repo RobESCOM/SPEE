@@ -7,6 +7,9 @@
 
 <jsp:text>
 	<![CDATA[                 
+	<script
+		src="${pageContext.request.contextPath}/pages/pagos/cargar-pago/js/index-editNew.js"
+		type="text/javascript"></script>
 	]]>
 </jsp:text>
 
@@ -35,25 +38,25 @@
 		<div class="row">
 			<s:iterator value="pago" var="archivoPago"></s:iterator>
 			<s:iterator value="tipoArchivo" var="tipo"></s:iterator>
-				<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>
-				<s:if test="%{#tipo == 'application/pdf'}">
-					<object data="data:application/pdf;base64, ${archivo}" type="application/pdf" width="600" height="500">
-						<a download="comprobante"></a>
-					</object>
-				</s:if>
-				<s:elseif test="%{#tipo == 'imagen/jpg'}">
-					<img src="data:imagen/jpg;base64, ${archivo}" alt="img" />
-				</s:elseif>
-				<s:else>
-					<img src="data:imagen/png;base64, ${archivo}" alt="img" />
-				</s:else>
+			<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>
+			<s:if test="%{#tipo == 'application/pdf'}">
+				<object data="data:application/pdf;base64, ${archivo}"
+					type="application/pdf" width="600" height="500">
+					<a download="comprobante"></a>
+				</object>
+			</s:if>
+			<s:elseif test="%{#tipo == 'imagen/jpg'}">
+				<img src="data:imagen/jpg;base64, ${archivo}" alt="img" />
+			</s:elseif>
+			<s:else>
+				<img src="data:imagen/png;base64, ${archivo}" alt="img" />
+			</s:else>
 		</div>
 	</div>
 </div>
-
 <div class="text-right">
 	<a
-		href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos!autorizarPago?idSel=${idSel}"
+		href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/new?idSel=${idSel}"
 		class="btn btn-primary"><s:text name="Autorizar" /></a> <a
 		href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos!rechazarPago?idSel=${idSel}"
 		class="btn btn-primary"><s:text name="Rechazar" /></a><a

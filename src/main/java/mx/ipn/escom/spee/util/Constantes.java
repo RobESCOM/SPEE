@@ -29,6 +29,7 @@ public class Constantes {
 	public static final String TEMPLATE = "template";
 	public static final String URL = "url";
 	public static final String MSG_SEND_MAIL_ERROR = "MSG_SEND_MAIL_ERROR";
+	public static final String IP = "http://localhost:8123";
 	/**
 	 * Claves de mensajes
 	 */

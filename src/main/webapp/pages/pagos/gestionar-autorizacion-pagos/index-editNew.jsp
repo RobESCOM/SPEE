@@ -14,6 +14,8 @@
 </jsp:text>
 </head>
 <body>
+
+	<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
 	<div class="row title">
 		<div class="col-md-12">
 			<h1 class="title">
@@ -22,26 +24,35 @@
 		</div>
 	</div>
 
+	<div class="row form-group">
+		<div class="col-md-12">
+			<s:actionerror theme="%{varTheme}" />
+			<s:actionmessage theme="%{varTheme}" />
+		</div>
+	</div>
+
+
 	<s:form id="frmActualizarEstadoPago" enctype="multipart/form-data"
-		action="%{#pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos"
+		action="%{#pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos!cargarSiga"
 		theme="simple" method="post">
-		<s:hidden name="idServicio" value="%{idServicio}"></s:hidden>
+		<s:hidden name="idSel" value="%{idSel}"></s:hidden>
 		<fieldset
 			class="form-section form-horizontal form-medium text-justify">
 			<label> <s:text
-					name="El archivo que proporciona representa un pago oficial y debe contar con lo siguiente: " />
+					name="El archivo que proporciona representa un comprobante de pago del subsistema SIG@: " />
 			</label>
 			<div class="text-left">
 				<ul>
-					<li>El formato debe ser .pdf</li>
-					<li>Debe poderse visualizar claramente</li>
+					<li>El formato debe ser .pdf o .png</li>
+					<li>Debe no mas de no más de 10 MB</li>
+					<li>Debe visualizarse claramente</li>
 				</ul>
 			</div>
 			<div class="form-group">
-				<label class="col-md-4 control-label "> <s:text
-						name="Nombre "></s:text>
+				<label class="col-md-4 control-label label-obligatorio "> <s:text
+						name="Comprobante SIG@ "></s:text>
 				</label>
-				<div class="col-md-6">
+				<div class="col-md-8">
 					<div class="input-group">
 						<input type="text" class="form-control" id="fileName"
 							readonly="true" /> <span class="input-group-btn" id="loadImage">
@@ -51,20 +62,19 @@
 					<s:fielderror fieldName="archivo.fileUpload" cssClass="error"
 						theme="bootstrap" />
 				</div>
-				<div class="col-xs-12 col-sm-8 col-md-1">
+				<div class="col-xs-12 col-sm-8 col-md-8">
 					<input type='file' id="fileUpload" name="archivo.fileUpload"
-						class="hide" accept=".pdf" value="" />
+						class="hide" accept=".pdf,png,jpeg" value="" />
 				</div>
 			</div>
 		</fieldset>
-		<div class="col-md-12 text-right">
-			<s:submit cssClass="btn btn-primary"
-				value="Aceptar"></s:submit>
-			<a
-				href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos"
-				class="btn btn-primary"><s:text name="Cancelar" /></a>
+		<div class="form-medium text-right">
+			<s:submit class="btn btn-default-spee" value="Adjuntar Comprobante"></s:submit>
 		</div>
 	</s:form>
 </body>
+<div class="text-left">
+	<div class="col-md-12"></div>
+</div>
 	</html>
 </jsp:root>

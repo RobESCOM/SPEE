@@ -39,6 +39,7 @@ import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
 import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
+import mx.ipn.escom.spee.pagos.mapeo.PagoSiga;
 import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.Meses;
 import mx.ipn.escom.spee.util.Numeros;
@@ -401,6 +402,13 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	
 	public String moneyForm(ArchivoPagoDia pago) {
 		return String.format("%.2f", pago.getCatalogoServicio().getPrecio());
+	}
+	
+	public boolean findSigaAsociado(Integer idPago) {
+		PagoSiga comprobante = new PagoSiga();
+		comprobante.setIdPago(idPago);
+		System.err.println(!genericSearchBs.findByExample(comprobante).isEmpty());
+		return !genericSearchBs.findByExample(comprobante).isEmpty();
 	}
 	
 	public String obtenerTipo(String tipo) {
