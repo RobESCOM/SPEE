@@ -35,7 +35,7 @@
 
 <div class="form-section form-horizontal">
 	<div class="form-group">
-		<div class="row">
+		<div class="row col-md-12">
 			<s:iterator value="pago" var="archivoPago"></s:iterator>
 			<s:iterator value="tipoArchivo" var="tipo"></s:iterator>
 			<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>

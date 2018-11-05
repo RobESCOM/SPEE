@@ -25,25 +25,6 @@
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">
-			<div class="col-md-8">
-				<fieldset
-					class="form-section form-horizontal form-medium text-justify">
-					<legend class="form-section">
-						<s:text name="Generar Reporte" />
-						<a
-							href="${pageContext.request.contextPath}/pagos/gestionar-pagos!generarReporte"
-							title="Generar Comprobante"> <i class="material-icons">${varIconoVisualizar}</i>
-						</a>
-					</legend>
-				</fieldset>
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="form-section form-horizontal">
-	<div class="form-group">
-		<div class="row">
 			<div class="col-md-12">
 				<table id="tblPagosEnviados" class="table table-striped">
 					<thead>
