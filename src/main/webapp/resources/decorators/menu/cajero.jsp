@@ -18,7 +18,7 @@
 							href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos">
 								<s:text name="menu.cajero.gestionar.pagos" />
 						</a><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-ser/new">
+							href="${pageContext.request.contextPath}/pagos/pago-caja/new">
 								<s:text name="Pago en Caja" />
 						</a></li>
 					</ul></li>

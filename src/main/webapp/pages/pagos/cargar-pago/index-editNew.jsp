@@ -14,7 +14,7 @@
 </jsp:text>
 </head>
 <body>
-<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
+	<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
 
 	<div class="row title">
 		<div class="col-md-12">
@@ -30,7 +30,7 @@
 			<s:actionmessage theme="%{varTheme}" />
 		</div>
 	</div>
-	
+
 	<div class="col-md-12">
 		<div class="outter-section form-medium text-left">
 			<s:text name="Los campos marcados con * son obligatorios." />
@@ -63,7 +63,7 @@
 					<div class="input-group">
 						<input type="text" class="form-control" id="fileName"
 							readonly="true" /> <span class="input-group-btn" id="loadImage">
-							<i class="material-icons md-24 md-eld">file_upload</i>
+							<i class="material-icons md-24">file_upload</i>
 						</span>
 					</div>
 					<s:fielderror fieldName="archivo.fileUpload" cssClass="error"
@@ -79,7 +79,8 @@
 						name="Folio de operacion"></s:text>
 				</label>
 				<div class="col-md-6">
-					<s:textfield name="folio" required="true" class="form-control" maxlength="6"></s:textfield>
+					<s:textfield name="folio" required="true" class="form-control"
+						maxlength="6"></s:textfield>
 				</div>
 			</div>
 		</fieldset>
