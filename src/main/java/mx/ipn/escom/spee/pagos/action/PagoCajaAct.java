@@ -14,10 +14,18 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
+import mx.ipn.escom.spee.action.NombreObjetosSesion;
+import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
+import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
+import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
+import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
+import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
@@ -53,29 +61,22 @@ public class PagoCajaAct extends GeneralActionSupport {
 
 	private String correo;
 
+	private Usuario usuarioSel;
+
 	public String editNew() {
 		listServicios = genericSearchBs.findAll(CatalogoServicio.class);
 		return EDITNEW;
 	}
 
 	public void validateCreate() {
-		getArchivo();
-		model.setFechaEnvio(new Date());
-		model.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-		model.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
-		model.setIdCarpeta(Numeros.UNO.getValorInteger());
-		model.setCorte(Boolean.FALSE);
-		model.setFolioOperacion("Pago en Caja");
-		try {
-			byte[] bfile = new byte[(int) archivo.getFileUpload().length()];
-			FileInputStream fis = new FileInputStream(archivo.getFileUpload());
-			model.setArchivo(bfile);
-			fis.read(bfile);
-		} catch (IOException e) {
-			addActionError("No se pudo abrir el archivo");
+		getUsuarioSel();
+		if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
+			pagoBs.pagoEnCaja(archivo, usuarioSel, model, correo);
+			enviarEmailPago(correo, model);
+		} else {
+			addActionError("Verifique su información.");
 		}
-		genericDao.save(model);
-		enviarEmailPago(correo, model);
+
 	}
 
 	public String create() {
@@ -173,6 +174,17 @@ public class PagoCajaAct extends GeneralActionSupport {
 
 	public void setCorreo(String correo) {
 		this.correo = correo;
+	}
+
+	public Usuario getUsuarioSel() {
+		if (SessionManager.get(NombreObjetosSesion.USUARIO_SESION) != null) {
+			usuarioSel = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
+		}
+		return usuarioSel;
+	}
+
+	public void setUsuarioSel(Usuario usuarioSel) {
+		this.usuarioSel = usuarioSel;
 	}
 
 }

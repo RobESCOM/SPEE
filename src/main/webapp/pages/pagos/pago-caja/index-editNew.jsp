@@ -8,7 +8,7 @@
 <jsp:text>
 	<![CDATA[
 	<script
-		src="${pageContext.request.contextPath}/pages/pagos/pago-caja/js/index-editNew.js"
+		src="${pageContext.request.contextPath}/pages/pagos/cargar-pago/js/index-editNew.js"
 		type="text/javascript"></script>
 	]]>
 </jsp:text>
@@ -38,7 +38,7 @@
 	</div>
 
 	<s:form
-		action="%{#pageContext.request.contextPath}/pagos/pago-caja/"
+		action="%{#pageContext.request.contextPath}/pagos/pago-caja"
 		method="post" theme="simple">
 		<fieldset class="form form-horizontal form-medium">
 			<div class="form-group">
@@ -63,25 +63,6 @@
 				<div class="col-xs-12 col-sm-8 col-md-8">
 					<s:textfield cssClass="form-control campo"
 						cssClassError="input-error" name="correo" id="txCorreo" />
-				</div>
-			</div>
-			<div class="form-group">
-				<label class="col-md-4 control-label label-obligatorio "> <s:text
-						name="Ticket Caja"></s:text>
-				</label>
-				<div class="col-md-8">
-					<div class="input-group">
-						<input type="text" class="form-control" id="fileName"
-							readonly="true" /> <span class="input-group-btn" id="loadImage">
-							<i class="material-icons md-24 md-eld">file_upload</i>
-						</span>
-					</div>
-					<s:fielderror fieldName="archivo.fileUpload" cssClass="error"
-						theme="bootstrap" />
-				</div>
-				<div class="col-xs-12 col-sm-8 col-md-8">
-					<input type='file' id="fileUpload" name="archivo.fileUpload"
-						class="hide" accept=".pdf,png,jpeg" value="" />
 				</div>
 			</div>
 		</fieldset>
