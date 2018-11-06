@@ -50,7 +50,7 @@
 								<td>$  ${pagAutorizadoCelex.catalogoServicio.precio}</td>
 								<td>
 									<a
-										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPag=${pagAutorizadoCelex.id}&amp;idSel=${pagAutorizadoCelex.idUsuario}"
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagAutorizadoCelex.id}&amp;idSel=${pagAutorizadoCelex.idUsuario}"
 										title="${ttbverSIGA}"><i
 											class="material-icons md-24 md-eld">find_in_page</i>
 									</a>

@@ -260,6 +260,20 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return new String(encoded);
 	}
 	
+	public String obtenerArchivoSIGA(PagoSiga archivo) throws IOException {
+		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
+		return new String(encoded);
+	}
+	
+	public PagoSiga siga(Integer id, Integer id_pago) {
+			PagoSiga pagoSiga = new PagoSiga();
+			List<PagoSiga> ps = new ArrayList<>();
+			pagoSiga.setIdCuenta(id);
+			pagoSiga.setIdPago(id_pago);
+			ps = genericSearchBs.findByExample(pagoSiga);
+		return ps.get(Numeros.CERO.getValor());
+	}
+	
 	public int obtenerAnio (ArchivoPagoDia pago) {
 		Calendar anio = Calendar.getInstance();
 		anio.setTime(pago.getFechaEnvio());

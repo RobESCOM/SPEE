@@ -32,6 +32,7 @@ import mx.ipn.escom.spee.pagos.bs.GestionarServiciosBs;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
+import mx.ipn.escom.spee.pagos.mapeo.PagoSiga;
 import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.ResultConstants;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -69,6 +70,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	private InformacionPersonal infoUsuario;
 
 	private List<ArchivoPagoDia> listPagos;
+	
+	private PagoSiga pagoSiga;
 
 	private Archivo archivoVisualizar;
 
@@ -181,6 +184,7 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	}
 	
 	public String show() {
+		pagoSiga = pagoBs.siga(idUser,idPago);
 		return SHOW;
 	}
 
@@ -325,5 +329,14 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
 	}
+
+	public PagoSiga getPagoSiga() {
+		return pagoSiga;
+	}
+
+	public void setPagoSiga(PagoSiga pagoSiga) {
+		this.pagoSiga = pagoSiga;
+	}
+	
 
 }
