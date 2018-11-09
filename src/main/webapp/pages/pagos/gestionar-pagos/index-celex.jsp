@@ -11,7 +11,7 @@
 	]]>
 </jsp:text>
 
-<s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
+<s:set var="ttbverSIGA" value="%{getText('Visualizar SIG@')}" />
 <s:set var="varIconoVisualizar" value="'attach_file'" />
 
 <div class="row title">
@@ -19,25 +19,6 @@
 		<h1 class="title">
 			<s:text name="Gestionar Pagos" />
 		</h1>
-	</div>
-</div>
-
-<div class="form-section form-horizontal">
-	<div class="form-group">
-		<div class="row">
-			<div class="col-md-8">
-				<fieldset
-					class="form-section form-horizontal form-medium text-justify">
-					<legend class="form-section">
-						<s:text name="Generar Reporte" />
-						<a
-							href="${pageContext.request.contextPath}/pagos/gestionar-pagos!generarReporte"
-							title="Generar Comprobante"> <i class="material-icons">${varIconoVisualizar}</i>
-						</a>
-					</legend>
-				</fieldset>
-			</div>
-		</div>
 	</div>
 </div>
 
@@ -53,6 +34,7 @@
 							<th><s:text name="Fecha" /></th>
 							<th><s:text name="Concepto" /></th>
 							<th><s:text name="Cantidad" /></th>
+							<th><s:text name="Comprobante"/></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -66,6 +48,13 @@
 										format="yyyy-MM-dd" /></td>
 								<td>${pagAutorizadoCelex.catalogoServicio.descripcion}</td>
 								<td>$  ${pagAutorizadoCelex.catalogoServicio.precio}</td>
+								<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagAutorizadoCelex.id}&amp;idSel=${pagAutorizadoCelex.idUsuario}"
+										title="${ttbverSIGA}"><i
+											class="material-icons md-24 md-eld">find_in_page</i>
+									</a>
+								</td>
 							</tr>
 						</s:iterator>
 					</tbody>

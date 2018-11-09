@@ -11,8 +11,7 @@
 	]]>
 </jsp:text>
 
-<s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
-<s:set var="ttbImprimir" value="%{getText('tooltipImprimir')}" />
+<s:set var="ttbVisualizar" value="%{getText('Visualizar')}" />
 
 <s:set var="varIconoImprimir" value="'&#xE8AD;'" />
 <s:set var="varIconoVisualizar" value="'&#xE415;'" />
@@ -55,15 +54,13 @@
 								<s:if test="admin">
 									<td>${pagoMes.catalogoServicio.area.nombreArea}</td>
 								</s:if>
-								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show"
-									title="${ttbVisualizar}"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-								</a><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show"
-									title="${ttbImprimir}"> <i
-										class="material-icons md-24 md-eld">${varIconoImprimir}</i>
-								</a></td>
+								<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagoMes.id}&amp;idSel=${pagoMes.idUsuario}"
+										title="${ttbverSIGA}"><i
+											class="material-icons md-24 md-eld">find_in_page</i>
+									</a>
+								</td>
 							</tr>
 						</s:iterator>
 					</tbody>

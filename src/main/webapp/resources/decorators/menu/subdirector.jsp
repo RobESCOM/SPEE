@@ -53,7 +53,7 @@
 						class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
+							href="${pageContext.request.contextPath}/pagos/gestionar-reportes">
 								<s:text name="Gestionar Reportes" />
 						</a></li>
 					</ul></li>

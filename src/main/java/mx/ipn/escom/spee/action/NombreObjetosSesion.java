@@ -22,6 +22,8 @@ public class NombreObjetosSesion {
 	public static final String CLIENT = "activate-client";
 	public static final String TIPO_DIRECCION = "tipo-direccion";
 	public static final String NOMBRE_AREA = "nombreArea";
+	public static final String ANIO = "listAnio";
+	public static final String MES = "listMes";
 	
 	public static final String AJAX_RESULT = "ajax-result";
 

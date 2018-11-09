@@ -295,6 +295,10 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 		List<ArchivoPagoDia> oct = new ArrayList<>();
 		List<ArchivoPagoDia> nov = new ArrayList<>();
 		List<ArchivoPagoDia> dic = new ArrayList<>();
+		
+		getListAnio();
+		getListMes();
+		
 		if (usuarioSel.getPerfilActivo()
 				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
 				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
@@ -954,10 +958,16 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 	
 
 	public String getListAnio() {
+		if(listAnio != null) {
+		 listAnio = (String) SessionManager.get(NombreObjetosSesion.ANIO);
+		}
 		return listAnio;
 	}
 
 	public void setListAnio(String listAnio) {
+		if(listAnio != null) {
+			SessionManager.put(NombreObjetosSesion.ANIO, listAnio);
+		}
 		this.listAnio = listAnio;
 	}
 
@@ -970,10 +980,16 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 	}
 
 	public String getListMes() {
+		if(listMes != null) {
+			 listMes = (String) SessionManager.get(NombreObjetosSesion.MES);
+			}
 		return listMes;
 	}
 
 	public void setListMes(String listMes) {
+		if(listMes != null) {
+			SessionManager.put(NombreObjetosSesion.MES, listMes);
+		}
 		this.listMes = listMes;
 	}
 

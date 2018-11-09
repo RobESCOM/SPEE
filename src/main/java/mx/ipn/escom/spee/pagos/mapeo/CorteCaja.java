@@ -32,6 +32,9 @@ public class CorteCaja implements Modelo, Serializable {
 	@Column(name = "fh_corte")
 	private Date fechaCorte;
 
+	@Column(name = "total_corte")
+	private Double total;
+
 	public Integer getId() {
 		return id;
 	}
@@ -74,6 +77,14 @@ public class CorteCaja implements Modelo, Serializable {
 
 	public void setFechaCorte(Date fechaCorte) {
 		this.fechaCorte = fechaCorte;
+	}
+
+	public Double getTotal() {
+		return total;
+	}
+
+	public void setTotal(Double total) {
+		this.total = total;
 	}
 
 }

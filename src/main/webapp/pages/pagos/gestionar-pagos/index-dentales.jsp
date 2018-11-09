@@ -34,6 +34,7 @@
 							<th><s:text name="Fecha" /></th>
 							<th><s:text name="Concepto" /></th>
 							<th><s:text name="Cantidad" /></th>
+							<th><s:text name="Comprobante" /></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,6 +48,13 @@
 										format="yyyy-MM-dd" /></td>
 								<td>${pagAutorizadoDentales.catalogoServicio.descripcion}</td>
 								<td>$  ${pagAutorizadoDentales.catalogoServicio.precio}</td>
+								<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagAutorizadoDentales.id}&amp;idSel=${pagAutorizadoDentales.idUsuario}"
+										title="${ttbverSIGA}"><i
+											class="material-icons md-24 md-eld">find_in_page</i>
+									</a>
+								</td>
 							</tr>
 						</s:iterator>
 					</tbody>

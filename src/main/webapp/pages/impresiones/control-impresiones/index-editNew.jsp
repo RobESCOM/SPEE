@@ -21,6 +21,13 @@
 	</div>
 </div>
 
+<div class="row form-group">
+	<div class="col-md-12">
+		<s:actionerror theme="%{varTheme}" />
+		<s:actionmessage theme="%{varTheme}" />
+	</div>
+</div>
+
 <div class="form-section form-horizontal" onload="inicio()">
 	<div class="form-group">
 		<div class="row">
@@ -88,7 +95,7 @@
 					<div class="col-xs-12 col-md-12 col-md-12 text-right">
 						<s:submit cssClass="btn btn-default-spee" value="Aceptar" />
 						<a class="btn btn-default-spee"
-							href="${pageContext.request.contextPath}/impresiones/control-impresiones/">Cancelar</a>
+							href="${pageContext.request.contextPath}/impresiones/control-impresiones">Cancelar</a>
 					</div>
 				</div>
 				

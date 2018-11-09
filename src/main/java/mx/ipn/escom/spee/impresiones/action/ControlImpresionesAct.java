@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import mx.edu.spee.controlacceso.exception.UsuarioNoEncontradoException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
@@ -51,6 +50,9 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 		
 	public String index() {
 		cuentaImpresiones = impresionesBs.obtenerCuentasConImpresiones();
+		if(!getActionErrors().isEmpty()) {
+			cuentaImpresiones = impresionesBs.obtenerCuentasConImpresiones();
+		}
 		return INDEX;
 	}
 	
@@ -68,12 +70,15 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 		return EDITNEW;
 	}
 	
-	public String agregarImpresiones() throws UsuarioNoEncontradoException {
-		if(impresionesBs.agregarImpresiones(clave, numeroImpresion, tipoUsuario)) {
-			return AGREGAR;
-		}
-		return NO_AUTORIZADO;
-	}
+//	public String agregarImpresiones(){
+//		try {
+//			impresionesBs.agregarImpresiones(clave, numeroImpresion, tipoUsuario);
+//			return AGREGAR;
+//		} catch (UsuarioNoEncontradoException e) {
+//			addActionError("Usuario no encontrado");
+//			return ERROR;
+//		}
+//	}
 
 	public ImpresionesBs getImpresionesBs() {
 		return impresionesBs;
