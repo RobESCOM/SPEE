@@ -1,18 +1,6 @@
 package mx.ipn.escom.spee.nota.mapeo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
-import mx.edu.spee.controlacceso.mapeo.Cuenta;
-import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 //@Entity

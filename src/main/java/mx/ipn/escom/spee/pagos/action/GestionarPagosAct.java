@@ -1,4 +1,5 @@
 package mx.ipn.escom.spee.pagos.action;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,6 +8,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.AllowedMethods;
@@ -26,13 +28,14 @@ import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
-import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea.CatalogoAreaEnum;
 import mx.ipn.escom.spee.pagos.bs.GestionarServiciosBs;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
+import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
+import mx.ipn.escom.spee.servicio.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.ResultConstants;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
@@ -44,11 +47,13 @@ import net.sf.jasperreports.engine.JRException;
 				"gestionar-pagos/new" }),
 		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }),
 		@Result(name = "getPaymentsByUserId", type = "json", params = { "root", "action", "includeProperties",
+				"jsonResult.*" }),
+		@Result(name = "getImgService", type = "json", params = { "root", "action", "includeProperties",
 				"ajaxResult.*" }),
-		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf,application/png,application/jpg", "inputName",
-				"inputStream", "contentDisposition", "inline;filename=\"${inputStream.fileUploadFileName}\"",
-				"bufferSize", "1024" }) })
-@AllowedMethods({ "generarReporte", "visualizarArchivo", "getPaymentsByUserId" })
+		@Result(name = "filesuccess", type = "stream", params = { "contentType",
+				"application/pdf,application/png,application/jpg", "inputName", "inputStream", "contentDisposition",
+				"inline;filename=\"${inputStream.fileUploadFileName}\"", "bufferSize", "1024" }) })
+@AllowedMethods({ "generarReporte", "visualizarArchivo", "getPaymentsByUserId", "getImgService" })
 public class GestionarPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +61,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	public static final String GENERAR_REPORTE = "generarReporte";
 
 	public static final String GET_PAYMENT_BY_USER = "getPaymentsByUserId";
+
+	public static final String GET_IMGB = "getImgService";
 
 	@Autowired
 	private PagoBs pagoBs;
@@ -75,12 +82,22 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	private Usuario usuarioSel;
 
 	private AjaxResult ajaxResult;
+	
+	private List<ArchivoPagoDia>  jsonResult;
 
 	private Integer idUser;
 
 	private Integer idPago;
 
+	private Integer idServicio;
+
+	private Integer folio;
+
 	private byte[] arch;
+
+	private byte[] data;
+
+	private File file;
 
 	public InputStream inputStream;
 
@@ -93,8 +110,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 			listPagos = new ArrayList<>();
 			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.CELEX.getIdEstatus()) {
+			for (ArchivoPagoDia pagado : pagoArea) {
+				if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.CELEX.getIdEstatus()) {
 					listPagos.add(pagado);
 				}
 			}
@@ -106,8 +123,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 			listPagos = new ArrayList<>();
 			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.DENTALES.getIdEstatus()) {
+			for (ArchivoPagoDia pagado : pagoArea) {
+				if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.DENTALES.getIdEstatus()) {
 					listPagos.add(pagado);
 				}
 			}
@@ -119,8 +136,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 			listPagos = new ArrayList<>();
 			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
+			for (ArchivoPagoDia pagado : pagoArea) {
+				if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
 					listPagos.add(pagado);
 				}
 			}
@@ -132,8 +149,8 @@ public class GestionarPagosAct extends GeneralActionSupport {
 			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 			listPagos = new ArrayList<>();
 			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
+			for (ArchivoPagoDia pagado : pagoArea) {
+				if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
 					listPagos.add(pagado);
 				}
 			}
@@ -179,7 +196,7 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 		return visualizarArchivo(archivo);
 	}
-	
+
 	public String show() {
 		return SHOW;
 	}
@@ -206,20 +223,34 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	@SkipValidation
 	public String getPaymentsByUserId() {
-		getUsuarioSel();
-		if (usuarioSel != null) {
-			if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
-					.getValor()) {
-				getAjaxResult();
-				ajaxResult = pagoBs.obtenerPagosUsuario(idUser);
-				SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
-				return GET_PAYMENT_BY_USER;
-			} else {
-				return NO_AUTORIZADO;
-			}
-		} else {
-			return NO_AUTORIZADO;
+		getJsonResult();
+		ArchivoPagoDia archivo = new ArchivoPagoDia();
+		archivo.setIdUsuario(idUser);
+		jsonResult = genericSearchBs.findByExample(archivo);
+		for (ArchivoPagoDia pagon : jsonResult) {
+			pagon.setArchivo(null);
 		}
+		SessionManager.put(NombreObjetosSesion.AJAX_RESULT, jsonResult);
+		return GET_PAYMENT_BY_USER;
+	}
+	
+	public List<ArchivoPagoDia> getJsonResult() {
+		this.jsonResult = (List<ArchivoPagoDia>) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
+		if (jsonResult == null) {
+			jsonResult =new ArrayList<ArchivoPagoDia>();
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, jsonResult);
+		}
+		return jsonResult;
+	}
+
+	public void setJsonResult(List<ArchivoPagoDia>  ajaxResult) {
+		this.jsonResult = ajaxResult;
+	}
+
+	public String getImgService() throws IOException, MailNoSendException {
+		getFile();
+		pagoBs.guardarPagoMovil(file, idServicio, idUser, folio);
+		return GET_IMGB;
 	}
 
 	public Usuario getUsuarioSel() {
@@ -324,6 +355,38 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public void setInputStream(InputStream inputStream) {
 		this.inputStream = inputStream;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public Integer getIdServicio() {
+		return idServicio;
+	}
+
+	public void setIdServicio(Integer idServicio) {
+		this.idServicio = idServicio;
+	}
+
+	public Integer getFolio() {
+		return folio;
+	}
+
+	public void setFolio(Integer folio) {
+		this.folio = folio;
 	}
 
 }

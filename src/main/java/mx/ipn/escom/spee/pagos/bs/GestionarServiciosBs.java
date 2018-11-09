@@ -39,12 +39,6 @@ public class GestionarServiciosBs {
 		return genericSearchBs.findByExample(info).get(0);
 	}
 	
-	
-	public AjaxResult obtenerServicios() {
-		AjaxResult ajaxResult = new AjaxResult();
-		ajaxResult.addCampo("pagos", genericSearchBs.findAll(CatalogoServicio.class));
-		return ajaxResult;
-	}
 
 	public GenericSearchBs getGenericSearchBs() {
 		return genericSearchBs;

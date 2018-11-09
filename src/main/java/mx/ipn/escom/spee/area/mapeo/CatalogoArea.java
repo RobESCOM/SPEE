@@ -79,9 +79,6 @@ public class CatalogoArea implements Modelo, Serializable {
 	@JoinColumn(name = "responsable", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
 	private Cuenta cuenta;
 
-	@OneToMany(fetch = FetchType.LAZY)
-	private List<CatalogoServicio> listServicios;
-
 	public CatalogoArea() {
 		super();
 	}
@@ -92,14 +89,6 @@ public class CatalogoArea implements Modelo, Serializable {
 
 	public void setCuenta(Cuenta cuenta) {
 		this.cuenta = cuenta;
-	}
-
-	public List<CatalogoServicio> getListServicios() {
-		return listServicios;
-	}
-
-	public void setListServicios(List<CatalogoServicio> listServicios) {
-		this.listServicios = listServicios;
 	}
 
 	public CatalogoArea(Integer id, String nombreArea, String descripcion) {

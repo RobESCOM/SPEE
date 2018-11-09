@@ -24,6 +24,8 @@ public class NombreObjetosSesion {
 	public static final String NOMBRE_AREA = "nombreArea";
 	
 	public static final String AJAX_RESULT = "ajax-result";
+	
+	public static final String JSON_RESULT = "json-result";
 
 	public static final String GRUPO = "grupo-cliente";
 

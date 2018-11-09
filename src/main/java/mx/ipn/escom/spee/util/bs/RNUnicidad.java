@@ -14,6 +14,11 @@ import mx.ipn.escom.spee.util.mapeo.Modelo;
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class RNUnicidad implements ReglaNegocio, Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L
+			;
 	@Autowired
 	private GenericBs genericBs;
 

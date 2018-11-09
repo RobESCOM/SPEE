@@ -6,7 +6,6 @@ import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.apache.struts2.rest.DefaultHttpHeaders;
 import org.apache.struts2.rest.HttpHeaders;
 import org.slf4j.Logger;
@@ -29,12 +28,12 @@ import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
-import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Namespace("/control-acceso")
 @AllowedMethods({ "welcome", "getLoginService" })
 @Results({ @Result(name = MenuAct.MENU, type = "redirectAction", params = { "actionName", "%{action}" }),
-		@Result(name = "getLoginService", type = "json", params = { "root", "action", "includeProperties", "ajaxResult.*" }) })
+		@Result(name = "getLoginService", type = "json", params = { "root", "action", "includeProperties",
+				"ajaxResult.*" }) })
 public class LoginAct extends GeneralActionSupport {
 
 	protected static final String WELCOME = "welcome";
@@ -61,7 +60,7 @@ public class LoginAct extends GeneralActionSupport {
 
 	private String password;
 
-	private AjaxResult ajaxResult;
+	private Usuario ajaxResult;
 
 	public HttpHeaders index() {
 		Usuario usuario = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
@@ -81,13 +80,12 @@ public class LoginAct extends GeneralActionSupport {
 		}
 	}
 
-	@SkipValidation
 	public String getLoginService() {
 		getAjaxResult();
 		try {
-			AjaxResult ajaxResult = new AjaxResult();
-			ajaxResult.addCampo("usuario", loginBs.ingresar(login, password));
-			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+			ajaxResult = loginBs.ingresar(login, password);
+			Usuario usuario = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, usuario);
 		} catch (UsuarioNoEncontradoException e) {
 			addActionError(getText("Usuario o Password icorrectos"));
 		} catch (LoginIncorrectoException e) {
@@ -181,16 +179,16 @@ public class LoginAct extends GeneralActionSupport {
 		this.genericSearchBs = genericSearchBs;
 	}
 
-	public AjaxResult getAjaxResult() {
-		this.ajaxResult = (AjaxResult) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
+	public Usuario getAjaxResult() {
+		this.ajaxResult = (Usuario) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
 		if (ajaxResult == null) {
-			ajaxResult = new AjaxResult();
+			ajaxResult = new Usuario();
 			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
 		}
 		return ajaxResult;
 	}
 
-	public void setAjaxResult(AjaxResult ajaxResult) {
+	public void setAjaxResult(Usuario ajaxResult) {
 		this.ajaxResult = ajaxResult;
 	}
 

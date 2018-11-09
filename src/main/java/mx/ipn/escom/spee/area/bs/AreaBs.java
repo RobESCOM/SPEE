@@ -17,7 +17,6 @@ import mx.edu.spee.controlacceso.exception.UserActiveException;
 import mx.edu.spee.controlacceso.exception.UserInactiveException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
-import mx.edu.spee.controlacceso.mapeo.Perfil;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
