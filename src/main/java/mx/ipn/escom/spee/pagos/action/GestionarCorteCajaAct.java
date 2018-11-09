@@ -1,34 +1,15 @@
 package mx.ipn.escom.spee.pagos.action;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Connection;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.servlet.ServletContext;
-
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.interceptor.validation.SkipValidation;
-import org.apache.struts2.rest.DefaultHttpHeaders;
-import org.apache.struts2.rest.HttpHeaders;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.internal.SessionImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.opensymphony.xwork2.ActionSupport;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
@@ -43,15 +24,8 @@ import mx.ipn.escom.spee.pagos.mapeo.CorteCaja;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.Numeros;
-import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
-import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperExportManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
 
 @Namespace("/pagos")
 @Results({
@@ -108,7 +82,7 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	private Double sumarTotalCorteCaja(List<ArchivoPagoDia> listPagosCorte) {
 		Double total = 0.0;
 		for (ArchivoPagoDia archivoPagoDia : listPagosCorte) {
@@ -116,7 +90,6 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		}
 		return total;
 	}
-
 
 	public void corteCaja() throws SinPagosConCorteException {
 		getUsuarioSel();

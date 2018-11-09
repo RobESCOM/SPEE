@@ -26,7 +26,7 @@
 	<div class="form-group">
 		<div class="row">
 			
-			<s:form	action="%{#pageContext.request.contextPath}/control-acceso/gestionar-bienvenida"
+			<s:form	action="%{#pageContext.request.contextPath}/nota-pago/index-notaBiblioteca"
 				method="post" theme="simple">
 				
 				<div class="form-group">
@@ -36,7 +36,7 @@
 					</label>
 					<div class="col-xs-12 col-sm-4 col-md-4">
 						<s:textfield cssClass="form-control campo"
-							cssClassError="input-error" name="model.nombre" id="txBoleta" />
+							cssClassError="input-error" name="model.boleta" id="txBoleta" />
 						<s:fielderror fieldName="model.boleta" cssClass="error"
 							theme="%{#varTheme}" />
 					</div>

@@ -1,4 +1,5 @@
 package mx.ipn.escom.spee.pagos.action;
+
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -46,9 +47,9 @@ import net.sf.jasperreports.engine.JRException;
 		@Result(name = "generarReporte", type = "redirectAction", params = { "actionName", "gestionar-pagos/new" }),
 		@Result(name = "getPaymentsByUserId", type = "json", params = { "root", "action", "includeProperties",
 				"ajaxResult.*" }),
-		@Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf,application/png,application/jpg", "inputName",
-				"inputStream", "contentDisposition", "inline;filename=\"${inputStream.fileUploadFileName}\"",
-				"bufferSize", "1024" }) })
+		@Result(name = "filesuccess", type = "stream", params = { "contentType",
+				"application/pdf,application/png,application/jpg", "inputName", "inputStream", "contentDisposition",
+				"inline;filename=\"${inputStream.fileUploadFileName}\"", "bufferSize", "1024" }) })
 @AllowedMethods({ "generarReporte", "visualizarArchivo", "getPaymentsByUserId" })
 public class GestionarPagosAct extends GeneralActionSupport {
 
@@ -70,7 +71,7 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	private InformacionPersonal infoUsuario;
 
 	private List<ArchivoPagoDia> listPagos;
-	
+
 	private PagoSiga pagoSiga;
 
 	private Archivo archivoVisualizar;
@@ -89,70 +90,75 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public String index() {
 		getUsuarioSel();
-		if (usuarioSel.getPerfilActivo()
-				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
-			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
-			listPagos = new ArrayList<>();
-			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.CELEX.getIdEstatus()) {
-					listPagos.add(pagado);
+		if (usuarioSel != null) {
+			if (usuarioSel.getPerfilActivo()
+					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+				listPagos = new ArrayList<>();
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				for (ArchivoPagoDia pagado : pagoArea) {
+					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.CELEX.getIdEstatus()) {
+						listPagos.add(pagado);
+					}
 				}
-			}
-			return ResultConstants.ADMINISTRADOR_CELEX;
-		} else if (usuarioSel.getPerfilActivo()
-				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
-			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
-			listPagos = new ArrayList<>();
-			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.DENTALES.getIdEstatus()) {
-					listPagos.add(pagado);
+				return ResultConstants.ADMINISTRADOR_CELEX;
+			} else if (usuarioSel.getPerfilActivo()
+					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+				listPagos = new ArrayList<>();
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				for (ArchivoPagoDia pagado : pagoArea) {
+					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.DENTALES.getIdEstatus()) {
+						listPagos.add(pagado);
+					}
 				}
-			}
-			return ResultConstants.ADMINISTRADOR_DENTALES;
-		} else if (usuarioSel.getPerfilActivo()
-				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor()) {
-			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
-			listPagos = new ArrayList<>();
-			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
-					listPagos.add(pagado);
+				return ResultConstants.ADMINISTRADOR_DENTALES;
+			} else if (usuarioSel.getPerfilActivo()
+					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+				listPagos = new ArrayList<>();
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				for (ArchivoPagoDia pagado : pagoArea) {
+					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
+						listPagos.add(pagado);
+					}
 				}
-			}
-			return ResultConstants.ADMINISTRADOR_BIBLIOTECA;
-		} else if (usuarioSel.getPerfilActivo()
-				.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO.getValor()) {
-			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> pagoArea = new ArrayList<>();
-			listPagos = new ArrayList<>();
-			pagoArea = genericSearchBs.findByExample(archivoPago);
-			for(ArchivoPagoDia pagado:pagoArea) {
-				if(pagado.getCatalogoServicio().getArea().getId()== CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
-					listPagos.add(pagado);
+				return ResultConstants.ADMINISTRADOR_BIBLIOTECA;
+			} else if (usuarioSel.getPerfilActivo()
+					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO
+							.getValor()) {
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
+				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
+				listPagos = new ArrayList<>();
+				pagoArea = genericSearchBs.findByExample(archivoPago);
+				for (ArchivoPagoDia pagado : pagoArea) {
+					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
+						listPagos.add(pagado);
+					}
 				}
+				return ResultConstants.ADMINISTRADOR_IMPRESIONES;
+			} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
+					.getValor()
+					|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
+							.getValor()
+					|| usuarioSel.getPerfilActivo()
+							.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
+				Cuenta cuenta = new Cuenta();
+				cuenta.setIdUsuario(usuarioSel.getId());
+				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+				archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
+				listPagos = genericSearchBs.findByExample(archivoPago);
+				return ResultConstants.ALUMNO;
+			} else {
+				return NO_AUTORIZADO;
 			}
-			return ResultConstants.ADMINISTRADOR_IMPRESIONES;
-		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
-				.getValor()
-				|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
-						.getValor()
-				|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
-						.getValor()) {
-			Cuenta cuenta = new Cuenta();
-			cuenta.setIdUsuario(usuarioSel.getId());
-			ArchivoPagoDia archivoPago = new ArchivoPagoDia();
-			archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
-			listPagos = genericSearchBs.findByExample(archivoPago);
-			return ResultConstants.ALUMNO;
 		} else {
 			return NO_AUTORIZADO;
 		}
@@ -182,9 +188,9 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 		return visualizarArchivo(archivo);
 	}
-	
+
 	public String show() {
-		pagoSiga = pagoBs.siga(idUser,idPago);
+		pagoSiga = pagoBs.siga(idUser, idPago);
 		return SHOW;
 	}
 
@@ -337,6 +343,5 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	public void setPagoSiga(PagoSiga pagoSiga) {
 		this.pagoSiga = pagoSiga;
 	}
-	
 
 }
