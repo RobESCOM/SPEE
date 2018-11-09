@@ -10,7 +10,6 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
 import org.apache.struts2.convention.annotation.Results;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.opensymphony.xwork2.ActionSupport;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
@@ -83,7 +82,7 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		}
 		return SUCCESS;
 	}
-	
+
 	private Double sumarTotalCorteCaja(List<ArchivoPagoDia> listPagosCorte) {
 		Double total = 0.0;
 		for (ArchivoPagoDia archivoPagoDia : listPagosCorte) {
@@ -91,7 +90,6 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		}
 		return total;
 	}
-
 
 	public void corteCaja() throws SinPagosConCorteException {
 		getUsuarioSel();

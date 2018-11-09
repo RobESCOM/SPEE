@@ -54,11 +54,13 @@
 								<s:if test="admin">
 									<td>${pagoMes.catalogoServicio.area.nombreArea}</td>
 								</s:if>
-								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show"
-									title="${ttbVisualizar}"> <i
-										class="material-icons md-24 md-eld">${varIconoVisualizar}</i>
-								</a></td>
+								<td>
+									<a
+										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagoMes.id}&amp;idSel=${pagoMes.idUsuario}"
+										title="${ttbverSIGA}"><i
+											class="material-icons md-24 md-eld">find_in_page</i>
+									</a>
+								</td>
 							</tr>
 						</s:iterator>
 					</tbody>

@@ -23,35 +23,25 @@
 
 <s:set var="typeMime" value="application/pdf" />
 
-<div class="text-left">
-	<label class="col-md-6 text-left control-label"> <s:text
-			name="Folio">
-		</s:text>
-	</label>
-	<div class="col-md-6 text-left">
-		<s:property value="model.folioOperacion" />
-	</div>
-</div>
-
 <div class="form-section form-horizontal">
 	<div class="form-group">
 		<div class="row">
-			<s:iterator value="pago" var="archivoPago"></s:iterator>
-			<s:iterator value="tipoArchivo" var="tipo"></s:iterator>
-			<s:set var="archivo" value="%{pagoBs.obtenerArchivo(#archivoPago)}"></s:set>
-			<s:if test="%{#tipo == 'application/pdf'}">
-				<object data="data:application/pdf;base64, ${archivo}"
-					type="application/pdf" width="600" height="500">
-					<a download="comprobante"></a>
-				</object>
-			</s:if>
-			<s:elseif test="%{#tipo == 'imagen/jpg'}">
-				<img src="data:imagen/jpg;base64, ${archivo}" alt="img" />
-			</s:elseif>
-			<s:else>
-				<img src="data:imagen/png;base64, ${archivo}" alt="img" />
-			</s:else>
+			<s:set var="archivoPago" value="pagoSiga" ></s:set>
+			<s:set var="anio" value="listAnio" ></s:set>
+			<s:set var="mes" value="listMes"></s:set>
+			<s:set var="archivo" value="%{pagoBs.obtenerArchivoSIGA(#archivoPago)}"></s:set>
+			<object data="data:application/pdf;base64, ${archivo}"
+				type="application/pdf" width="600" height="500">
+				<a download="comprobante"></a>
+			</object>
 		</div>
+	</div>
+</div>
+
+<s:set var="mes" value="listAnio"/>
+<div class="row">
+	<div class="col-md-12">
+		<a class="btn btn-primary" href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show?${anio}=&amp;listMes=${mes}"><s:text name="Regresar" /></a>
 	</div>
 </div>
 

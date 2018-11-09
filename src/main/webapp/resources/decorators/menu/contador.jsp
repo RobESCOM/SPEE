@@ -6,25 +6,18 @@
 	xmlns:log="http://jakarta.apache.org/taglibs/log-1.0">
 	<jsp:directive.page language="java"
 		contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" />
-
 	<div class="navbar sidebar" role="navigation">
 		<div class="sidebar-nav navbar-collapse">
 			<ul class="nav" id="side-menu">
-				<li class="dropdown"><a
-					href="${pageContext.request.contextPath}/pagos/gestionar-pagos"><s:text
-							name="Pagos" /><span class="fa arrow"></span> </a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/pagos/gestionar-pagos">
-								<s:text name="Reportes" />
-						</a> </li>
-					</ul></li>
 				<li class="dropdown"><a href="#"><s:text
-							name="Notificaciones" /><span class="fa arrow"></span> </a>
+							name="menu.alumno.pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
-								<s:text name="Gestionar Notificaciones" />
+							href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-caja/new">
+								<s:text name="Autorizar Corte Caja" />
+						</a> <a
+							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
+								<s:text name="Archivo Pagos" />
 						</a></li>
 					</ul></li>
 			</ul>

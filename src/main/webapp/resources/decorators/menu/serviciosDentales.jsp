@@ -49,16 +49,6 @@
 								<s:text name="menu.dentales.pagos.gestionar_historial_pagos" />
 						</a></li>
 					</ul></li>
-
-				<!-- Notificaciones -->
-				<li class="dropdown"><a href="#"><s:text
-							name="menu.dentales.notificaciones" /><span class="fa arrow"></span> </a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
-								<s:text name="menu.dentales.notificaciones.gestionar_notificaciones" />
-						</a></li>
-					</ul></li>
 			</ul>
 		</div>
 	</div>
