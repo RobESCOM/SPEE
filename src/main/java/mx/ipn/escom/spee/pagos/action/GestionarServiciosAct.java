@@ -55,7 +55,9 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 		getUsuarioSel();
 		if (usuarioSel != null) {
 			if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO
-					.getValor()) {
+					.getValor() || usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO
+					.getValor() || usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR
+					.getValor() ) {
 				infoUsuario = gestionarServiciosBs.obtenerInformacionPersonal(usuarioSel);
 				listCatalogoServicios = genericSearchBs.findAll(CatalogoServicio.class);
 				return ResultConstants.ALUMNO;
