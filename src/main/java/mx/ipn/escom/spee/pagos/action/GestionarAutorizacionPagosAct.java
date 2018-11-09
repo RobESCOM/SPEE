@@ -91,8 +91,18 @@ public class GestionarAutorizacionPagosAct extends GeneralActionSupport {
 
 	public String index() {
 		getUsuarioSel();
-		listArchivoPagosRevision = pagoBs.obtenerPagosPorAutorizar();
-		return INDEX;
+		if (usuarioSel != null) {
+			if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ENCARGADO_CAJA
+					.getValor()) {
+				getUsuarioSel();
+				listArchivoPagosRevision = pagoBs.obtenerPagosPorAutorizar();
+				return INDEX;
+			} else {
+				return NO_AUTORIZADO;
+			}
+		} else {
+			return NO_AUTORIZADO;
+		}
 	}
 
 	public String show() {

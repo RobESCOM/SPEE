@@ -26,6 +26,8 @@ public class NombreObjetosSesion {
 	public static final String MES = "listMes";
 	
 	public static final String AJAX_RESULT = "ajax-result";
+	
+	public static final String JSON_RESULT = "json-result";
 
 	public static final String GRUPO = "grupo-cliente";
 

@@ -102,34 +102,6 @@ public class GestionarNotificacionesAct extends GeneralActionSupport {
 		return SUCCESS;
 	}
 
-	@SkipValidation
-	public String getNotificationsByUserId() {
-		getUsuarioSel();
-		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()
-				&& usuarioSel != null) {
-			getAjaxResult();
-			ajaxResult = obtenerNotificaciónUsuario(idUser);
-			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
-			return GET_NOTIFICATIONS_BY_USER;
-		} else if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
-				.getValor()) {
-			getAjaxResult();
-			ajaxResult = obtenerNotificaciónUsuario(idUser);
-			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
-			return GET_NOTIFICATIONS_BY_USER;
-		} else {
-			return NO_AUTORIZADO;
-		}
-
-	}
-
-	public AjaxResult obtenerNotificaciónUsuario(Integer idUsuario) {
-		AjaxResult ajaxResult = new AjaxResult();
-		Notificacion notificacion = new Notificacion();
-		notificacion.setIdCuenta(usuarioSel.getId());
-		ajaxResult.addCampo("notificaciones", genericSearchBs.findByExample(notificacion));
-		return ajaxResult;
-	}
 
 	public Usuario getUsuarioSel() {
 		if (SessionManager.get(NombreObjetosSesion.USUARIO_SESION) != null) {

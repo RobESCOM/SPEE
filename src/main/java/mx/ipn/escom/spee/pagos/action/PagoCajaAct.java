@@ -1,10 +1,6 @@
 package mx.ipn.escom.spee.pagos.action;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,16 +18,9 @@ import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
-import mx.ipn.escom.spee.pagos.exception.FolioDuplicadoException;
-import mx.ipn.escom.spee.pagos.exception.FormatoArchivoException;
-import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
-import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
-import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
-import mx.ipn.escom.spee.servicio.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.Constantes;
-import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.dao.GenericDao;
 

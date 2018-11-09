@@ -5,10 +5,20 @@
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<!-- Head -->
+<link rel="stylesheet" type="text/css"
+	href="${pageContext.request.contextPath}/resources/css/style.css" />
 </head>
 <body>
-	<h1> Hubo un problema, contacte con su administrador. </h1>
+	<div id="notfound">
+		<div class="notfound">
+			<h2>Algo ha ocurrido</h2>
+			<p>Disculpe las molestias, por favor contacte con el
+				administrador</p>
+			<a
+				href="${pageContext.request.contextPath}/control-acceso/gestionar-bienvenida">Ir
+				a Inicio</a>
+		</div>
+	</div>
 </body>
 	</html>
 </jsp:root>

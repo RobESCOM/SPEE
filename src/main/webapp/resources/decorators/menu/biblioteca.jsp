@@ -28,7 +28,7 @@
 							name="menu.biblioteca.servicio" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/nota-pago/gestionar-nota-pago">
+							href="${pageContext.request.contextPath}/nota-pago/gestionar-nota-pago/new">
 								<s:text name="menu.biblioteca.servicio.multa" />
 						</a></li>
 					</ul></li>

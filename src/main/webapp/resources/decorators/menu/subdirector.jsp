@@ -57,26 +57,6 @@
 								<s:text name="Gestionar Reportes" />
 						</a></li>
 					</ul></li>
-
-				<!-- Permisos -->
-				<li class="dropdown"><a href="#"><s:text name="Permisos" /><span
-						class="fa arrow"></span> </a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-reporte">
-								<s:text name="Gestionar Permisos" />
-						</a></li>
-					</ul></li>
-
-				<!-- Notificaciones -->
-				<li class="dropdown"><a href="#"><s:text
-							name="Notificaciones" /><span class="fa arrow"></span> </a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/notificaciones/gestionar-notificaciones">
-								<s:text name="Gestionar Notificaciones" />
-						</a></li>
-					</ul></li>
 			</ul>
 		</div>
 	</div>

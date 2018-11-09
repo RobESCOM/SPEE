@@ -35,4 +35,5 @@ public class GestionarNotaPagoAct extends GeneralActionSupport {
 	public String visualizarNotaDental() {
 		return SHOW_NOTA_DENTAL;
 	}
+
 }
