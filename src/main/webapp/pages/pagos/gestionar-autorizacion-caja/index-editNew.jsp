@@ -7,7 +7,7 @@
 
 <jsp:text>
 	<![CDATA[                 
-	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/pagos/gestionar-autorizacion-pagos/js/index.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/pagos/gestionar-autorizacion-caja/js/index-editNew.js"></script>
 	]]>
 </jsp:text>
 
@@ -103,8 +103,7 @@
 </sj:dialog>
 
 <div class="text-left">
-	<div class="col-md-12">
-	</div>
+	<div class="col-md-12"></div>
 </div>
 	</html>
 </jsp:root>
