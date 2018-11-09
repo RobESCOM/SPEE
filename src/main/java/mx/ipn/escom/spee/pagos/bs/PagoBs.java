@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -278,6 +279,16 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return new String(encoded);
 	}
 	
+	public int obtenerArea(PagoSiga archivo) {
+		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
+		return archivoPagoDia.getCatalogoServicio().getIdArea();
+	}
+	
+	public int obtenerId(PagoSiga archivo) {
+		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
+		return archivoPagoDia.getIdUsuario();
+	}
+	
 	public PagoSiga siga(Integer id, Integer id_pago) {
 			PagoSiga pagoSiga = new PagoSiga();
 			List<PagoSiga> ps = new ArrayList<>();
@@ -411,10 +422,15 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return anio;
 	}
 
-	public String dateForm(ArchivoPagoDia pago) {
+	public String dateForm() {
 		Calendar anio = Calendar.getInstance();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		return format1.format(anio.getTime());
+	}
+	
+	public Date dateFormat() throws ParseException {
+		 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(dateForm());
+		 return date1;
 	}
 
 	public String moneyForm(ArchivoPagoDia pago) {

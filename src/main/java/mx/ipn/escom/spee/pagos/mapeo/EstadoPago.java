@@ -23,7 +23,9 @@ public class EstadoPago implements Modelo, Serializable {
 
 		REVISION(2, "Pago en Revision"),
 
-		RECHAZADO(3, "Pago Rechazado");
+		RECHAZADO(3, "Pago Rechazado"),
+		
+		EFECTUADO(4, "Servicio Efectuado");
 
 		private Integer idEstatus;
 

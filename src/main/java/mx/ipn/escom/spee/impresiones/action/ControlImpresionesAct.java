@@ -14,9 +14,14 @@ import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.impresiones.bs.ImpresionesBs;
 import mx.ipn.escom.spee.impresiones.exception.ImpresionesInsuficientesException;
 import mx.ipn.escom.spee.impresiones.mapeo.*;
+import mx.ipn.escom.spee.pagos.bs.PagoBs;
+import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
+import mx.ipn.escom.spee.pagos.mapeo.ServicioEfectuado;
+import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.List;
 
 @Namespace("/impresiones")
@@ -31,6 +36,9 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	
 	@Autowired
 	private ImpresionesBs impresionesBs; 
+	
+	@Autowired
+	private GenericBs<ServicioEfectuado> genericBs;
 	
 	private Integer idSel;
 	
@@ -70,15 +78,20 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 		return EDITNEW;
 	}
 	
-//	public String agregarImpresiones(){
-//		try {
-//			impresionesBs.agregarImpresiones(clave, numeroImpresion, tipoUsuario);
-//			return AGREGAR;
+	public String agregarImpresiones() throws ParseException{
+		//		try {
+		impresionesBs.agregarImpresiones(clave, numeroImpresion);
+		PagoBs pagoBs = new PagoBs();
+		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, idSel);
+		ServicioEfectuado servicioEfectuado = new ServicioEfectuado();servicioEfectuado.setArchivoPago(archivoPagoDia);
+		servicioEfectuado.setFh_aprobado(pagoBs.dateFormat());
+		genericBs.save(servicioEfectuado);
+		return AGREGAR;
 //		} catch (UsuarioNoEncontradoException e) {
 //			addActionError("Usuario no encontrado");
 //			return ERROR;
 //		}
-//	}
+	}
 
 	public ImpresionesBs getImpresionesBs() {
 		return impresionesBs;
@@ -178,5 +191,15 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	public void setTipoUsuario(int tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
+
+	public GenericBs<ServicioEfectuado> getGenericBs() {
+		return genericBs;
+	}
+
+	public void setGenericBs(GenericBs<ServicioEfectuado> genericBs) {
+		this.genericBs = genericBs;
+	}
+	
+	
 
 }

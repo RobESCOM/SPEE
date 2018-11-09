@@ -94,18 +94,13 @@ public class ImpresionesBs implements Serializable{
 		}
 	}
 	
-	public void agregarImpresiones(int clave, int numeroImp, int tipoUsuario) throws UsuarioNoEncontradoException {
+	public void agregarImpresiones(int clave, int numeroImp){
 		setCuentaImpresiones(new CuentaImpresiones());
 		setCuentaImpresiones(genericSearchBs.findById(CuentaImpresiones.class, clave));
 		if(getCuentaImpresiones() == null) {
 			Cuenta cuenta = genericSearchBs.findById(Cuenta.class, clave);
-			if(cuenta != null) {
-				setCuentaImpresiones(new CuentaImpresiones(cuenta, numeroImp));
-				genericBs.save(getCuentaImpresiones());
-			}
-			else {
-				throw new UsuarioNoEncontradoException();
-			}
+			setCuentaImpresiones(new CuentaImpresiones(cuenta, numeroImp));
+			genericBs.save(getCuentaImpresiones());
 		}
 		else {
 			getCuentaImpresiones().setNu_impresiones(getCuentaImpresiones().getNu_impresiones()+numeroImp);
