@@ -7,9 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import javax.servlet.GenericServlet;
 
 import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -35,7 +37,9 @@ import mx.ipn.escom.spee.pagos.exception.MailNoSendException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.pagos.mapeo.PagoSiga;
+import mx.ipn.escom.spee.pagos.mapeo.ServicioEfectuado;
 import mx.ipn.escom.spee.util.ResultConstants;
+import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 import net.sf.jasperreports.engine.JRException;
@@ -71,6 +75,9 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	@Autowired
 	private GestionarServiciosBs gestionarServiciosBs;
+	
+	@Autowired
+	private GenericBs<ServicioEfectuado> genericBs;
 
 	private InformacionPersonal infoUsuario;
 
@@ -102,59 +109,73 @@ public class GestionarPagosAct extends GeneralActionSupport {
 
 	public InputStream inputStream;
 
-	public String index() {
+	public String index() throws ParseException {
 		getUsuarioSel();
+		ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+		ServicioEfectuado servicioEfectuado = new ServicioEfectuado();
+		if(idPago != null) {
+			ArchivoPagoDia pagoEfectuado = genericSearchBs.findById(ArchivoPagoDia.class, idPago);
+			servicioEfectuado.setArchivoPago(pagoEfectuado);
+			servicioEfectuado.setFh_aprobado(pagoBs.dateFormat());
+			genericBs.save(servicioEfectuado);
+		}
+		
+		
 		if (usuarioSel != null) {
 			if (usuarioSel.getPerfilActivo()
 					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_CELEX.getValor()) {
-				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 				listPagos = new ArrayList<>();
 				pagoArea = genericSearchBs.findByExample(archivoPago);
 				for (ArchivoPagoDia pagado : pagoArea) {
 					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.CELEX.getIdEstatus()) {
-						listPagos.add(pagado);
+						servicioEfectuado = genericSearchBs.findById(ServicioEfectuado.class, pagado.getId());
+						if( servicioEfectuado == null)
+							listPagos.add(pagado);
 					}
 				}
 				return ResultConstants.ADMINISTRADOR_CELEX;
 			} else if (usuarioSel.getPerfilActivo()
 					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_DENTALES.getValor()) {
-				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 				listPagos = new ArrayList<>();
 				pagoArea = genericSearchBs.findByExample(archivoPago);
 				for (ArchivoPagoDia pagado : pagoArea) {
 					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.DENTALES.getIdEstatus()) {
-						listPagos.add(pagado);
+						servicioEfectuado = genericSearchBs.findById(ServicioEfectuado.class, pagado.getId());
+						if( servicioEfectuado == null)
+							listPagos.add(pagado);
 					}
 				}
 				return ResultConstants.ADMINISTRADOR_DENTALES;
 			} else if (usuarioSel.getPerfilActivo()
 					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_BIBLIOTECA.getValor()) {
-				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 				listPagos = new ArrayList<>();
 				pagoArea = genericSearchBs.findByExample(archivoPago);
 				for (ArchivoPagoDia pagado : pagoArea) {
 					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.BIBLIOTECA.getIdEstatus()) {
-						listPagos.add(pagado);
+						servicioEfectuado = genericSearchBs.findById(ServicioEfectuado.class, pagado.getId());
+						if( servicioEfectuado == null)
+							listPagos.add(pagado);
 					}
 				}
 				return ResultConstants.ADMINISTRADOR_BIBLIOTECA;
 			} else if (usuarioSel.getPerfilActivo()
 					.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO
 							.getValor()) {
-				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 				archivoPago.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 				List<ArchivoPagoDia> pagoArea = new ArrayList<>();
 				listPagos = new ArrayList<>();
 				pagoArea = genericSearchBs.findByExample(archivoPago);
 				for (ArchivoPagoDia pagado : pagoArea) {
 					if (pagado.getCatalogoServicio().getArea().getId() == CatalogoAreaEnum.FOTOCOPIADO.getIdEstatus()) {
-						listPagos.add(pagado);
+						servicioEfectuado = genericSearchBs.findById(ServicioEfectuado.class, pagado.getId());
+						if( servicioEfectuado == null)
+							listPagos.add(pagado);
 					}
 				}
 				return ResultConstants.ADMINISTRADOR_IMPRESIONES;
@@ -166,7 +187,6 @@ public class GestionarPagosAct extends GeneralActionSupport {
 							.getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
 				Cuenta cuenta = new Cuenta();
 				cuenta.setIdUsuario(usuarioSel.getId());
-				ArchivoPagoDia archivoPago = new ArchivoPagoDia();
 				archivoPago.setIdUsuario(genericSearchBs.findByExample(cuenta).get(0).getIdCuenta());
 				listPagos = genericSearchBs.findByExample(archivoPago);
 				return ResultConstants.ALUMNO;
@@ -404,4 +424,14 @@ public class GestionarPagosAct extends GeneralActionSupport {
 		this.pagoSiga = pagoSiga;
 	}
 
+	public GenericBs<ServicioEfectuado> getGenericBs() {
+		return genericBs;
+	}
+
+	public void setGenericBs(GenericBs<ServicioEfectuado> genericBs) {
+		this.genericBs = genericBs;
+	}
+
+	
+	
 }
