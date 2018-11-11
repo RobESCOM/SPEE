@@ -14,18 +14,21 @@ import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea.CatalogoAreaEnum;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
+import mx.ipn.escom.spee.pagos.mapeo.PagoSiga;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.Meses;
 import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/pagos")
-@AllowedMethods("Meses")
+@AllowedMethods({"Meses" , "showPago"})
 public class GestionarArchivoPagosAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
 
 	protected static final String MESES = "meses";
+	
+	protected static final String SHOWPAGO = "showPago";
 
 	private List<List<ArchivoPagoDia>> listArchivosPago = new ArrayList<List<ArchivoPagoDia>>();
 
@@ -38,6 +41,12 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 	private PagoBs pagoBs;
 
 	private boolean permisos;
+	
+	private Integer idUser;
+
+	private Integer idPago;
+	
+	private PagoSiga pagoSiga;
 
 	@Autowired
 	private GenericSearchBs genericSearchBs;
@@ -828,6 +837,15 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 
 		return SHOW;
 	}
+	
+	public String showPago() {
+		getUsuarioSel();
+		if(usuarioSel != null) {
+			pagoSiga = pagoBs.siga(idUser, idPago);
+			return SHOWPAGO;
+		}
+		return NO_AUTORIZADO;
+	}
 
 	public Usuario getUsuarioSel() {
 		if (SessionManager.get(NombreObjetosSesion.USUARIO_SESION) != null) {
@@ -908,4 +926,30 @@ public class GestionarArchivoPagosAct extends GeneralActionSupport {
 		this.permisos = permisos;
 	}
 
+	public Integer getIdUser() {
+		return idUser;
+	}
+
+	public void setIdUser(Integer idUser) {
+		this.idUser = idUser;
+	}
+
+	public Integer getIdPago() {
+		return idPago;
+	}
+
+	public void setIdPago(Integer idPago) {
+		this.idPago = idPago;
+	}
+
+	public PagoSiga getPagoSiga() {
+		return pagoSiga;
+	}
+
+	public void setPagoSiga(PagoSiga pagoSiga) {
+		this.pagoSiga = pagoSiga;
+	}
+
+	
+	
 }

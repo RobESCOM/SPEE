@@ -56,7 +56,7 @@
 								</s:if>
 								<td>
 									<a
-										href="${pageContext.request.contextPath}/pagos/gestionar-pagos/show?idPago=${pagoMes.id}&amp;idSel=${pagoMes.idUsuario}"
+										href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos!showPago?idPago=${pagoMes.id}&amp;idSel=${pagoMes.idUsuario}"
 										title="${ttbverSIGA}"><i
 											class="material-icons md-24 md-eld">find_in_page</i>
 									</a>

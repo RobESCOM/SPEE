@@ -50,8 +50,7 @@
 					for=""> <s:text name="Perfil" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:select id="alumnoCheckId" class="form-control" headerKey="-1"
-						headerValue="Seleccione"
+					<s:select id="alumnoCheckId" class="form-control" value="10"
 						list="#{'8':'Alumno', '9':'Profesor', '10':'Externo'}"
 						name="model.idPerfil" cssErrorClass="field-error" />
 					<s:fielderror fieldName="model.idPerfil" cssClass="error"
@@ -86,7 +85,7 @@
 			</div>
 			<div class="form-group">
 				<label
-					class="col-xs-12 col-sm-4 col-md-4 control-label label-obligatorio"
+					class="col-xs-12 col-sm-4 col-md-4 control-label"
 					for=""> <s:text name="Segundo Apellido" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
@@ -103,9 +102,9 @@
 					<s:text name="CURP" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">
-					<s:textfield cssClass="form-control campo" name="model.curp"
+					<s:textfield cssClass="form-control campo" name="model.clave"
 						cssClassError="input-error" id="txCurp" maxlength="18"/>
-					<s:fielderror fieldName="model.curp" cssClass="error"
+					<s:fielderror fieldName="model.clave" cssClass="error"
 						theme="%{#varTheme}" />
 				</div>
 			</div>
@@ -146,7 +145,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class=" col-sm-4 col-md-4 control-label label-obligatorio"
+				<label class=" col-sm-4 col-md-4 control-label"
 					for=""> <s:text name="CU1_LBL8" />
 				</label>
 				<div class="col-xs-12 col-sm-8 col-md-8">

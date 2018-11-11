@@ -11,8 +11,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.GenericServlet;
-
 import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.Result;
@@ -224,8 +222,12 @@ public class GestionarPagosAct extends GeneralActionSupport {
 	}
 
 	public String show() {
-		pagoSiga = pagoBs.siga(idUser, idPago);
-		return SHOW;
+		getUsuarioSel();
+		if(usuarioSel != null) {
+			pagoSiga = pagoBs.siga(idUser, idPago);
+			return SHOW;
+		}
+		return NO_AUTORIZADO;
 	}
 
 	@SkipValidation
