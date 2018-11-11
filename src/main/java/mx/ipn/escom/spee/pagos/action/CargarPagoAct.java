@@ -64,7 +64,7 @@ public class CargarPagoAct extends GeneralActionSupport {
 			addActionError("Folio no válido");
 		} catch (MailNoSendException mnse) {
 			addActionError("No se pudo notificar al usuario");
-		} 
+		}
 	}
 
 	public String create() {
