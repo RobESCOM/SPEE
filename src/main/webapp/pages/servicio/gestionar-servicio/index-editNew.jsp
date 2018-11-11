@@ -68,7 +68,7 @@
 						name="model.idTipoServicio" listValue="nombre" listKey="id"
 						headerKey="-1" headerValue="Seleccione" class="form-control"
 						cssErrorClass="field-error" />
-					<s:fielderror fieldName="model.idTipoServicio" cssClass="error"
+					<s:fielderror fieldName="model.idHora" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>

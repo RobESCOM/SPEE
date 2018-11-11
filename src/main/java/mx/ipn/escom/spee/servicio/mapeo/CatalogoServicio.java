@@ -1,6 +1,7 @@
 package mx.ipn.escom.spee.servicio.mapeo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.opensymphony.xwork2.validator.annotations.RequiredFieldValidator;
@@ -18,6 +20,7 @@ import com.opensymphony.xwork2.validator.annotations.Validations;
 import com.opensymphony.xwork2.validator.annotations.ValidatorType;
 
 import mx.ipn.escom.spee.area.mapeo.CatalogoArea;
+import mx.ipn.escom.spee.citas.mapeo.NotaPago;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 
 @Entity
@@ -56,6 +59,9 @@ public class CatalogoServicio implements Modelo, Serializable {
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_servicio", referencedColumnName = "id_tipo_servicio", insertable = false, updatable = false)
 	private TipoServicio tipoServicio;
+	
+	@OneToMany(mappedBy = "servicio")
+	private List<NotaPago> listNotas;
 
 	public CatalogoServicio() {
 		super();
@@ -157,5 +163,15 @@ public class CatalogoServicio implements Modelo, Serializable {
 	public void setTipoServicio(TipoServicio tipoServicio) {
 		this.tipoServicio = tipoServicio;
 	}
+
+	public List<NotaPago> getListNotas() {
+		return listNotas;
+	}
+
+	public void setListNotas(List<NotaPago> listNotas) {
+		this.listNotas = listNotas;
+	}
+	
+	
 
 }

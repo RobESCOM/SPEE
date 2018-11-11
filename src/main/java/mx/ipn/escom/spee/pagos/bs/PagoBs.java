@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -115,7 +116,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
 		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
 		archivoPago.setFechaEnvio(currentDate);
-		archivoPago.setIdCarpeta(1);
+		archivoPago.setIdCarpeta(Numeros.UNO.getValorInteger());
 		archivoPago.setCorte(Boolean.FALSE);
 		archivoPago.setFolioOperacion(folio);
 		if (tamanioArchivo(archivo, CINCUENTA_MB)) {
@@ -143,6 +144,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		model.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
 		model.setIdCarpeta(Numeros.UNO.getValorInteger());
 		model.setCorte(Boolean.FALSE);
+		model.setIdCarpeta(Numeros.UNO.getValorInteger());
 		model.setFolioOperacion("Pago en Caja");
 
 		byte[] bfile = new byte[30];
@@ -150,11 +152,42 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		genericDao.save(model);
 	}
 
+	@Transactional
+	public void guardarPagoMovil(File file, Integer idServicio, Integer idUsuario, Integer folio)
+			throws FileNotFoundException, IOException, MailNoSendException {
+		ArchivoPagoDia archivoPago = new ArchivoPagoDia();
+		byte[] bfile = new byte[(int) file.length()];
+		FileInputStream fis = new FileInputStream(file);
+		archivoPago.setArchivo(bfile);
+		fis.read(bfile);
+		archivoPago.setArchivo(bfile);
+		archivoPago.setIdEstadoPago(EstadoPagoEnum.REVISION.getIdEstatus());
+		archivoPago.setIdTipoComprobante(CatalogoTipoServicioEnum.VOUCHER.getId());
+		archivoPago.setIdCarpeta(Numeros.UNO.getValorInteger());
+		archivoPago.setCorte(Boolean.FALSE);
+		Date currentDate = new Date();
+		archivoPago.setFechaEnvio(currentDate);
+		archivoPago.setFolioOperacion(folio.toString());
+		archivoPago.setIdCatalogoServicio(idServicio);
+		
+		Cuenta cuenta = new Cuenta();
+		cuenta.setIdUsuario(idUsuario);
+		Usuario usuario = genericSearchBs.findById(Usuario.class, idUsuario);
+		archivoPago.setIdUsuario(idUsuario);
+		try {
+			enviarEmailPago(usuario, archivoPago);
+		} catch (Exception ex) {
+			throw new MailNoSendException();
+		}
+		
+		genericDao.save(archivoPago);
+	}
+
 	public void enviarEmailPago(Usuario usuario, ArchivoPagoDia archivoPago) {
 		Map<String, String> mailProperties = new HashMap<>();
 		Map<String, Object> templateParams = new HashMap<>();
 
-		String ip = "http://localhost:8123";
+		String ip = Constantes.IP;
 		String contextPath = ServletActionContext.getRequest().getContextPath();
 		String namespace = "/notificaciones/gestionar-notificaciones";
 		mailProperties.put(Constantes.SUBJECT, "Sistema de Pagos Electrónicos ESCOM");
@@ -248,14 +281,6 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return genericSearchBs.findByExample(archivo);
 	}
 
-	public AjaxResult obtenerPagosUsuario(Integer idUsuario) {
-		AjaxResult ajaxResult = new AjaxResult();
-		ArchivoPagoDia pagoDia = new ArchivoPagoDia();
-		pagoDia.setIdUsuario(idUsuario);
-		ajaxResult.addCampo("pagos", genericSearchBs.findByExample(pagoDia));
-		return ajaxResult;
-	}
-
 	public InformacionPersonal obtenerAlumno(ArchivoPagoDia pago) {
 		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, pago.getIdUsuario());
 		return obtenerPersona(cuenta);
@@ -276,6 +301,16 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 	public String obtenerArchivoSIGA(PagoSiga archivo) throws IOException {
 		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
 		return new String(encoded);
+	}
+	
+	public int obtenerArea(PagoSiga archivo) {
+		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
+		return archivoPagoDia.getCatalogoServicio().getIdArea();
+	}
+	
+	public int obtenerId(PagoSiga archivo) {
+		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
+		return archivoPagoDia.getIdUsuario();
 	}
 	
 	public PagoSiga siga(Integer id, Integer id_pago) {
@@ -411,10 +446,15 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return anio;
 	}
 
-	public String dateForm(ArchivoPagoDia pago) {
+	public String dateForm() {
 		Calendar anio = Calendar.getInstance();
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		return format1.format(anio.getTime());
+	}
+	
+	public Date dateFormat() throws ParseException {
+		 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(dateForm());
+		 return date1;
 	}
 
 	public String moneyForm(ArchivoPagoDia pago) {

@@ -1,5 +1,6 @@
 package mx.ipn.escom.spee.pagos.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.convention.annotation.AllowedMethods;
@@ -24,8 +25,8 @@ import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 
 @Namespace("/pagos")
 @Results({
-		@Result(name = "getAllServices", type = "json", params = { "root", "action", "includeProperties",
-				"ajaxResult.*" }),
+		@Result(name = GestionarServiciosAct.GET_ALL_SERVICES, type = "json", params = { "root", "action",
+				"includeProperties", "ajaxResult.*" }),
 		@Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
 				"gestionar-servicios" }) })
 @AllowedMethods({ "getAllServices" })
@@ -46,6 +47,8 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 	private Usuario usuarioSel;
 
 	private List<CatalogoServicio> listCatalogoServicios;
+
+	private List<CatalogoServicio> result;
 
 	private AjaxResult ajaxResult;
 
@@ -93,9 +96,15 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 	@SkipValidation
 	public String getAllServices() {
 		getAjaxResult();
-		ajaxResult = gestionarServiciosBs.obtenerServicios();
-		SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+		result = genericSearchBs.findAll(CatalogoServicio.class);
+		SessionManager.put(NombreObjetosSesion.AJAX_RESULT, result);
 		return GET_ALL_SERVICES;
+	}
+
+	public AjaxResult obtenerServicios() {
+		AjaxResult ajaxResult = new AjaxResult();
+		ajaxResult.addCampo(genericSearchBs.findAll(CatalogoServicio.class));
+		return ajaxResult;
 	}
 
 	public GestionarServiciosBs getGestionarServiciosBs() {
@@ -122,17 +131,17 @@ public class GestionarServiciosAct extends GeneralActionSupport {
 		this.genericSearchBs = genericSearchBs;
 	}
 
-	public AjaxResult getAjaxResult() {
-		this.ajaxResult = (AjaxResult) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
-		if (ajaxResult == null) {
-			ajaxResult = new AjaxResult();
-			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, ajaxResult);
+	public List<CatalogoServicio> getAjaxResult() {
+		this.result = (List<CatalogoServicio>) SessionManager.get(NombreObjetosSesion.AJAX_RESULT);
+		if (result == null) {
+			result = new ArrayList<CatalogoServicio>();
+			SessionManager.put(NombreObjetosSesion.AJAX_RESULT, result);
 		}
-		return ajaxResult;
+		return result;
 	}
 
-	public void setAjaxResult(AjaxResult ajaxResult) {
-		this.ajaxResult = ajaxResult;
+	public void setAjaxResult(List<CatalogoServicio> ajaxResult) {
+		this.result = ajaxResult;
 	}
 
 	public Usuario getUsuarioSel() {

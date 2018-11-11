@@ -8,7 +8,7 @@
 <jsp:text>
 	<![CDATA[                 
 	<script
-		src="${pageContext.request.contextPath}/pages/pagos/cargar-pago/js/index-editNew.js"
+		src="${pageContext.request.contextPath}/pages/pagos/gestionar-pagos/js/index-show.js"
 		type="text/javascript"></script>
 	]]>
 </jsp:text>
@@ -40,10 +40,48 @@
 
 <s:set var="mes" value="listAnio"/>
 <div class="row">
+	<s:set var="area" value="%{pagoBs.obtenerArea(#archivoPago)}"></s:set>
 	<div class="col-md-12">
 		<a class="btn btn-primary" href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show?${anio}=&amp;listMes=${mes}"><s:text name="Regresar" /></a>
+		<s:if test="#area == 3">
+			<a class="btn btn-primary" onclick="myClickDialog('${archivoPago.idPago}')"><s:text name="Agreagar impresiones" /></a>
+		</s:if>
+		<s:else>
+			<a class="btn btn-primary" href="${pageContext.request.contextPath}/pagos/gestionar-pagos?idPago=${archivoPago.idPago}"><s:text name="Efectuar" /></a>
+		</s:else>
 	</div>
 </div>
+
+<sj:dialog id="registroPago" modal="true"
+	title="Agregar impresiones" autoOpen="false"
+	openTopics="showRegistro" closeTopics="closeRegistro" resizable="false"
+	draggable="false" cssClass="hidden">
+	
+	<s:form id="frmRegistroImpresiones" action="%{pageContext.request.contextPath}/impresiones/control-impresiones!agregarImpresiones" theme="simple" method="post">
+		<div class="row">
+			<div class="col-md-12">
+				<s:hidden name="idSel" value="%{#archivoPago.idPago}"></s:hidden>
+				<s:hidden name="clave" value="%{#archivoPago.idCuenta}"></s:hidden>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<s:textfield type="number" id="numeroImpresion" class="form-control" name="numeroImpresion" value="15" min="15"></s:textfield>
+			</div>
+		</div>
+		
+		<!-- Botones de si y no -->
+		<div class="row">
+			<div class="text-right col-md-12">
+				<s:submit cssClass="btn btn-default btn-default-eld" value="Si" />
+				<a onclick="closeBajaDlg()" class="btn btn-default btn-default-eld"><s:text
+						name="No" /></a>
+			</div>
+		</div>
+	</s:form>
+</sj:dialog>
+
 
 <div class="text-left">
 	<div class="col-md-12"></div>

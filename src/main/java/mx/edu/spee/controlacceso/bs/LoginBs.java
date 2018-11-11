@@ -3,10 +3,6 @@ package mx.edu.spee.controlacceso.bs;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.struts2.convention.annotation.AllowedMethods;
-import org.apache.struts2.convention.annotation.Result;
-import org.apache.struts2.convention.annotation.Results;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +10,12 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.opensymphony.xwork2.ActionSupport;
-
 import mx.edu.spee.controlacceso.exception.LoginIncorrectoException;
 import mx.edu.spee.controlacceso.exception.UsuarioNoEncontradoException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
-import mx.ipn.escom.spee.servicio.mapeo.CatalogoServicio;
 import mx.ipn.escom.spee.util.SHADigest;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.mapeo.AjaxResult;
