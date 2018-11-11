@@ -4,95 +4,87 @@
 	<jsp:directive.page language="java"
 		contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" />
 	<html xmlns="http://www.w3.org/1999/xhtml">
-
+<head>
 <jsp:text>
-	<![CDATA[                 
-	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/pagos/gestionar-archivo-pagos/js/index.js"></script>
+	<![CDATA[
+	<script
+		src="${pageContext.request.contextPath}/pages/control-acceso/registrar-usuario/js/index-editNew.js"
+		type="text/javascript"></script>
 	]]>
 </jsp:text>
-
-<s:set var="listHorariosMatutino"
-	value="{{'Lunes','9:30 - 12:00'},
-	 {'Martes', '9:30 - 12:00'}}" />
-
-<s:set var="listHorariosVespertino"
-	value="{{'Lunes','13:30 - 15:00'},
-	 {'Martes', '13:30 - 15:00'}}" />
-
-<s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
-<s:set var="varIconoVisualizar" value="'&#xE8F4;'" />
-
-<div class="row title">
-	<div class="col-md-12">
-		<h1 class="title">
-			<s:text name="CU95_TITLE" />
-		</h1>
-	</div>
-</div>
-
-<div class="row">
+</head>
+<body>
+	<div class="row title">
 		<div class="col-md-12">
-			<s:actionmessage theme="%{getText('mx.edu.eld.defaulTheme')}" />
-			<s:actionerror theme="%{getText('mx.edu.eld.defaulTheme')}" />
+			<h1 class="title">
+				<s:text name="Agendar Cita"></s:text>
+			</h1>
 		</div>
 	</div>
 
-<s:form id="frmActualizarEstadoPago" enctype="multipart/form-data"
+	<!-- Action messages -->
+	<div class="form-group">
+		<div class="col-md-8 col-md-offset-2">
+			<s:actionmessage cssClass="alert alert-success" />
+			<s:actionerror cssClass="alert alert-danger" />
+		</div>
+	</div>
+
+	<!-- Campos obligatorios -->
+	<div class="col-md-12">
+		<div class="outter-section form-medium text-left">
+			<s:property value="'Los campos marcados con * son obligatorios.'" />
+		</div>
+	</div>
+
+	<s:form
 		action="%{#pageContext.request.contextPath}/citas/gestionar-citas-dentales"
-		theme="simple" method="post">
+		method="post" theme="simple">
+		<fieldset class="form form-horizontal form-medium">
+			<legend class="form-section">
+				<s:text name="Datos de la cita" />
+			</legend>
+			<!-- Fecha de la cita -->
+			<div class="form-group">
+				<label
+					class="col-xs-12 col-sm-6 col-md-6 control-label label-obligatorio text-xs-left">
+					<s:text name="Fecha de la cita" />
+				</label>
+				<div class="col-xs-12 col-sm-6 col-md-6">
+					<sj:datepicker id="id_fhCita" name="fecha"
+						displayFormat="dd/M/yy" cssClass="form-control date-picker"
+						showOn="focus" inputAppendIcon="calendar" changeYear="true"
+						changeMonth="true" readonly="true" showAnim="fadeIn"
+						parentTheme="bootstrap" value="" />
+					<s:fielderror fieldName="fecha" cssClass="error"
+						theme="bootstrap" />
+				</div>
+			</div>
+			<!-- Hora de la cita -->
+			<div class="form-group">
+				<label
+					class="col-xs-12 col-sm-6 col-md-6 control-label label-obligatorio"
+					for=""> <s:text name="Hora de la cita" />
+				</label>
+				<div class="col-xs-12 col-sm-6 col-md-6">
+					<s:select id="slcHora" class="form-control" headerKey=""
+						headerValue="Seleccione" list="listHoras"
+						name="model.idHora" listValue="hora" listKey="id"
+						cssErrorClass="field-error" />
+					<s:fielderror fieldName="model.idHora" cssClass="error" theme="bootstrap" />
+				</div>
+			</div>
+		</fieldset>
 
-<div class="">
-	<div class="row">
-		<label class="col-md-4 text-left control-label"> <s:text
-				name="CU95_LBL1">
-			</s:text>
-		</label><label class="col-md-4 text-left"> <s:iterator
-				value="listHorariosMatutino" var="pagoMatutino">
-				<ul>
-					<li>${pagoMatutino[0]} ${pagoMatutino[1]}</li>
-				</ul>
-			</s:iterator>
-		</label>
-	</div>
-	<div class="row">
-		<label class="col-md-4 text-left control-label"> <s:text
-				name="CU95_LBL2">
-			</s:text>
-		</label> <label class="col-md-4 text-left"> <s:iterator
-				value="listHorariosVespertino" var="pagoVespertino">
-				<ul>
-					<li>${pagoVespertino[0]} ${pagoVespertino[1]}</li>
-				</ul>
-			</s:iterator>
-		</label>
-	</div>
-	<div class="row">
-		<label class="col-md-4 text-left control-label"> <s:text
-				name="CU95_LBL3">
-			</s:text>
-		</label>
-		<div class="col-md-8 input-min">
-			<sj:datepicker id="dpInicio" name="fechaSel.fechaInicio"
-				cssClass="form-control date-picker" showOn="focus"
-				displayFormat="%{getText('mx.edu.eld.jsFormatDate')}"
-				inputAppendIcon="calendar" changeYear="true" changeMonth="true"
-				readonly="true" showAnim="fadeIn" minDate="%{#setInicio}"
-				maxDate="%{#setFinal}" />
-			<s:fielderror fieldName="fechaSel.fechaInicio" cssClass="error"
-				theme="%{getText('mx.edu.eld.defaulTheme')}"></s:fielderror>
+		<!-- Botones de Aceptar y Cancelar -->
+		<div class="outter-section form-medium text-right">
+			<div class="col-xs-12 col-md-12 col-md-12 text-right">
+				<s:submit cssClass="btn btn-default-spee" value="Aceptar" />
+				<a class="btn btn-default-spee"
+					href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales">Cancelar</a>
+			</div>
 		</div>
-	</div>
-</div>
-
-<div class="col-md-12 text-right">
-			<s:submit cssClass="btn btn-primary"
-				value="Aceptar"></s:submit>
-			<a
-				href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos"
-				class="btn btn-primary"><s:text name="Regresar" /></a>
-		</div>
-
-</s:form>
-
+	</s:form>
+</body>
 	</html>
 </jsp:root>
