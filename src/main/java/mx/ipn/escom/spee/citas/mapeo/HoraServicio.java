@@ -1,13 +1,14 @@
 package mx.ipn.escom.spee.citas.mapeo;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import mx.ipn.escom.spee.util.mapeo.Modelo;
@@ -35,8 +36,8 @@ public class HoraServicio implements Modelo, Serializable {
 	@Column(name = "st_activo")
 	private Boolean estatus;
 	
-	@OneToOne(mappedBy = "horaServicio")
-	private Cita cita;
+	@OneToMany(mappedBy = "horaServicio")
+	private List<Cita> listCitas;
 	
 	public HoraServicio() {
 		super();
@@ -73,15 +74,15 @@ public class HoraServicio implements Modelo, Serializable {
 	public void setEstatus(Boolean estatus) {
 		this.estatus = estatus;
 	}
-
-	public Cita getCita() {
-		return cita;
-	}
-
-	public void setCita(Cita cita) {
-		this.cita = cita;
-	}
 	
+	public List<Cita> getListCitas() {
+		return listCitas;
+	}
+
+	public void setListCitas(List<Cita> listCitas) {
+		this.listCitas = listCitas;
+	}
+
 	@Override
 	public String toString() {
 		return hora;

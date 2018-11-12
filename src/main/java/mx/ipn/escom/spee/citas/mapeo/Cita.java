@@ -50,7 +50,7 @@ public class Cita implements Modelo, Serializable {
 	@JoinColumn(name = "id_cuenta", referencedColumnName = "id_cuenta", insertable = false, updatable = false)
 	private Cuenta cuenta;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "id_hora_servicio", referencedColumnName = "id_hora_servicio", insertable = false, updatable = false)
 	private HoraServicio horaServicio;
 	
