@@ -22,6 +22,7 @@ import mx.ipn.escom.spee.pagos.exception.SinPagosConCorteException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.CorteCaja;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
+import mx.ipn.escom.spee.pagos.mapeo.PagosCorte;
 import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.bs.GenericBs;
@@ -61,6 +62,7 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 		archivo.setCorte(Boolean.FALSE);
 		archivo.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
 		List<ArchivoPagoDia> listPagosCorte = genericSearchBs.findByExample(archivo);
+		guardarPagosConCorte(listPagosCorte);
 		if (!listPagosCorte.isEmpty()) {
 			for (ArchivoPagoDia archivoPagoDia : genericSearchBs.findByExample(archivo)) {
 				archivoPagoDia.setCorte(Boolean.TRUE);
@@ -81,6 +83,19 @@ public class GestionarCorteCajaAct extends GeneralActionSupport {
 			return ERROR;
 		}
 		return SUCCESS;
+	}
+
+	private void guardarPagosConCorte(List<ArchivoPagoDia> listPagosCorte) {
+		List<CorteCaja> listCorteCaja = genericSearchBs.findAll(CorteCaja.class);
+		CorteCaja ultimoCorteCaja = listCorteCaja.get(listCorteCaja.size() - 1);
+		for (ArchivoPagoDia pagosCorte : listPagosCorte) {
+			PagosCorte pagosConCorte = new PagosCorte();
+			pagosConCorte.setFechaPago(pagosCorte.getFechaEnvio());
+			pagosConCorte.setIdCorteCaja(ultimoCorteCaja.getId());
+			pagosConCorte.setIdPago(pagosCorte.getId());
+			pagosConCorte.setIdCuenta(ultimoCorteCaja.getIdCuenta());
+			genericBs.save(pagosConCorte);
+		}
 	}
 
 	private Double sumarTotalCorteCaja(List<ArchivoPagoDia> listPagosCorte) {

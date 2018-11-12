@@ -10,9 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.ServletContext;
-
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.AllowedMethods;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -30,9 +28,9 @@ import mx.ipn.escom.spee.action.Archivo;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
 import mx.ipn.escom.spee.action.NombreObjetosSesion;
 import mx.ipn.escom.spee.action.SessionManager;
+import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.CorteCaja;
-import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import net.sf.jasperreports.engine.JRException;
@@ -41,6 +39,7 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Namespace("/pagos")
 @Results({ @Result(name = "filesuccess", type = "stream", params = { "contentType", "application/pdf", "inputName",
@@ -52,12 +51,19 @@ public class GestionarReportesAct extends GeneralActionSupport {
 	private static final long serialVersionUID = 1L;
 
 	@Autowired
+	private PagoBs pagoBs;
+
+	@Autowired
 	private GenericSearchBs genericSearchBs;
 
 	@Autowired
 	protected SessionFactory sessionFactory;
 
+	private Integer idSel;
+
 	private List<CorteCaja> listCorteCaja;
+
+	List<ArchivoPagoDia> listPagosCorte;
 
 	private Archivo archivoVisualizar;
 
@@ -65,23 +71,21 @@ public class GestionarReportesAct extends GeneralActionSupport {
 
 	public String index() {
 		listCorteCaja = genericSearchBs.findAll(CorteCaja.class);
-		getUsuarioSel();
-		ArchivoPagoDia archivo = new ArchivoPagoDia();
-		archivo.setCorte(Boolean.TRUE);
-		archivo.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-		List<ArchivoPagoDia> listPagosCorte = genericSearchBs.findByExample(archivo);
-		
 		return INDEX;
 	}
 
+	@SkipValidation
 	public HttpHeaders imprimirReporte() {
+		getIdSel();
+		
 		try {
 			getUsuarioSel();
-			ArchivoPagoDia archivo = new ArchivoPagoDia();
-			archivo.setCorte(Boolean.FALSE);
-			archivo.setIdEstadoPago(EstadoPagoEnum.AUTORIZADO.getIdEstatus());
-			List<ArchivoPagoDia> listPagosCorte = genericSearchBs.findByExample(archivo);
-			return vizualizarArchivo(generarReporte(listPagosCorte));
+			listPagosCorte = pagoBs.obtenerPagosAutorizadosConCorte(idSel);
+			double total = 0.0;
+			for (ArchivoPagoDia pago : listPagosCorte) {
+				total += pago.getCatalogoServicio().getPrecio();
+			}
+			return vizualizarArchivo(generarReporte(listPagosCorte, total));
 		} catch (FileNotFoundException | JRException e) {
 			return new DefaultHttpHeaders(ERROR).disableCaching();
 		}
@@ -94,22 +98,30 @@ public class GestionarReportesAct extends GeneralActionSupport {
 		return new DefaultHttpHeaders("filesuccess").disableCaching();
 	}
 
-	public Archivo generarReporte(List<ArchivoPagoDia> listPagosCorte) throws FileNotFoundException, JRException {
+	public Archivo generarReporte(List<ArchivoPagoDia> listPagosCorte,Double total) throws FileNotFoundException, JRException {
 		String ruta = "/resources/reportes/reporte-pago-autorizados/reporte-subdirector/";
 		ServletContext servletContext = ServletActionContext.getServletContext();
 		String context = servletContext.getRealPath("/");
 
-		return compilarReporteSubdirector(context, ruta, listPagosCorte);
+		return compilarReporteSubdirector(context, ruta, listPagosCorte, total);
 	}
 
-	private Archivo compilarReporteSubdirector(String context, String ruta, List<ArchivoPagoDia> listPagosCorte)
+	private Archivo compilarReporteSubdirector(String context, String ruta, List<ArchivoPagoDia> listPagosCorte, Double total)
 			throws JRException, FileNotFoundException {
 		Archivo archivo = new Archivo();
 		DateFormat outputFormatter = new SimpleDateFormat(PropertyAccess.getProperty("mx.edu.spee.formatDate"));
 		String output = outputFormatter.format(new Date());
 		Map<String, Object> parameters = new HashMap<>();
+		JRBeanCollectionDataSource dataSet = new JRBeanCollectionDataSource(listPagosCorte);
 		parameters.put("fecha", output);
-		parameters.put("listCorte", listPagosCorte);
+		parameters.put("nombreCajero", "Javier Mata Gil");
+		parameters.put("turno", "Matutino");
+		CorteCaja corte = new CorteCaja();
+		corte.setId(idSel);
+		parameters.put("total", genericSearchBs.findByExample(corte).get(0).getTotal().toString());
+		parameters.put("idXSel", idSel);
+		parameters.put("idSel", idSel);
+		parameters.put("listCorte", dataSet);
 
 		Session session = (Session) sessionFactory.getCurrentSession().getDelegate();
 		SessionImpl sessionImpl = (SessionImpl) session;
@@ -166,6 +178,30 @@ public class GestionarReportesAct extends GeneralActionSupport {
 
 	public void setListCorteCaja(List<CorteCaja> listCorteCaja) {
 		this.listCorteCaja = listCorteCaja;
+	}
+
+	public PagoBs getPagoBs() {
+		return pagoBs;
+	}
+
+	public void setPagoBs(PagoBs pagoBs) {
+		this.pagoBs = pagoBs;
+	}
+
+	public List<ArchivoPagoDia> getListPagosCorte() {
+		return listPagosCorte;
+	}
+
+	public void setListPagosCorte(List<ArchivoPagoDia> listPagosCorte) {
+		this.listPagosCorte = listPagosCorte;
+	}
+
+	public Integer getIdSel() {
+		return idSel;
+	}
+
+	public void setIdSel(Integer idSel) {
+		this.idSel = idSel;
 	}
 
 }
