@@ -63,7 +63,7 @@
 									<td>$ ${pagAutorizado.catalogoServicio.precio} MXN</td>
 									<td>
 									<a
-										href="${pageContext.request.contextPath}/pagos/gestionar-pagos!visualizarArchivo?idPago=${pagAutorizado.id}"
+										href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos!showPago?idPago=${pagAutorizado.id}&amp;idSel=${pagAutorizado.idUsuario}"
 										title="Visualizar Archivo de Pago"> <i
 											class="material-icons md-24">${varIconoVisualizar}</i>
 									</a>

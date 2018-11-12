@@ -24,7 +24,7 @@ public class CuentaImpresiones implements Modelo, Serializable{
 	private Cuenta id;
 	
 	@Column(name="nu_impresiones")
-	private Integer nu_impresiones;
+	private int nu_impresiones;
 	
 	public CuentaImpresiones() {
 		
@@ -43,11 +43,11 @@ public class CuentaImpresiones implements Modelo, Serializable{
 		this.id = id;
 	}
 
-	public Integer getNu_impresiones() {
+	public int getNu_impresiones() {
 		return nu_impresiones;
 	}
 
-	public void setNu_impresiones(Integer nu_impresiones) {
+	public void setNu_impresiones(int nu_impresiones) {
 		this.nu_impresiones = nu_impresiones;
 	}
 

@@ -10,18 +10,23 @@ import com.opensymphony.xwork2.ActionSupport;
 
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
+import mx.edu.spee.controlacceso.mapeo.Usuario;
 import mx.ipn.escom.spee.action.GeneralActionSupport;
+import mx.ipn.escom.spee.action.NombreObjetosSesion;
+import mx.ipn.escom.spee.action.SessionManager;
 import mx.ipn.escom.spee.impresiones.bs.ImpresionesBs;
 import mx.ipn.escom.spee.impresiones.exception.ImpresionesInsuficientesException;
 import mx.ipn.escom.spee.impresiones.mapeo.*;
 import mx.ipn.escom.spee.pagos.bs.PagoBs;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.ServicioEfectuado;
+import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Namespace("/impresiones")
@@ -40,9 +45,11 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	@Autowired
 	private GenericBs<ServicioEfectuado> genericBs;
 	
+	private Usuario usuarioSel;
+	
 	private Integer idSel;
 	
-	private List<CuentaImpresiones> cuentaImpresiones;
+	private List<CuentaImpresiones> cuentaImpresiones = new ArrayList<CuentaImpresiones>();
 	
 	private List<InformacionPersonal> informacionPersonal;
 	
@@ -55,17 +62,23 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	private int tipoImpresion, numeroImpresion, tipoUsuario, clave;
 	
 	private GenericSearchBs genericSearchBs;
+	
+	private int impresiones;
+	
+	private List<FhImpresiones> listFhImpresiones = new ArrayList<FhImpresiones>();
 		
 	public String index() {
 		cuentaImpresiones = impresionesBs.obtenerCuentasConImpresiones();
-		if(!getActionErrors().isEmpty()) {
-			cuentaImpresiones = impresionesBs.obtenerCuentasConImpresiones();
-		}
 		return INDEX;
 	}
 	
 	public void validateCreate() throws ImpresionesInsuficientesException {
-		impresionesBs.modCantidad(numeroImpresion,tipoImpresion,idSel);
+		try {
+			impresionesBs.modCantidad(numeroImpresion,tipoImpresion,idSel);
+		}catch(ImpresionesInsuficientesException e) {
+			addActionError("Impresiones insuficientes");
+		}
+		
 	}
 	
 	public String create() {
@@ -91,6 +104,54 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 //			addActionError("Usuario no encontrado");
 //			return ERROR;
 //		}
+	}
+	
+	public String show() {
+		Cuenta cuenta = new Cuenta();
+		if(getUsuarioSel() != null) {
+			if(usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ALUMNO.getValor()
+					|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.EXTERNO.getValor()
+					|| usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.TRABAJADOR.getValor()) {
+				cuenta.setIdUsuario(getUsuarioSel().getId());
+				List<Cuenta> cuentaId = genericSearchBs.findByExample(cuenta);
+				CuentaImpresiones cuentaImpresiones = genericSearchBs.findById(CuentaImpresiones.class, cuentaId.get(Numeros.CERO.getValor()).getIdCuenta());
+				if(cuentaImpresiones != null) {
+					impresiones = cuentaImpresiones.getNu_impresiones();
+				
+					List<FhImpresiones> listFecha = genericSearchBs.findAll(FhImpresiones.class);
+					for(FhImpresiones pagoFecha:listFecha) {
+						if(pagoFecha.getCuentaImpresion().getId().getIdCuenta() == cuentaImpresiones.getId().getIdCuenta()) {
+							listFhImpresiones.add(pagoFecha);
+						}
+					}
+				}
+				else
+					impresiones = 0;
+				
+				return SHOW;
+			}
+			else if(usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.ADMINISTRADOR_FOTOCOPIADO.getValor()) {
+				getIdSel();
+				CuentaImpresiones cuentaImpresiones = genericSearchBs.findById(CuentaImpresiones.class, idSel);
+				if(cuentaImpresiones != null) {
+					impresiones = cuentaImpresiones.getNu_impresiones();
+					
+					List<FhImpresiones> listFecha = genericSearchBs.findAll(FhImpresiones.class);
+					for(FhImpresiones pagoFecha:listFecha) {
+						if(pagoFecha.getCuentaImpresion().getId().getIdCuenta() == cuentaImpresiones.getId().getIdCuenta()) {
+							listFhImpresiones.add(pagoFecha);
+						}
+					}
+				}
+				else
+					impresiones = 0;
+				
+				return SHOW;
+			}
+			else 
+				return NO_AUTORIZADO;
+		}
+		return NO_AUTORIZADO;
 	}
 
 	public ImpresionesBs getImpresionesBs() {
@@ -198,6 +259,33 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 
 	public void setGenericBs(GenericBs<ServicioEfectuado> genericBs) {
 		this.genericBs = genericBs;
+	}
+
+	public int getImpresiones() {
+		return impresiones;
+	}
+
+	public void setImpresiones(int impresiones) {
+		this.impresiones = impresiones;
+	}
+	
+	public Usuario getUsuarioSel() {
+		if (SessionManager.get(NombreObjetosSesion.USUARIO_SESION) != null) {
+			usuarioSel = (Usuario) SessionManager.get(NombreObjetosSesion.USUARIO_SESION);
+		}
+		return usuarioSel;
+	}
+	
+	public void setUsuarioSel(Usuario usuarioSel) {
+		this.usuarioSel = usuarioSel;
+	}
+
+	public List<FhImpresiones> getListFhImpresiones() {
+		return listFhImpresiones;
+	}
+
+	public void setListFhImpresiones(List<FhImpresiones> listFhImpresiones) {
+		this.listFhImpresiones = listFhImpresiones;
 	}
 	
 	
