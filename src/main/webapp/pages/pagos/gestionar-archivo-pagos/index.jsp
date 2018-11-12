@@ -17,7 +17,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="Gestionar Archivo de Pagos" />
+			<s:text name="Archivo de Pagos Anuales" />
 		</h1>
 	</div>
 </div>
