@@ -19,8 +19,10 @@ import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
 import mx.edu.spee.controlacceso.mapeo.Perfil;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
+import mx.edu.spee.controlacceso.mapeo.UsuarioIpn;
 import mx.ipn.escom.spee.mail.business.MailSender;
 import mx.ipn.escom.spee.util.Constantes;
+import mx.ipn.escom.spee.util.Numeros;
 import mx.ipn.escom.spee.util.SHADigest;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 import mx.ipn.escom.spee.util.dao.GenericDao;
@@ -54,30 +56,64 @@ public class UsuarioBs implements Serializable {
 		if (!genericSearchBs.findByExample(usuarioExample).isEmpty()) {
 			throw new UniqueException();
 		}
+		usuario.setLogin(info.getCorreo());
 		usuario.setPassword(SHADigest.digest(usuario.getPassword()));
 		Date date = new Date();
 		usuario.setFechaAlta(date);
 		genericDao.save(usuario);
-		crearCuenta(usuario);
+		//usuario guardado 
+		
+		crearCuenta(usuario, Integer.parseInt(info.getIdPerfil()));
+		//cuenta guardada
+		
+		Cuenta cuenta = new Cuenta();
+		cuenta.setIdUsuario(usuario.getId());
+		cuenta.setIdPerfil(Integer.parseInt(info.getIdPerfil()));
+		cuenta.setEstatus(true);
+		List<Cuenta> cuentaNueva = genericSearchBs.findByExample(cuenta);
+		info.setIdCuenta(cuentaNueva.get(Numeros.CERO.getValor()).getIdCuenta());
+		guardarInformacionPersonal(usuario, info);
+		//informacion personal guardada
+		
+		if(Integer.parseInt(info.getIdPerfil()) == Numeros.OCHO.getValor() 
+				|| Integer.parseInt(info.getIdPerfil()) == Numeros.NUEVE.getValor()) {
+			guardaBoleta(info,Integer.parseInt(info.getIdPerfil()));
+		}
+		
 //		info.setClave("clave");
 //		genericDao.save(info);
-		usuario.setLogin(info.getCorreo());
 		enviarEmailConfirmacion(usuario);
 		return usuario;
 	}
-
-	public void guardarInformacionPersonal(Usuario usuario, InformacionPersonal info) {
-
-		InformacionPersonal infoExample = new InformacionPersonal();
-
-		info.setClave("clave");
-		genericDao.save(info);
+	
+	public void guardaBoleta(InformacionPersonal info, int perfil) {
+		UsuarioIpn usuarioIpn = new UsuarioIpn();
+		usuarioIpn.setInfoPersonal(info);
+		if(perfil == Numeros.OCHO.getValor())
+			usuarioIpn.setNumIpn(info.getBoleta());
+		else
+			usuarioIpn.setNumIpn(info.getNoEmpleado());
+		genericDao.save(usuarioIpn);
 	}
 
-	public void crearCuenta(Usuario usuario) {
+	public void guardarInformacionPersonal(Usuario usuario, InformacionPersonal info) throws UniqueException {
+
+		InformacionPersonal infoExample = new InformacionPersonal();
+		infoExample.setClave(info.getClave());
+		List<InformacionPersonal> person = genericSearchBs.findByExample(infoExample);
+		for(InformacionPersonal p:person) {
+			if (p.getClave().equals(info.getClave())) {
+				throw new UniqueException();
+			}
+		}
+		genericDao.save(info);
+		
+	}
+
+	public void crearCuenta(Usuario usuario, int perfil) {
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(usuario.getId());
-		cuenta.setIdPerfil(Perfil.PerfilEnum.ALUMNO.getValor());
+		cuenta.setIdPerfil(perfil);
 		cuenta.setEstatus(true);
 		genericDao.save(cuenta);
 	}
