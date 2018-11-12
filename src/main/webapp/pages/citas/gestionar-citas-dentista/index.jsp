@@ -7,7 +7,7 @@
 
 <jsp:text>
 	<![CDATA[                 
-	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/citas/gestionar-citas-dentales/js/index.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/pages/citas/gestionar-citas-dentista/js/index.js"></script>
 	]]>
 </jsp:text>
 
@@ -22,6 +22,7 @@
 	value="%{getText('Visualizar Historial Clínico')}" />
 <s:set var="ttbCancelarCita" value="%{getText('Cancelar Cita')}" />
 <s:set var="ttbInasistencia" value="%{getText('Marcar Inasistencia')}" />
+<s:set var="ttbConclusion" value="%{getText('Concluir cita')}" />
 
 <s:set var="varIconoVisualizar" value="'&#xE8F4;'" />
 <s:set var="varIconoVisualizarCuestionario" value="description" />
@@ -58,35 +59,80 @@
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listCitas" var="citas">
-							<tr>
-								<s:if test="%{#citas.idEstado == 1}">
-									<td class="material-icons  md-24 md-sem-yellow">&#xE061;</td>
-								</s:if>
-								<s:elseif test="%{#citas.idEstado == 2}">
-									<td class="material-icons  md-24 md-sem-green">&#xE061;</td>
-								</s:elseif>
-								<s:elseif test="%{#citas.idEstado == 3}">
-									<td class="material-icons  md-24 md-sem-rojo">&#xE061;</td>
-								</s:elseif>
-								<s:else>
-									<td class="material-icons  md-24 md-sem-orange">&#xE061;</td>
-								</s:else>
-								<td><s:property value="%{#citas.fecha}" /></td>
-								<td><s:property value="%{#citas.horaServicio}" /></td>
+						<s:if
+							test="%{txLogin == 'administrador_dentales_matutino@ipn.com.mx'}">
+							<s:iterator value="listCitasMatutino" var="citasMatutino">
+								<tr>
+									<s:if test="%{#citasMatutino.idEstado == 1}">
+										<td class="material-icons  md-24 md-sem-yellow">&#xE061;</td>
+									</s:if>
+									<s:elseif test="%{#citasMatutino.idEstado == 2}">
+										<td class="material-icons  md-24 md-sem-green">&#xE061;</td>
+									</s:elseif>
+									<s:elseif test="%{#citasMatutino.idEstado == 3}">
+										<td class="material-icons  md-24 md-sem-rojo">&#xE061;</td>
+									</s:elseif>
+									<s:else>
+										<td class="material-icons  md-24 md-sem-orange">&#xE061;</td>
+									</s:else>
+									<td><s:property value="%{#citasMatutino.fecha}" /></td>
+									<td><s:property value="%{#citasMatutino.horaServicio}" /></td>
 
-								<s:if test="%{#citas.idEstado == 3}">
-									<td><s:property value="'Sin acciones'" /></td>
-								</s:if>
-								<s:else>
-									<td><a onclick="myclickDialogCancelacion('${citas.id}')"
-										title="${ttbCancelarCita}"> <i
-											class="material-icons md-24 md-eld">cancel</i>
-									</a></td>
-								</s:else>
+									<s:if
+										test="%{#citasMatutino.idEstado == 3 || #citasMatutino.idEstado == 4 || #citasMatutino.idEstado == 2}">
+										<td><s:property value="'Sin acciones'" /></td>
+									</s:if>
+									<s:else>
+										<td><a
+											href="${pageContext.request.contextPath}/citas/gestionar-citas-dentista!marcarInasistencia?idSel=${citasMatutino.id}"
+											title="${ttbInasistencia}"> <i
+												class="material-icons md-24 md-eld">clear</i>
+										</a> <a onclick="myclickDialogCancelacion('${citasMatutino.id}')"
+											title="${ttbCancelarCita}"> <i
+												class="material-icons md-24 md-eld">cancel</i>
+										</a></td>
+									</s:else>
 
-							</tr>
-						</s:iterator>
+								</tr>
+							</s:iterator>
+						</s:if>
+						<s:else>
+							<s:iterator value="listCitasVespertino" var="citasVespertino">
+								<tr>
+									<s:if test="%{#citasVespertino.idEstado == 1}">
+										<td class="material-icons  md-24 md-sem-yellow">&#xE061;</td>
+									</s:if>
+									<s:elseif test="%{#citasVespertino.idEstado == 2}">
+										<td class="material-icons  md-24 md-sem-green">&#xE061;</td>
+									</s:elseif>
+									<s:elseif test="%{#citasVespertino.idEstado == 3}">
+										<td class="material-icons  md-24 md-sem-rojo">&#xE061;</td>
+									</s:elseif>
+									<s:else>
+										<td class="material-icons  md-24 md-sem-orange">&#xE061;</td>
+									</s:else>
+									<td><s:property value="%{#citasVespertino.fecha}" /></td>
+									<td><s:property value="%{#citasVespertino.horaServicio}" /></td>
+
+									<s:if
+										test="%{#citasVespertino.idEstado == 3 || #citasVespertino.idEstado == 4 || #citasVespertino.idEstado == 2}">
+										<td><s:property value="'Sin acciones'" /></td>
+									</s:if>
+									<s:else>
+										<td><a
+											href="${pageContext.request.contextPath}/citas/gestionar-citas-dentista!marcarInasistencia?idSel=${citasVespertino.id}"
+											title="${ttbInasistencia}"> <i
+												class="material-icons md-24 md-eld">clear</i>
+										</a> <a
+											onclick="myclickDialogCancelacion('${citasVespertino.id}')"
+											title="${ttbCancelarCita}"> <i
+												class="material-icons md-24 md-eld">cancel</i>
+										</a></td>
+									</s:else>
+
+								</tr>
+							</s:iterator>
+						</s:else>
 					</tbody>
 				</table>
 			</div>
@@ -99,14 +145,14 @@
 		closeTopics="closeDlgCancelacion" resizable="false" draggable="false"
 		cssClass="hidden">
 		<s:url var="urlAction"
-			action="gestionar-citas-dentales!cancelarCita?idSel=%{citas.id}"
+			action="gestionar-citas-dentista!cancelarCita?idSel=%{citas.id}"
 			includeContext="true" />
 		<s:hidden id="hdnUrlAction" value="%{#urlAction}" />
 		<s:form id="frmCancelacionCita" action="" theme="simple" method="post">
 			<div class="row">
 				<div class="col-md-12">
 					<s:text
-						name="Esta seguro que desea cancelar su cita dental? Para tener una nueva cita acceda al apartado Agendar cita.">
+						name="Esta seguro(a) que desea cancelar la cita de su paciente?.">
 					</s:text>
 				</div>
 			</div>
@@ -120,6 +166,7 @@
 			</div>
 		</s:form>
 	</sj:dialog>
+
 
 </div>
 

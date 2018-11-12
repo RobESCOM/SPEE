@@ -1,6 +1,5 @@
 package mx.ipn.escom.spee.citas.action;
 
-import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -15,6 +14,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.validator.annotations.VisitorFieldValidator;
 
 import mx.edu.spee.controlacceso.exception.CitaOcupadaException;
+import mx.edu.spee.controlacceso.exception.FechaInvalidaException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum;
 import mx.edu.spee.controlacceso.mapeo.Usuario;
@@ -34,7 +34,7 @@ import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 				"gestionar-citas-dentales" }),
 		@Result(name = "getAppointmentByUserId", type = "json", params = { "root", "action", "includeProperties",
 				"ajaxResult.*" }) })
-@AllowedMethods({ "getAppointmentByUserId" })
+@AllowedMethods({ "getAppointmentByUserId", "cancelarCita" })
 public class GestionarCitasDentalesAct extends GeneralActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -87,16 +87,10 @@ public class GestionarCitasDentalesAct extends GeneralActionSupport {
 	}
 
 	public void validateCreate() {
-		System.err.println("Fecha -> " + fecha);
 		try {
 			if (getFieldErrors().isEmpty() && getActionErrors().isEmpty()) {
-				Date fechaCita = new Date();
-				try {
-					fechaCita = citaBs.convertirFechaStringDate(fecha);
-					//model.setFecha(fechaCita);
-				} catch (ParseException pe) {
-					// TODO: handle exception
-				}
+				Date fechaCita;
+				fechaCita = citaBs.convertirFechaStringDate(fecha);
 				model.setFecha(fechaCita);
 				citaBs.registrarCita(model, (Integer) SessionManager.get(NombreObjetosSesion.CUENTA_ID));
 			} else {
@@ -106,6 +100,9 @@ public class GestionarCitasDentalesAct extends GeneralActionSupport {
 		} catch (CitaOcupadaException co) {
 			addActionError("La fecha y hora de la cita ya se encuentran ocupadas. Elige una fecha u hora distinta.");
 			listHoras = genericSearchBs.findAll(HoraServicio.class);
+		} catch (FechaInvalidaException fi) {
+			addActionError("Ingresa una fecha para la cita.");
+			listHoras = genericSearchBs.findAll(HoraServicio.class);
 		}
 	}
 
@@ -114,6 +111,15 @@ public class GestionarCitasDentalesAct extends GeneralActionSupport {
 		return SUCCESS;
 	}
 
+	
+	@SkipValidation
+	public String cancelarCita() {
+		getIdSel();
+		citaBs.cancelarCita(idSel);
+		addActionMessage("Se canceló su cita correctamente.");
+		return SUCCESS;
+	}
+	
 	@SkipValidation
 	public String getAppointmentByUserId() {
 		getUsuarioSel();

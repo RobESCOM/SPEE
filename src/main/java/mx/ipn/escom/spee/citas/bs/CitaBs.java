@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import mx.edu.spee.controlacceso.exception.CitaOcupadaException;
+import mx.edu.spee.controlacceso.exception.FechaInvalidaException;
 import mx.ipn.escom.spee.citas.mapeo.Cita;
 import mx.ipn.escom.spee.citas.mapeo.EstadoCita.EstadoCitaEnum;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
@@ -52,7 +53,7 @@ public class CitaBs implements Serializable {
 				String fechaActual = convertirFechaDateString(cita.getFecha());
 				if (fechaAnterior.equals(fechaActual) && citaAux.getIdHora() == cita.getIdHora()) {
 					throw new CitaOcupadaException();
-				} 
+				}
 			}
 		}
 		cita.setIdEstado(EstadoCitaEnum.PENDIENTE.getId());
@@ -60,9 +61,20 @@ public class CitaBs implements Serializable {
 		genericDao.save(cita);
 	}
 
-	public Date convertirFechaStringDate(String fecha) throws ParseException {
-		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-		Date fechaCita = formato.parse(fecha);
+	public Date convertirFechaStringDate(String fecha) throws FechaInvalidaException {
+		DateFormat formato = new SimpleDateFormat("dd/MMM/yyyy");
+		Date fechaCita = new Date();
+		
+		try {
+			if(fecha.equals("")) {
+				throw new FechaInvalidaException();
+			}
+			fechaCita = formato.parse(fecha);
+			return fechaCita;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return fechaCita;
 	}
 	
@@ -71,4 +83,28 @@ public class CitaBs implements Serializable {
 		String fechaStr = formato.format(fecha);
 		return fechaStr;
 	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void cancelarCita(Integer idCita) {
+		Cita cita = genericSearchBs.findById(Cita.class, idCita);
+		cita.setIdEstado(EstadoCitaEnum.CANCELADA.getId());
+		genericDao.update(cita);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void cancelarCitaDentista(Integer idCita) {
+		Cita cita = genericSearchBs.findById(Cita.class, idCita);
+		cita.setIdEstado(EstadoCitaEnum.CANCELADA.getId());
+		genericDao.update(cita);
+	}
+	
+	@Transactional(rollbackFor = Exception.class)
+	public void marcarInasistencia(Integer idCita) {
+		Cita cita = genericSearchBs.findById(Cita.class, idCita);
+		cita.setIdEstado(EstadoCitaEnum.INASISTENCIA.getId());
+		genericDao.update(cita);
+
+	}
+	
+	
 }

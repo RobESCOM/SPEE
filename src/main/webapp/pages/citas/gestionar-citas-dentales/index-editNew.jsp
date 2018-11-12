@@ -52,7 +52,7 @@
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<sj:datepicker id="id_fhCita" name="fecha"
-						displayFormat="dd/M/yy" cssClass="form-control date-picker"
+						displayFormat="dd/MM/yy" cssClass="form-control date-picker"
 						showOn="focus" inputAppendIcon="calendar" changeYear="true"
 						changeMonth="true" readonly="true" showAnim="fadeIn"
 						parentTheme="bootstrap" value="" />

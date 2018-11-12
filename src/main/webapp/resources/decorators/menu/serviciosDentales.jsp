@@ -16,7 +16,7 @@
 							name="menu.dentales.citas" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales">
+							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentista">
 								<s:text name="menu.dentales.citas.gestionar_citas" />
 						</a></li>
 						<li class="dropdown"><a
