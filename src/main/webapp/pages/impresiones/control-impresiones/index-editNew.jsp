@@ -13,6 +13,8 @@
 	]]>
 </jsp:text>
 
+<s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
+
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
@@ -47,10 +49,10 @@
 					class="col-xs-12 col-sm-4 col-md-4 control-label"
 					for=""> <s:text name="Impresiones disponibles en negro" />
 				</label>
-				<s:set var="impresiones" value="usrImpresiones"></s:set>
+				<s:set var="impresion" value="usrImpresiones"></s:set>
 				<label
 					class="col-xs-12 col-sm-5 col-md-5"
-					for=""> <s:text name="impresiones">${impresiones.nu_impresiones}</s:text>
+					for=""> <s:text name="impresiones">${impresion.nu_impresiones}</s:text>
 				</label>
 			</div>
 			

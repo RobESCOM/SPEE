@@ -44,13 +44,13 @@
 					<tbody>
 						<s:iterator value="listCorteCaja" var="corte">
 							<tr>
-								<td>${corte.total} MXN</td>
+								<td>${corte.total}MXN</td>
 								<td>${corte.fechaCorte}</td>
 								<td><a
-									href="${pageContext.request.contextPath}/pagos/gestionar-reportes!imprimirReporte"
-									title="Visualizar Reporte"> <i
-										class="material-icons md-24 md-eld">picture_as_pdf </i>
-								</a> </td>
+									href="${pageContext.request.contextPath}/pagos/gestionar-reportes!imprimirReporte?idSel=${corte.id}"
+									target="_blank" title="Visualizar Reporte"> <i
+										class="material-icons md-24">picture_as_pdf </i>
+								</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -59,5 +59,8 @@
 		</div>
 	</div>
 </fieldset>
+<div class="row">
+	<div class="col-md-12"></div>
+</div>
 	</html>
 </jsp:root>

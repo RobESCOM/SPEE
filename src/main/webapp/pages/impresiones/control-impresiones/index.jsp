@@ -15,6 +15,7 @@
 </jsp:text>
 
 <s:set var="ttbReducirImpresiones" value="%{getText('Reducir Impresión')}" />
+<s:set var="ttbHistorial" value="%{getText('Historial de impresiones')}" />
 <s:set var="ttbBaja" value="%{getText('Agregar Impresiones')}" />
 
 <s:set var="varTheme" value="%{getText('mx.edu.spee.defaulTheme')}" />
@@ -48,17 +49,29 @@
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="cuentaImpresiones" var="impresiones">
-							<s:set var="usuario" value="%{impresionesBs.obtenerUsuario(#impresiones)}"></s:set>
+						<s:iterator value="cuentaImpresiones" var="impresionesRealizadas">
+							<s:set var="usuario" value="%{impresionesBs.obtenerUsuario(#impresionesRealizadas)}"></s:set>
+							<s:set var="boleta" value="%{impresionesBs.obtenerBoleta(#usuario)}" />
 							<tr>
 								<td>${usuario.nombre}</td>
-								<td>${usuario.curp}</td>
-								<td>${impresiones.nu_impresiones}</td>
+								<s:if test="#boleta == 'null'">
+									<td>${usuario.clave}</td>
+								</s:if>
+								<s:else>
+									<td>${boleta}</td>
+								</s:else>
+								
+								<td>${impresionesRealizadas.nu_impresiones}</td>
 								<td>
 									<a
-										href="${pageContext.request.contextPath}/impresiones/control-impresiones/new?idSel=${impresiones.id.idCuenta}"
+										href="${pageContext.request.contextPath}/impresiones/control-impresiones/new?idSel=${impresionesRealizadas.id.idCuenta}"
 										title="${ttbReducirImpresiones}"> <i
 											class="material-icons md-24 md-eld">scanner</i>
+									</a>
+									<a
+										href="${pageContext.request.contextPath}/impresiones/control-impresiones/${impresionesRealizadas.id.idCuenta}"
+										title="${ttbHistorial}"> <i
+											class="material-icons md-24 md-eld">chrome_reader_mode</i>
 									</a>
 								</td>
 							</tr>

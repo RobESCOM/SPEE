@@ -1,7 +1,10 @@
 package mx.ipn.escom.spee.impresiones.bs;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -11,9 +14,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import mx.edu.spee.controlacceso.exception.UsuarioNoEncontradoException;
 import mx.edu.spee.controlacceso.mapeo.Cuenta;
 import mx.edu.spee.controlacceso.mapeo.InformacionPersonal;
+import mx.edu.spee.controlacceso.mapeo.UsuarioIpn;
 import mx.ipn.escom.spee.impresiones.exception.ImpresionesInsuficientesException;
 import mx.ipn.escom.spee.impresiones.mapeo.CuentaImpresiones;
 import mx.ipn.escom.spee.impresiones.mapeo.FhImpresiones;
@@ -39,7 +42,8 @@ public class ImpresionesBs implements Serializable{
 	private CuentaImpresiones cuentaImpresiones;
 	
 	public List<CuentaImpresiones> obtenerCuentasConImpresiones() {	
-		List<CuentaImpresiones> listaCuentaImpresiones= genericSearchBs.findAll(CuentaImpresiones.class);
+		List<CuentaImpresiones> listaCuentaImpresiones= new ArrayList<CuentaImpresiones>();
+		listaCuentaImpresiones = genericSearchBs.findAll(CuentaImpresiones.class);
 		return listaCuentaImpresiones;
 	}
 	
@@ -53,6 +57,15 @@ public class ImpresionesBs implements Serializable{
 		return obtenerPersona(cuenta);
 	}
 	
+	public String obtenerBoleta(InformacionPersonal info) {
+		List<UsuarioIpn> usrIpn = genericSearchBs.findAll(UsuarioIpn.class);
+		for(UsuarioIpn usr:usrIpn) {
+			if(usr.getInfoPersonal().getClave().equals(info.getClave()))
+				return usr.getNumIpn();
+		}
+		return "null";
+	}
+	
 	public void modCantidad(int impresion, int tipoImpresion, Integer idSel) throws ImpresionesInsuficientesException {
 		CuentaImpresiones usr = genericSearchBs.findById(CuentaImpresiones.class, idSel);
 		int nu_impresiones = usr.getNu_impresiones();
@@ -60,7 +73,7 @@ public class ImpresionesBs implements Serializable{
 		Calendar myCal = Calendar.getInstance();
 		Calendar myHour = Calendar.getInstance();
 		myCal.set(Calendar.YEAR, now.getYear());
-		myCal.set(Calendar.MONTH, now.getMonthValue());
+		myCal.set(Calendar.MONTH, now.getMonthValue()-1);
 		myCal.set(Calendar.DAY_OF_MONTH, now.getDayOfMonth());
 		myHour.set(Calendar.HOUR, now.getHour());
 		myHour.set(Calendar.MINUTE, now.getMinute());
@@ -113,6 +126,11 @@ public class ImpresionesBs implements Serializable{
 		infoPersonal.setIdCuenta(cuentaImpresiones.getIdCuenta());
 		List<InformacionPersonal> infoPersona = genericSearchBs.findByExample(infoPersonal);
 		return infoPersona.get(Numeros.CERO.getValor());
+	}
+	
+	public String dateForm(FhImpresiones fhImpresion) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(fhImpresion.getFh_impresion());
 	}
 
 	public CuentaImpresiones getCuentaImpresiones() {

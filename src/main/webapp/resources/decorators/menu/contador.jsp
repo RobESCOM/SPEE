@@ -14,7 +14,7 @@
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-caja/new">
-								<s:text name="Autorizar Corte Caja" />
+								<s:text name="Corte Caja" />
 						</a> <a
 							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">
 								<s:text name="Archivo Pagos" />

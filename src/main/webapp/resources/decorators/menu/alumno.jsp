@@ -34,9 +34,17 @@
 								<s:text name="menu.alumno.agendar.cita" />
 						</a></li>
 					</ul></li>
-
 				<li class="dropdown"><a href="#"><s:text
-							name="Historial de Pagos" /><span class="fa arrow"></span> </a>
+							name="menu.alumno.impresiones" /><span class="fa arrow"></span>
+				</a>
+					<ul class="nav nav-second-level">
+						<li class="dropdown"><a
+							href="${pageContext.request.contextPath}/impresiones/control-impresiones/show">
+								<s:text name="menu.alumno.impresiones.ver_impresiones" />
+						</a></li>
+					</ul></li>
+
+				<li class="dropdown"><a href="#"><s:text name="Historial de Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
 						<li class="dropdown"><a
 							href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos">

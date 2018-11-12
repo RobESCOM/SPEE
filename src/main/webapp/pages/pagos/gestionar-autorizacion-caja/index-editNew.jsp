@@ -11,8 +11,6 @@
 	]]>
 </jsp:text>
 
-<s:set var="ttbVisualizar" value="%{getText('tooltipVisualizar')}" />
-<s:set var="ttbAdjuntar" value="%{getText('tooltipAdjuntar')}" />
 <s:set var="varIconoVisualizar" value="'&#xE8F4;'" />
 <s:set var="varIconoAdjuntar" value="'&#xE5D8;'" />
 
@@ -21,7 +19,7 @@
 <div class="row title">
 	<div class="col-md-12">
 		<h1 class="title">
-			<s:text name="Autorizar Corte de Caja" />
+			<s:text name="Corte de Caja" />
 		</h1>
 	</div>
 </div>
@@ -33,41 +31,29 @@
 	</div>
 </div>
 
-<div class="form-section form-horizontal">
+<fieldset class="form form-horizontal form-medium">
 	<div class="form-group">
 		<div class="row">
 			<div class="col-md-12">
 				<table id="tblAutorizarCorteCaja" class="table table-striped">
 					<thead>
 						<tr>
-							<th><s:text name="Estado" /></th>
-							<th><s:text name="Nombre" /></th>
-							<th><s:text name="Fecha" /></th>
-							<th><s:text name="Acciones" /></th>
+							<th data-priority="1"><s:text name="Cantidad" /></th>
+							<th data-priority="1"><s:text name="Fecha" /></th>
+							<th data-priority="2"><s:text name="Acciones" /></th>
+
 						</tr>
 					</thead>
 					<tbody>
-						<s:iterator value="listArchivoPagosRevision"
-							var="pagoPorAutorizar">
+						<s:iterator value="listCorteCaja" var="corte">
 							<tr>
-								<td>${alumno.nombre}</td>
-								<td>${alumno.clave }</td>
-								<td><s:date name="%{#pagoPorAutorizar.fechaEnvio}"
-										format="yyyy-MM-dd" /></td>
-								<td>${pagoPorAutorizar.catalogoServicio.descripcion}</td>
-								<td>$ ${pagoPorAutorizar.catalogoServicio.precio} MXN</td>
-								<td><s:if
-										test="%{pagoBs.findSigaAsociado(#pagoPorAutorizar.id) == false}">
-										<a
-											href="${pageContext.request.contextPath}/pagos/gestionar-autorizacion-pagos/${pagoPorAutorizar.id}"
-											title="Visualizar Comprobante"> <i
-											class="material-icons md-24">${varIconoVisualizar}</i>
-										</a>
-									</s:if> <s:else>
-										<a href="#" title="Pago gestionado"> <i
-											class="material-icons"> done </i>
-										</a>
-									</s:else></td>
+								<td>${corte.total}MXN</td>
+								<td>${corte.fechaCorte}</td>
+								<td><a
+									href="${pageContext.request.contextPath}/pagos/gestionar-reportes!imprimirReporte"
+									title="Autorizar Corte de Caja"> <i
+										class="material-icons md-24">picture_as_pdf </i>
+								</a></td>
 							</tr>
 						</s:iterator>
 					</tbody>
@@ -75,7 +61,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</fieldset>
 
 <sj:dialog id="corteCajaId" modal="true" title="Corte de Caja"
 	autoOpen="false" openTopics="showDlgCorteCaja"
