@@ -41,6 +41,7 @@ import mx.ipn.escom.spee.pagos.exception.TamanioArchivoException;
 import mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia;
 import mx.ipn.escom.spee.pagos.mapeo.EstadoPago.EstadoPagoEnum;
 import mx.ipn.escom.spee.pagos.mapeo.PagoSiga;
+import mx.ipn.escom.spee.pagos.mapeo.PagosCorte;
 import mx.ipn.escom.spee.util.Constantes;
 import mx.ipn.escom.spee.util.Meses;
 import mx.ipn.escom.spee.util.Numeros;
@@ -49,7 +50,6 @@ import mx.ipn.escom.spee.servicio.mapeo.TipoServicio.CatalogoTipoServicioEnum;
 import mx.ipn.escom.spee.util.PropertyAccess;
 import mx.ipn.escom.spee.util.bs.GenericBs;
 import mx.ipn.escom.spee.util.bs.GenericSearchBs;
-import mx.ipn.escom.spee.util.mapeo.AjaxResult;
 import mx.ipn.escom.spee.util.mapeo.Modelo;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -169,7 +169,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		archivoPago.setFechaEnvio(currentDate);
 		archivoPago.setFolioOperacion(folio.toString());
 		archivoPago.setIdCatalogoServicio(idServicio);
-		
+
 		Cuenta cuenta = new Cuenta();
 		cuenta.setIdUsuario(idUsuario);
 		Usuario usuario = genericSearchBs.findById(Usuario.class, idUsuario);
@@ -179,7 +179,7 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		} catch (Exception ex) {
 			throw new MailNoSendException();
 		}
-		
+
 		genericDao.save(archivoPago);
 	}
 
@@ -281,6 +281,16 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return genericSearchBs.findByExample(archivo);
 	}
 
+	public List<ArchivoPagoDia> obtenerPagosAutorizadosConCorte(Integer idSel) {
+		PagosCorte pagosConCorte = new PagosCorte();
+		pagosConCorte.setIdCorteCaja(idSel);
+		List<ArchivoPagoDia> listPagosPorCorte = new ArrayList<>();
+		for (PagosCorte pagosCorte : genericSearchBs.findByExample(pagosConCorte)) {
+				listPagosPorCorte.add(genericSearchBs.findById(ArchivoPagoDia.class, pagosCorte.getIdPago()));
+		}
+		return listPagosPorCorte;
+	}
+
 	public InformacionPersonal obtenerAlumno(ArchivoPagoDia pago) {
 		Cuenta cuenta = genericSearchBs.findById(Cuenta.class, pago.getIdUsuario());
 		return obtenerPersona(cuenta);
@@ -297,31 +307,30 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
 		return new String(encoded);
 	}
-	
+
 	public String obtenerArchivoSIGA(PagoSiga archivo) throws IOException {
 		byte[] encoded = Base64.getEncoder().encode(archivo.getArchivo());
 		return new String(encoded);
 	}
-	
+
 	public int obtenerArea(PagoSiga archivo) {
 		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
 		return archivoPagoDia.getCatalogoServicio().getIdArea();
 	}
-	
+
 	public int obtenerId(PagoSiga archivo) {
 		ArchivoPagoDia archivoPagoDia = genericSearchBs.findById(ArchivoPagoDia.class, archivo.getIdPago());
 		return archivoPagoDia.getIdUsuario();
 	}
-	
+
 	public PagoSiga siga(Integer id, Integer id_pago) {
-			PagoSiga pagoSiga = new PagoSiga();
-			List<PagoSiga> ps = new ArrayList<>();
-			pagoSiga.setIdCuenta(id);
-			pagoSiga.setIdPago(id_pago);
-			ps = genericSearchBs.findByExample(pagoSiga);
+		PagoSiga pagoSiga = new PagoSiga();
+		List<PagoSiga> ps = new ArrayList<>();
+		pagoSiga.setIdCuenta(id);
+		pagoSiga.setIdPago(id_pago);
+		ps = genericSearchBs.findByExample(pagoSiga);
 		return ps.get(Numeros.CERO.getValor());
 	}
-	
 
 	public int obtenerAnio(ArchivoPagoDia pago) {
 		Calendar anio = Calendar.getInstance();
@@ -451,10 +460,10 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		return format1.format(anio.getTime());
 	}
-	
+
 	public Date dateFormat() throws ParseException {
-		 Date date1=new SimpleDateFormat("yyyy-MM-dd").parse(dateForm());
-		 return date1;
+		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateForm());
+		return date1;
 	}
 
 	public String moneyForm(ArchivoPagoDia pago) {

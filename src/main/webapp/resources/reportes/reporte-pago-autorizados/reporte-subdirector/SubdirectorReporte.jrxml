@@ -12,7 +12,7 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="249"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Table_TH" mode="Transparent" backcolor="#00FFFF">
 		<box>
 			<pen lineWidth="0.5" lineStyle="Solid" lineColor="#FFFFFF"/>
@@ -82,180 +82,285 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#8FCCCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#CFE6E6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F3F8F8"/>
+		</conditionalStyle>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#8FAFCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#8FAFCC">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#CFDBE6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<subDataset name="Dataset1" uuid="a5778dfa-3033-4c53-b409-5f6a5bee6f4d">
-		<parameter name="listPagosCorte" class="mx.edu.eld.posgrado.admision.action.views.AspiranteEvaluacionEntrevista"/>
+		<parameter name="listCorte" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
 		<queryString>
 			<![CDATA[]]>
 		</queryString>
 		<field name="field1" class="java.lang.String"/>
+		<field name="field2" class="java.lang.String"/>
+		<field name="field3" class="java.lang.String"/>
+		<field name="field4" class="java.lang.String"/>
 	</subDataset>
-	<parameter name="listaEntrevistas" class="java.util.List" nestedType="mx.edu.eld.posgrado.admision.action.views.AspiranteEvaluacionEntrevista"/>
-	<parameter name="listaAceptados" class="java.util.List" nestedType="mx.edu.eld.posgrado.admision.action.views.AspiranteEvaluacionEntrevista"/>
-	<parameter name="listaRechazados" class="java.util.List" nestedType="mx.edu.eld.posgrado.admision.action.views.AspiranteEvaluacionEntrevista"/>
-	<parameter name="nombrePrograma" class="java.lang.String"/>
-	<parameter name="rutaImagen" class="java.lang.String"/>
-	<parameter name="tipoSel" class="java.lang.String"/>
-	<parameter name="cicloEscolar" class="java.lang.String"/>
-	<parameter name="cAceptacion" class="java.lang.String"/>
-	<parameter name="pEntrevista" class="java.lang.String"/>
-	<parameter name="pAntecedentes" class="java.lang.String"/>
-	<parameter name="listaAccepted" class="java.util.List" nestedType="mx.edu.eld.posgrado.admision.action.views.AspiranteEvaluacionEntrevista"/>
+	<subDataset name="New Dataset 1" uuid="bb7fa5ce-a440-47a6-ab86-335a4b082b57">
+		<queryString language="SQL">
+			<![CDATA[select * from tp01_pago_dia where corte_caja = true and fh_envio = current_date]]>
+		</queryString>
+		<field name="folio_operacion" class="java.lang.String"/>
+		<field name="fh_envio" class="java.sql.Date"/>
+		<field name="id_carpeta" class="java.lang.Integer"/>
+		<group name="folio_operacion">
+			<groupExpression><![CDATA[$F{folio_operacion}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="New Dataset 2" uuid="cfdc068b-54f7-45de-a790-32d34dcb2040">
+		<parameter name="idXSel" class="java.lang.Integer">
+			<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+		</parameter>
+		<parameter name="idSel" class="java.lang.Integer"/>
+		<queryString>
+			<![CDATA[select *
+from tp01_pago_dia pd
+full outer join tc02_catalogo_servicio cs
+on pd.id_catalogo_servicio=cs.id_catalogo_servicio
+full outer join tp08_pagos_corte pc on pd.id_catalogo_servicio=pc.id_pago
+where corte_caja = true and id_corte_caja = $P{idXSel}]]>
+		</queryString>
+		<field name="id_pago_dia" class="java.lang.Integer"/>
+		<field name="tx_archivo" class="java.lang.Object"/>
+		<field name="fh_envio" class="java.sql.Date"/>
+		<field name="id_tipo_comprobante" class="java.lang.Integer"/>
+		<field name="id_catalogo_servicio" class="java.lang.Integer"/>
+		<field name="id_estado_pago" class="java.lang.Integer"/>
+		<field name="id_cuenta" class="java.lang.Integer"/>
+		<field name="id_carpeta" class="java.lang.Integer"/>
+		<field name="corte_caja" class="java.lang.Boolean"/>
+		<field name="folio_operacion" class="java.lang.String"/>
+		<field name="tx_clave" class="java.lang.String"/>
+		<field name="ds_servicio" class="java.lang.String"/>
+		<field name="precio" class="java.lang.Double"/>
+		<field name="st_activo" class="java.lang.Boolean"/>
+		<field name="id_area" class="java.lang.Integer"/>
+		<field name="id_tipo_servicio" class="java.lang.Integer"/>
+		<field name="id_pago_corte" class="java.lang.Integer"/>
+		<field name="id_corte_caja" class="java.lang.Integer"/>
+		<field name="id_pago" class="java.lang.Integer"/>
+		<field name="fecha_pago" class="java.sql.Date"/>
+		<group name="fh_envio">
+			<groupExpression><![CDATA[$F{fh_envio}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="listCorte" class="java.util.List" nestedType="mx.ipn.escom.spee.pagos.mapeo.ArchivoPagoDia"/>
+	<parameter name="nombreCajero" class="java.lang.String"/>
+	<parameter name="fecha" class="java.lang.String"/>
+	<parameter name="turno" class="java.lang.String"/>
+	<parameter name="total" class="java.lang.String"/>
+	<parameter name="folio" class="java.lang.String"/>
+	<parameter name="idSel" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[$P{idSel}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idXSel" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[1]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[]]>
+		<![CDATA[select *
+from tp01_pago_dia pd
+full outer join tp08_pagos_corte pc on pd.id_catalogo_servicio=pc.id_pago
+where id_corte_caja = 1]]>
 	</queryString>
+	<field name="id_pago_dia" class="java.lang.Integer"/>
+	<field name="tx_archivo" class="java.lang.Object"/>
+	<field name="fh_envio" class="java.sql.Date"/>
+	<field name="id_tipo_comprobante" class="java.lang.Integer"/>
+	<field name="id_catalogo_servicio" class="java.lang.Integer"/>
+	<field name="id_estado_pago" class="java.lang.Integer"/>
+	<field name="id_cuenta" class="java.lang.Integer"/>
+	<field name="id_carpeta" class="java.lang.Integer"/>
+	<field name="corte_caja" class="java.lang.Boolean"/>
+	<field name="folio_operacion" class="java.lang.String"/>
+	<field name="id_pago_corte" class="java.lang.Integer"/>
+	<field name="id_corte_caja" class="java.lang.Integer"/>
+	<field name="id_pago" class="java.lang.Integer"/>
+	<field name="fecha_pago" class="java.sql.Date"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="209" splitType="Stretch">
+		<band height="185" splitType="Stretch">
 			<staticText>
-				<reportElement x="130" y="30" width="293" height="30" uuid="0113ccf3-3bab-41d8-ace7-6a301178cd20"/>
+				<reportElement x="55" y="30" width="419" height="75" uuid="0113ccf3-3bab-41d8-ace7-6a301178cd20"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18"/>
+					<font size="30"/>
 				</textElement>
 				<text><![CDATA[Reporte de Corte de Caja]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="170" y="125" width="200" height="18" uuid="5716582d-b420-4b36-9681-8cedf22ab279"/>
+				<reportElement x="113" y="125" width="200" height="18" uuid="5716582d-b420-4b36-9681-8cedf22ab279"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{cicloEscolar}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{fecha}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="70" y="124" width="42" height="19" uuid="d9800f97-c505-4edb-97aa-186a75398694"/>
+				<reportElement x="13" y="124" width="42" height="19" uuid="d9800f97-c505-4edb-97aa-186a75398694"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="143" width="42" height="19" uuid="1a1119cf-7b08-45fa-8efc-614dbea46380"/>
+				<reportElement x="13" y="143" width="42" height="19" uuid="1a1119cf-7b08-45fa-8efc-614dbea46380"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="162" width="42" height="19" uuid="b9d65cfb-a342-4ab1-a7ff-b35c33e33011"/>
+				<reportElement x="13" y="162" width="42" height="19" uuid="b9d65cfb-a342-4ab1-a7ff-b35c33e33011"/>
 				<textElement verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Turno]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="70" y="181" width="42" height="19" uuid="49a6b94c-fdae-4859-9712-eb0e7e83ce3d"/>
-				<textElement verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Total]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="170" y="144" width="200" height="18" uuid="c88f69d4-723e-41fb-892b-1fc00b5090c8"/>
+				<reportElement x="113" y="144" width="200" height="18" uuid="c88f69d4-723e-41fb-892b-1fc00b5090c8"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{cicloEscolar}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{nombreCajero}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="170" y="162" width="200" height="18" uuid="9f8afe66-413a-4e9f-b806-7a136d04b7c9"/>
+				<reportElement x="113" y="162" width="200" height="18" uuid="9f8afe66-413a-4e9f-b806-7a136d04b7c9"/>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{cicloEscolar}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="170" y="182" width="200" height="18" uuid="78c07cad-b780-4964-b083-a21a939b9722"/>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{cicloEscolar}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{turno}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
 		<band height="582">
 			<componentElement>
-				<reportElement positionType="Float" x="1" y="10" width="555" height="557" uuid="9c9a0454-b1b7-47eb-babc-05957338d740">
-					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
-					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
-					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
-					<property name="com.jaspersoft.studio.table.style.detail" value="Table 1_TD"/>
-					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
-					<property name="com.jaspersoft.studio.components.autoresize.next" value="true"/>
-				</reportElement>
+				<reportElement key="table 2" style="table 2" x="0" y="3" width="555" height="579" uuid="462f9e85-8c3e-4f87-af53-af0968680b53"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
-					<datasetRun subDataset="Dataset1" uuid="bbea6924-5e5b-409c-8118-6ea33290ee85">
-						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource ($P{listPagosCorte})]]></dataSourceExpression>
+					<datasetRun subDataset="New Dataset 2" uuid="20154901-41d5-4ee0-9b30-06ceaedadcbc">
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="112" uuid="3aeee2de-9a60-42e8-b41a-2fe58598811e">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
-						<jr:tableHeader style="Table 1_TH" height="30" rowSpan="1">
+					<jr:column width="90" uuid="a9a02c37-8016-4683-b48a-9c70f4058031">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="112" height="30" uuid="e1c64945-1178-409f-8318-62d533f50457"/>
-								<textElement textAlignment="Left"/>
-								<text><![CDATA[Aspirantes Aceptados]]></text>
+								<reportElement x="0" y="0" width="90" height="30" uuid="9e1e8d07-f265-48c7-a02b-280524e9d24c"/>
+								<text><![CDATA[Fecha envio]]></text>
 							</staticText>
-						</jr:tableHeader>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="39" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="00ae47cc-d06c-4a6c-b207-724e6aa38115"/>
+								<textFieldExpression><![CDATA[$F{fh_envio}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="8656ec05-a9c0-4c83-a63e-50bd43209dbd">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="112" height="30" forecolor="#FFFFFF" uuid="6ff6fc7c-fb40-4fb2-862e-d9b22f3895dc"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<reportElement x="0" y="0" width="90" height="30" uuid="1f0bbf54-cec3-4a76-a929-3bf7351f53d2"/>
+								<text><![CDATA[Clave]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table 2_TD" height="39" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="20" uuid="05f7b0d9-6301-4c78-971c-29de57a6ab92"/>
+								<textFieldExpression><![CDATA[$F{tx_clave}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="213" uuid="3d634534-153a-4ac6-926c-a139b8dd1f84">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="13ce2b50-991e-49fe-9137-f1565f9583b5"/>
 								<text><![CDATA[Concepto]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="112" height="30" uuid="4e230067-cc40-4f79-986f-69db594ee13f"/>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="10"/>
-								</textElement>
+						<jr:detailCell style="table 2_TD" height="39" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="213" height="39" uuid="17f996b5-6bc6-4f8d-a2e8-fb35d4dcc6b8"/>
+								<textFieldExpression><![CDATA[$F{ds_servicio}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="112" uuid="d7cb9e8c-85aa-44d9-8a5a-64d656f2ef0d">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+					<jr:column width="90" uuid="77f98071-4807-42c4-8020-0321394cd15e">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="112" height="30" forecolor="#FFFFFF" uuid="bfd7f866-586d-4a33-88d2-38e8c0847ffd"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Cantidad]]></text>
+								<reportElement x="0" y="0" width="90" height="30" uuid="074410b0-2291-4f89-88dd-04e857020ce1"/>
+								<text><![CDATA[precio]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="112" height="30" uuid="05dd85d8-0b71-4f99-a1ee-08d53aaecb30"/>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="10"/>
-								</textElement>
+						<jr:detailCell style="table 2_TD" height="39" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="39" uuid="f762bdcb-75d6-4b1a-be7a-660a7041e4e2"/>
+								<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="112" uuid="2041fd2c-7eb1-42fd-9eb5-b376b4afe00d">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
+					<jr:column width="62" uuid="9e5cb2d8-9c2d-4536-9009-68cb9f80c85d">
+						<jr:columnHeader style="table 2_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="112" height="30" forecolor="#FFFFFF" uuid="a79cb301-545a-4996-b446-8cd04b7560ea"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Entrevistador]]></text>
+								<reportElement x="2" y="0" width="60" height="30" uuid="6f40930d-e841-48e0-9f15-b9ec88f1e292"/>
+								<text><![CDATA[# voucher]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="112" height="30" uuid="f9308826-28d0-400b-a71a-e2a5c5c10979"/>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="10"/>
-								</textElement>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="112" uuid="ff7f981e-6b59-4da3-90cd-0247d11fdbd4">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
-						<jr:columnHeader style="Table 1_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="112" height="30" forecolor="#FFFFFF" uuid="ff1a4a3f-79f7-4f42-9267-b7a013cfc369"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Observaciones]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table 1_TD" height="30" rowSpan="1">
-							<textField isBlankWhenNull="true">
-								<reportElement x="0" y="0" width="112" height="30" uuid="366e40a9-95e7-4110-9c8a-0db7967f3751"/>
-								<textElement verticalAlignment="Middle">
-									<paragraph leftIndent="10"/>
-								</textElement>
+						<jr:detailCell style="table 2_TD" height="39" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="39" uuid="a4944937-1b4a-48bc-a91d-8599adf9475e"/>
+								<textFieldExpression><![CDATA[$F{folio_operacion}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
