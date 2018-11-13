@@ -19,21 +19,6 @@
 							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentista">
 								<s:text name="menu.dentales.citas.gestionar_citas" />
 						</a></li>
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/citas/gestionar-citas-dentales!">
-									<s:text name="menu.dentales.citas.previa_cita" />
-							</a></li>
-					</ul></li>
-				
-				<!-- Pacientes -->
-				<li class="dropdown"><a href="#"><s:text
-							name="menu.dentales.pacientes" /><span class="fa arrow"></span>
-				</a>
-					<ul class="nav nav-second-level">
-						<li class="dropdown"><a
-							href="${pageContext.request.contextPath}/paciente/gestionar-paciente">
-								<s:text name="menu.dentales.pacientes.consultar_pacientes" />
-						</a></li>
 					</ul></li>
 				
 				<!-- Pagos -->

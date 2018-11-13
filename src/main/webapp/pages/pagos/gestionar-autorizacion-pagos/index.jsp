@@ -80,9 +80,9 @@
 											class="material-icons md-24">${varIconoVisualizar}</i>
 										</a>
 									</s:if> <s:else>
-										<a href="#" title="Pago gestionado"> <i
+										 <i
 											class="material-icons"> done </i>
-										</a>
+									
 									</s:else></td>
 							</tr>
 						</s:iterator>

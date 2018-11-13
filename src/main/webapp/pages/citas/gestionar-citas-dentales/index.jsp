@@ -75,7 +75,7 @@
 								<td><s:property value="%{#citas.fecha}" /></td>
 								<td><s:property value="%{#citas.horaServicio}" /></td>
 
-								<s:if test="%{#citas.idEstado == 3}">
+								<s:if test="%{#citas.idEstado == 3 || #citas.idEstado == 4 || #citas.idEstado == 2}">
 									<td><s:property value="'Sin acciones'" /></td>
 								</s:if>
 								<s:else>
