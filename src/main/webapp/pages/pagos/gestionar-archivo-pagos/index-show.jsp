@@ -44,7 +44,7 @@
 					</thead>
 					<tbody>
 						<s:iterator value="pagosDate" var="pagoMes">
-						<s:set var="date" value="%{pagoBs.dateForm(#pagoMes)}" />
+						<s:set var="date" value="%{pagoBs.fechaForm(#pagoMes)}" />
 						<s:set var="money" value="%{pagoBs.moneyForm(#pagoMes)}" />
 							<tr>
 								<td>${pagoMes.folioOperacion}</td>

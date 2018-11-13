@@ -86,9 +86,12 @@ public class ControlImpresionesAct extends GeneralActionSupport {
 	}
 	
 	public String editNew() {
+		if(getUsuarioSel() != null) {
 		usrInformacion = impresionesBs.obtenerPersona(usr);
 		usrImpresiones = impresionesBs.obtenerCuentaImpresion(usr.getIdCuenta());
 		return EDITNEW;
+		}
+		return NO_AUTORIZADO;
 	}
 	
 	public String agregarImpresiones() throws ParseException{

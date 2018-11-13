@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -461,6 +462,11 @@ public class PagoBs extends GenericBs<Modelo> implements Serializable {
 		return format1.format(anio.getTime());
 	}
 
+	public String fechaForm(ArchivoPagoDia pago) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(pago.getFechaEnvio());
+	}
+	
 	public Date dateFormat() throws ParseException {
 		Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(dateForm());
 		return date1;

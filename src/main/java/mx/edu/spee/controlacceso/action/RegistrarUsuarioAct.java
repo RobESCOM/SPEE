@@ -17,7 +17,11 @@ import mx.ipn.escom.spee.util.bs.GenericSearchBs;
 
 @Namespace("/control-acceso")
 @Results({ @Result(name = ActionSupport.SUCCESS, type = "redirectAction", params = { "actionName",
-		"registrar-usuario/new" }) })
+		"registrar-usuario/new" }),
+		   @Result(name= "login", type = "redirectAction", params = {"actionName",
+		"login"})
+})
+
 public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDriven<InformacionPersonal> {
 
 	private static final long serialVersionUID = 1L;
@@ -55,7 +59,7 @@ public class RegistrarUsuarioAct extends GeneralActionSupport implements ModelDr
 
 	public String create() {
 		addActionMessage("El usuario se registró exitosamente, revise su correo electrónico");
-		return SUCCESS;
+		return "login";
 	}
 
 	public Usuario getUsuario() {
