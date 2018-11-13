@@ -62,11 +62,14 @@
 									<td>${pagAutorizado.catalogoServicio.descripcion}</td>
 									<td>$ ${pagAutorizado.catalogoServicio.precio} MXN</td>
 									<td>
-									<a
-										href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos!showPago?idPago=${pagAutorizado.id}&amp;idSel=${pagAutorizado.idUsuario}"
-										title="Visualizar Archivo de Pago"> <i
-											class="material-icons md-24">${varIconoVisualizar}</i>
-									</a>
+									<s:if 
+										test="%{#pagAutorizado.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@AUTORIZADO.getIdEstatus()}">
+										<a
+											href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos!showPago?idPago=${pagAutorizado.id}&amp;idSel=${pagAutorizado.idUsuario}"
+											title="Visualizar Archivo de Pago"> <i
+												class="material-icons md-24">${varIconoVisualizar}</i>
+										</a>
+									</s:if>
 									</td>
 								</tr>
 							</s:iterator>
