@@ -42,7 +42,6 @@
 								<s:text name="menu.alumno.impresiones.ver_impresiones" />
 						</a></li>
 					</ul></li>
-
 				<li class="dropdown"><a href="#"><s:text
 							name="Historial de Pagos" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
