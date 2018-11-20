@@ -34,7 +34,6 @@
 								<s:text name="menu.alumno.agendar.cita" />
 						</a></li>
 					</ul></li>
-					
 				<li class="dropdown"><a href="#"><s:text
 							name="menu.alumno.impresiones" /><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
