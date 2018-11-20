@@ -57,7 +57,7 @@
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:textfield cssClass="form-control campo"
 						cssClassError="input-error" name="model.clave" id="txClave" maxlength="4"/>
-					<s:fielderror fieldName="" cssClass="error" theme="bootstrap" />
+					<s:fielderror fieldName="model.clave" cssClass="error" theme="bootstrap" />
 				</div>
 			</div>
 			<!-- Tipo de servicio -->

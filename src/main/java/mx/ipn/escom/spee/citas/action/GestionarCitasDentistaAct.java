@@ -58,7 +58,7 @@ public class GestionarCitasDentistaAct extends GeneralActionSupport {
 		listCitasMatutino = new ArrayList<>();
 		listCitasVespertino = new ArrayList<>();
 		HoraServicio hora = new HoraServicio();
-		if (usuarioSel.getLogin().equals("administrador_dentales_matutino@ipn.com.mx")) {
+		if (usuarioSel.getLogin().equals("coordinador.dentales.matutino@gmail.com")) {
 			Cita citaAux = new Cita();
 			citaAux.setIdEstado(EstadoCitaEnum.PENDIENTE.getId());
 			listCitasAux = genericSearchBs.findByExample(citaAux);

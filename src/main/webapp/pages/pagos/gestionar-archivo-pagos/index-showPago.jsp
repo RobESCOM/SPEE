@@ -39,12 +39,6 @@
 </div>
 
 <s:set var="mes" value="listAnio"/>
-<div class="row">
-	<s:set var="area" value="%{pagoBs.obtenerArea(#archivoPago)}"></s:set>
-	<div class="col-md-12">
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show?${anio}=&amp;listMes=${mes}"><s:text name="Regresar" /></a>
-	</div>
-</div>
 
 <div class="text-left">
 	<div class="col-md-12"></div>

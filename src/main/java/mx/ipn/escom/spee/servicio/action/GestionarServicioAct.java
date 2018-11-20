@@ -81,9 +81,13 @@ public class GestionarServicioAct extends GeneralActionSupport {
 				servicioBs.registrarServicio(model);
 			} else {
 				addActionError("Verifique su información.");
+				listTipos = genericSearchBs.findAll(TipoServicio.class);
+				listAreas = areaBs.obtieneAreasActivas();
 			}
 		} catch (UniqueException ue) {
 			addActionError("El servicio que intenta registrar ya existe. Verifique la clave del servicio.");
+			listTipos = genericSearchBs.findAll(TipoServicio.class);
+			listAreas = areaBs.obtieneAreasActivas();
 		}
 	}
 
@@ -122,10 +126,14 @@ public class GestionarServicioAct extends GeneralActionSupport {
 				servicioBs.editarServicio(model);
 			} else {
 				addActionError("Verifique su información.");
+				listTipos = genericSearchBs.findAll(TipoServicio.class);
 				listAreas = areaBs.obtieneAreasActivas();
 			}
 		} catch (UniqueException ue) {
 			addActionError("El servicio que intenta registrar ya existe. Verifique la clave del servicio.");
+			listTipos = genericSearchBs.findAll(TipoServicio.class);
+			listAreas = areaBs.obtieneAreasActivas();
+			
 		}
 	}
 

@@ -62,11 +62,6 @@
 	</div>
 </div>
 
-<div class="row">
-	<div class="col-md-12">
-		<a class="btn btn-primary" href="${pageContext.request.contextPath}/pagos/gestionar-archivo-pagos/show?${anio}=&amp;listMes=${mes}"><s:text name="Regresar" /></a>
-	</div>
-</div>
 
 	</html>
 </jsp:root>

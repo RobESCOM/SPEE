@@ -49,10 +49,10 @@
 			<div class="text-left">
 				<ul>
 					<li>El formato debe ser .pdf o .png</li>
-					<li>Debe no mas de no más de 10 MB</li>
-					<li>Debe contener su nombre, identificador y la Folio de
-						operación.</li>
-					<li>Debe visualizarse claramente</li>
+					<li>Debe pesar no más de 10 MB.</li>
+					<li>Debe contener su nombre, identificador y el Folio de
+						operación del voucher de pago.</li>
+					<li>Debe visualizarse claramente.</li>
 				</ul>
 			</div>
 			<div class="form-group">

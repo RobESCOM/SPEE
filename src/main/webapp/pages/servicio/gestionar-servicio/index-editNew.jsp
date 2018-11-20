@@ -66,9 +66,9 @@
 				<div class="col-xs-12 col-sm-6 col-md-6">
 					<s:select id="slcTipoServicio" list="listTipos"
 						name="model.idTipoServicio" listValue="nombre" listKey="id"
-						headerKey="-1" headerValue="Seleccione" class="form-control"
+						headerKey="" headerValue="Seleccione" class="form-control"
 						cssErrorClass="field-error" />
-					<s:fielderror fieldName="model.idHora" cssClass="error"
+					<s:fielderror fieldName="model.idTipoServicio" cssClass="error"
 						theme="bootstrap" />
 				</div>
 			</div>
@@ -106,7 +106,7 @@
 					for=""> <s:text name="Area a la que pertenece" />
 				</label>
 				<div class="col-xs-12 col-sm-6 col-md-6">
-					<s:select id="slcArea" class="form-control" headerKey="-1"
+					<s:select id="slcArea" class="form-control" headerKey=""
 						headerValue="Seleccione" list="listAreas" listValue="nombreArea"
 						listKey="id" name="model.idArea" cssErrorClass="field-error" />
 					<s:fielderror fieldName="model.idArea" cssClass="error"

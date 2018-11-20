@@ -60,7 +60,13 @@ public class GestionarAreaAct extends GeneralActionSupport {
 		if (usuarioSel.getPerfilActivo().getId() == mx.edu.spee.controlacceso.mapeo.Perfil.PerfilEnum.SUBDIRECTOR
 				.getValor()) {
 			listAreas = genericSearchBs.findAll(CatalogoArea.class);
-			return INDEX;
+			if(!listAreas.isEmpty()){
+				return INDEX;
+			}
+			else {
+				addActionError("No existen áreas registradas.");
+				return INDEX;
+			}			
 		} else {
 			return NO_AUTORIZADO;
 		}

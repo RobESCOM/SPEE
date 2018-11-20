@@ -65,8 +65,7 @@
 										test="%{#pagoPorAutorizar.idEstadoPago eq @mx.ipn.escom.spee.pagos.mapeo.EstadoPago$EstadoPagoEnum@RECHAZADO.getIdEstatus()}">
 										<i class="material-icons  md-24 md-sem-rojo ">&#xE061;</i>
 									</s:elseif></td>
-
-								<td>${alumno.nombre}</td>
+								<td><s:property value="%{#alumno.nombre + ' ' + #alumno.primerApellido + ' ' + #alumno.segundoApellido}"/></td>
 								<td>${alumno.clave }</td>
 								<td><s:date name="%{#pagoPorAutorizar.fechaEnvio}"
 										format="yyyy-MM-dd" /></td>

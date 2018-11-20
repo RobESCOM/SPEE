@@ -60,7 +60,7 @@
 					</thead>
 					<tbody>
 						<s:if
-							test="%{txLogin == 'administrador_dentales_matutino@ipn.com.mx'}">
+							test="%{txLogin == 'coordinador.dentales.matutino@gmail.com'}">
 							<s:iterator value="listCitasMatutino" var="citasMatutino">
 								<tr>
 									<s:if test="%{#citasMatutino.idEstado == 1}">
