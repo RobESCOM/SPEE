@@ -50,6 +50,7 @@
 								<s:text name="Gestionar Historial Pagos" />
 						</a></li>
 					</ul></li>
+					
 			</ul>
 		</div>
 	</div>
